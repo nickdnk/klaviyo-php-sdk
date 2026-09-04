@@ -183,6 +183,10 @@ $query = (new Query())
     ->pageSize(50);
 
 $page = $client->profiles->list($query);            // ['data' => Profile[], 'links' => ?PaginationLinks]
+
+foreach ($client->profiles->iterate($query)->items() as $p) {   // all pages, fetched as you go
+    // ...
+}
 ```
 
 The maximum `page[size]` differs per endpoint, and Klaviyo answers 400 when it is exceeded:
@@ -251,8 +255,9 @@ Klaviyo paginates with cursors. Every `list()` result carries a `links` object:
 - `$page['links']->prev` points back, `self` is the current page, `first` and `last` exist for some endpoints.
 - `page[size]` sets how many resources one page holds (see the limits above).
 
-The simplest way to get the next page is to pass that URL straight back with `next:`. The URL already contains every
-query parameter of the original request, so the `Query` is not needed again:
+The easiest way through all pages is `iterate()`, available on every service that has `list()`. It returns a
+`Paginator` whose `items()` generator fetches the next page only when the current one is exhausted, so breaking out of
+the loop stops the requests:
 
 ```php
 use nickdnk\Klaviyo\Filter;
@@ -260,15 +265,32 @@ use nickdnk\Klaviyo\Query;
 
 $query = (new Query())->filter(Filter::equals('email', 'jane@example.com'))->pageSize(50);
 
-$profiles = [];
+foreach ($client->profiles->iterate($query)->items() as $profile) {
+    echo $profile->email, PHP_EOL;
+}
+
+$pages = $client->profiles->iterate($query)->pages();   // one ['data' => ..., 'links' => ...] per page
+$all   = $client->profiles->iterate($query)->all();     // everything in one array; fine for small sets
+```
+
+Relationship listings take a `next:` argument instead, so wrap them with `paginate()`. The callback gets `null` for the
+first page and `links->next` after that:
+
+```php
+$paginator = $client->paginate(fn(?string $next) => $client->lists->profiles($listId, $query, next: $next));
+foreach ($paginator->items() as $profile) {
+    echo $profile->email, PHP_EOL;
+}
+```
+
+To page by hand, pass `links->next` back with `next:`. The URL already contains every query parameter of the original
+request, so the `Query` is not needed again:
+
+```php
 $page = $client->profiles->list($query);
-do {
-    array_push($profiles, ...$page['data']);
-    $next = $page['links']?->next;
-    if ($next !== null) {
-        $page = $client->profiles->list(next: $next);
-    }
-} while ($next !== null);
+while ($page['links']?->next !== null) {
+    $page = $client->profiles->list(next: $page['links']->next);
+}
 ```
 
 If you keep the cursor somewhere, for example to resume a job later, use `Query::cursor()`. It accepts either the bare
@@ -279,9 +301,6 @@ fields, page size) so the follow-up request matches the first one:
 $cursor = $page['links']->next;                                      // store this
 $page   = $client->profiles->list((new Query())->filter(Filter::equals('email', 'jane@example.com'))->pageSize(50)->cursor($cursor));
 ```
-
-Relationship listings paginate the same way, for example `$client->lists->profiles($listId, $query)` and
-`$client->lists->profiles($listId, next: $next)`.
 
 ### Relationships and `include`
 

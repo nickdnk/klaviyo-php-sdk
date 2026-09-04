@@ -7,6 +7,7 @@ use nickdnk\Klaviyo\Exceptions\ClientException;
 use nickdnk\Klaviyo\Exceptions\ConnectionException;
 use nickdnk\Klaviyo\Exceptions\OAuthException;
 use nickdnk\Klaviyo\Exceptions\ServerException;
+use nickdnk\Klaviyo\Paginator;
 use nickdnk\Klaviyo\Query;
 use nickdnk\Klaviyo\Resources\Shared\PaginationLinks;
 use nickdnk\Klaviyo\Resources\Shared\Resource;
@@ -40,5 +41,19 @@ trait HasList
     }
 
     abstract public function list(?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface;
+
+    /**
+     * Every resource matching `$query`, fetched page by page as you iterate. Breaking out of the
+     * loop stops the requests. Use `iterate($query)->all()` when the whole set is wanted at once,
+     * or `->pages()` to see each page with its links.
+     *
+     * @return Paginator<Resource>
+     */
+    public function iterate(?Query $query = null): Paginator
+    {
+
+        return new Paginator(fn(?string $next) => $this->list($query, $next));
+
+    }
 
 }

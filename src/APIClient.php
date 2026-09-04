@@ -968,6 +968,25 @@ class APIClient
     }
 
     /**
+     * Auto-pagination over any listing that takes a `next` URL. `$fetch` receives null for the
+     * first page and `links.next` afterwards; see {@see Paginator}.
+     *
+     * ```php
+     * foreach ($client->paginate(fn(?string $next) => $client->lists->profiles($listId, $query, next: $next))->items() as $profile) { … }
+     * ```
+     *
+     * @template T of IdentifiableResource
+     * @param callable(?string): array{data: T[], links: ?PaginationLinks} $fetch
+     * @return Paginator<T>
+     */
+    public function paginate(callable $fetch): Paginator
+    {
+
+        return new Paginator($fetch);
+
+    }
+
+    /**
      * Convenience wrapper around {@see self::executePool()} for the common case where the
      * caller has a list of inputs (jobs, profile chunks, etc.) and a function that turns
      * one input into a request. Inputs are iterated lazily and request objects are only
