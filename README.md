@@ -183,9 +183,6 @@ $query = (new Query())
     ->pageSize(50);
 
 $page = $client->profiles->list($query);            // ['data' => Profile[], 'links' => ?PaginationLinks]
-while ($next = $page['links']?->next) {
-    $page = $client->profiles->list(next: $next);
-}
 ```
 
 The maximum `page[size]` differs per endpoint, and Klaviyo answers 400 when it is exceeded:
@@ -215,7 +212,6 @@ $query = (new Query())
     ->pageSize(20);                                         // page[size]=20
 
 $page = $client->profiles->list($query);
-$page = $client->profiles->list($query->cursor($page['links']->next));   // or list(next: $page['links']->next)
 ```
 
 Filter operators and what they serialise to:
@@ -246,6 +242,46 @@ Some examples from the live run:
 - Lists and segments allow only `equals` and `any` on `name`.
 - Campaigns allow only `contains` on `name`.
 - `campaigns.list` requires an `equals(messages.channel, ...)` filter.
+
+### Pagination
+
+Klaviyo paginates with cursors. Every `list()` result carries a `links` object:
+
+- `$page['links']->next` is the full URL of the next page, or `null` on the last page.
+- `$page['links']->prev` points back, `self` is the current page, `first` and `last` exist for some endpoints.
+- `page[size]` sets how many resources one page holds (see the limits above).
+
+The simplest way to get the next page is to pass that URL straight back with `next:`. The URL already contains every
+query parameter of the original request, so the `Query` is not needed again:
+
+```php
+use nickdnk\Klaviyo\Filter;
+use nickdnk\Klaviyo\Query;
+
+$query = (new Query())->filter(Filter::equals('email', 'jane@example.com'))->pageSize(50);
+
+$profiles = [];
+$page = $client->profiles->list($query);
+do {
+    array_push($profiles, ...$page['data']);
+    $next = $page['links']?->next;
+    if ($next !== null) {
+        $page = $client->profiles->list(next: $next);
+    }
+} while ($next !== null);
+```
+
+If you keep the cursor somewhere, for example to resume a job later, use `Query::cursor()`. It accepts either the bare
+`page[cursor]` value or the full `next` URL and extracts the cursor from it, and it keeps the rest of the `Query` (filter,
+fields, page size) so the follow-up request matches the first one:
+
+```php
+$cursor = $page['links']->next;                                      // store this
+$page   = $client->profiles->list((new Query())->filter(Filter::equals('email', 'jane@example.com'))->pageSize(50)->cursor($cursor));
+```
+
+Relationship listings paginate the same way, for example `$client->lists->profiles($listId, $query)` and
+`$client->lists->profiles($listId, next: $next)`.
 
 ### Relationships and `include`
 
