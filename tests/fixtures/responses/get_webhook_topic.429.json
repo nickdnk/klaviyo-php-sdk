@@ -1,0 +1,37 @@
+{
+    "operation": "get_webhook_topic",
+    "request": {
+        "method": "GET",
+        "path": "/api/webhook-topics/event:klaviyo.nope",
+        "query": {}
+    },
+    "response": {
+        "status": 429,
+        "headers": {
+            "retry-after": "1"
+        },
+        "body": {
+            "errors": [
+                {
+                    "title": "Request was throttled.",
+                    "meta": [],
+                    "detail": "Request was throttled. Expected available in 1 second.",
+                    "status": 429,
+                    "code": "throttled",
+                    "source": {
+                        "pointer": "/data"
+                    },
+                    "links": {
+                        "type": "https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling#rate-limits"
+                    },
+                    "id": "789d6b67-f1ab-43d8-9896-e7799a6afa68"
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "webhookTopics.get",
+        "recorded": "2026-09-04"
+    }
+}

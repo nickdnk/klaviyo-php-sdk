@@ -1,0 +1,10 @@
+# Keep dist archives (what Composer installs from Packagist) down to the library itself.
+/tests            export-ignore
+/scratch          export-ignore
+/.github          export-ignore
+/phpunit.xml.dist export-ignore
+/.gitignore       export-ignore
+/.gitattributes   export-ignore
+/.idea            export-ignore
+
+* text=auto eol=lf

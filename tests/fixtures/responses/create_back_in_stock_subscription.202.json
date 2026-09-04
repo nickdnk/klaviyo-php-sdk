@@ -1,0 +1,22 @@
+{
+    "operation": "create_back_in_stock_subscription",
+    "request": {
+        "method": "POST",
+        "path": "/api/back-in-stock-subscriptions",
+        "query": {}
+    },
+    "response": {
+        "status": 202,
+        "headers": {
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "backInStockSubscriptions.create",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "operation": "delete_custom_metric",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/custom-metrics/01M1PA9Z9DFGK85H67PJSZZ67V",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "customMetrics.delete",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,61 @@
+{
+    "operation": "update_tracking_setting",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/tracking-settings/WBhXHN",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "tracking-setting",
+                "id": "WBhXHN",
+                "attributes": {
+                    "auto_add_parameters": false,
+                    "utm_source": {
+                        "flow": {
+                            "type": "static",
+                            "value": "Klaviyo"
+                        },
+                        "campaign": {
+                            "type": "static",
+                            "value": "Klaviyo"
+                        }
+                    },
+                    "utm_medium": {
+                        "flow": {
+                            "type": "dynamic",
+                            "value": "message_type"
+                        },
+                        "campaign": {
+                            "type": "dynamic",
+                            "value": "message_type"
+                        }
+                    },
+                    "utm_campaign": null,
+                    "utm_id": null,
+                    "utm_term": null,
+                    "custom_parameters": []
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/tracking-settings/WBhXHN/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/tracking-settings/WBhXHN"
+            }
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "trackingSettings.update",
+        "recorded": "2026-09-04"
+    }
+}

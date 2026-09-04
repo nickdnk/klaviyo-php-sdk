@@ -1,0 +1,60 @@
+{
+    "operation": "create_list",
+    "request": {
+        "method": "POST",
+        "path": "/api/lists",
+        "query": {}
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60, 150;w=86400",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "list",
+                "id": "VAnKig",
+                "attributes": {
+                    "name": "sdk-smoke-09048514-l",
+                    "created": "2026-09-04T13:38:42.697020+00:00",
+                    "updated": "2026-09-04T13:38:42.697033+00:00",
+                    "opt_in_process": "single_opt_in"
+                },
+                "relationships": {
+                    "profiles": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/lists/VAnKig/relationships/profiles/",
+                            "related": "https://a.klaviyo.com/api/lists/VAnKig/profiles/"
+                        }
+                    },
+                    "tags": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/lists/VAnKig/relationships/tags/",
+                            "related": "https://a.klaviyo.com/api/lists/VAnKig/tags/"
+                        }
+                    },
+                    "flow-triggers": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/lists/VAnKig/relationships/flow-triggers/",
+                            "related": "https://a.klaviyo.com/api/lists/VAnKig/flow-triggers/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/lists/VAnKig/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/lists"
+            }
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "lists.create",
+        "recorded": "2026-09-04"
+    }
+}

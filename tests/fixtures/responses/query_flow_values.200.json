@@ -1,0 +1,40 @@
+{
+    "operation": "query_flow_values",
+    "request": {
+        "method": "POST",
+        "path": "/api/flow-values-reports",
+        "query": {
+            "fields": {
+                "flow-values-report": "results"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 2;w=60, 225;w=86400",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "flow-values-report",
+                "id": "a738b3ea-1c8e-4b74-b254-c39697aae326",
+                "attributes": {
+                    "results": []
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/flow-values-reports?fields%5Bflow-values-report%5D=results",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "reports.flowValues",
+        "recorded": "2026-09-04"
+    }
+}

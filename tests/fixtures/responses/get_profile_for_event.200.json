@@ -1,0 +1,135 @@
+{
+    "operation": "get_profile_for_event",
+    "request": {
+        "method": "GET",
+        "path": "/api/events/7qWkC6JPz7g/profile",
+        "query": {
+            "fields": {
+                "profile": "email"
+            },
+            "additional-fields": {
+                "profile": "subscriptions"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "profile",
+                "id": "01M1PA9MBA7VB258TP74BXMQTG",
+                "attributes": {
+                    "email": "sdk-smoke+09042132-ev2@nickdnktech.com",
+                    "subscriptions": {
+                        "email": {
+                            "marketing": {
+                                "can_receive_email_marketing": false,
+                                "consent": "NEVER_SUBSCRIBED",
+                                "consent_timestamp": null,
+                                "last_updated": "2026-09-04T13:38:56.911708+00:00",
+                                "method": null,
+                                "method_detail": null,
+                                "custom_method_detail": null,
+                                "double_optin": null,
+                                "suppression": [
+                                    {
+                                        "reason": "USER_SUPPRESSED",
+                                        "timestamp": "2026-09-04T13:38:56.911708+00:00"
+                                    }
+                                ],
+                                "list_suppressions": []
+                            },
+                            "open_tracking": {
+                                "consent": "NEVER_SUBSCRIBED",
+                                "consent_timestamp": null,
+                                "last_updated": null,
+                                "created_timestamp": null,
+                                "metadata": null,
+                                "can_receive": false,
+                                "valid_until": null
+                            },
+                            "click_tracking": {
+                                "consent": "NEVER_SUBSCRIBED",
+                                "consent_timestamp": null,
+                                "last_updated": null,
+                                "created_timestamp": null,
+                                "metadata": null,
+                                "can_receive": false,
+                                "valid_until": null
+                            }
+                        },
+                        "sms": {
+                            "marketing": {
+                                "can_receive_sms_marketing": false,
+                                "consent": "NEVER_SUBSCRIBED",
+                                "consent_timestamp": null,
+                                "method": null,
+                                "method_detail": null,
+                                "last_updated": null
+                            },
+                            "transactional": {
+                                "can_receive_sms_transactional": false,
+                                "consent": "NEVER_SUBSCRIBED",
+                                "consent_timestamp": null,
+                                "method": null,
+                                "method_detail": null,
+                                "last_updated": null
+                            }
+                        },
+                        "mobile_push": {
+                            "marketing": {
+                                "can_receive_push_marketing": false,
+                                "consent": "NEVER_SUBSCRIBED",
+                                "consent_timestamp": null
+                            }
+                        },
+                        "whatsapp": null
+                    }
+                },
+                "relationships": {
+                    "lists": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/relationships/lists/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/lists/"
+                        }
+                    },
+                    "segments": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/relationships/segments/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/segments/"
+                        }
+                    },
+                    "push-tokens": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/relationships/push-tokens/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/push-tokens/"
+                        }
+                    },
+                    "conversation": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/relationships/conversation/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/conversation/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/events/7qWkC6JPz7g/profile?fields%5Bprofile%5D=email&additional-fields%5Bprofile%5D=subscriptions"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "events.profile",
+        "recorded": "2026-09-04"
+    }
+}

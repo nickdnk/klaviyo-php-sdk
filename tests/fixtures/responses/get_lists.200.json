@@ -1,0 +1,103 @@
+{
+    "operation": "get_lists",
+    "request": {
+        "method": "GET",
+        "path": "/api/lists",
+        "query": {
+            "filter": "any(id,[\"YafG4m\",\"TjmPN9\"])",
+            "include": "tags"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "73",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "list",
+                    "id": "TjmPN9",
+                    "attributes": {
+                        "name": "sdk-smoke-09047c86-list2",
+                        "created": "2026-09-04T13:39:29+00:00",
+                        "updated": "2026-09-04T13:39:29+00:00",
+                        "opt_in_process": "double_opt_in"
+                    },
+                    "relationships": {
+                        "profiles": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/TjmPN9/relationships/profiles/",
+                                "related": "https://a.klaviyo.com/api/lists/TjmPN9/profiles/"
+                            }
+                        },
+                        "tags": {
+                            "data": [],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/TjmPN9/relationships/tags/",
+                                "related": "https://a.klaviyo.com/api/lists/TjmPN9/tags/"
+                            }
+                        },
+                        "flow-triggers": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/TjmPN9/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/lists/TjmPN9/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/lists/TjmPN9/"
+                    }
+                },
+                {
+                    "type": "list",
+                    "id": "YafG4m",
+                    "attributes": {
+                        "name": "sdk-smoke-09047c86-list",
+                        "created": "2026-09-04T13:39:28+00:00",
+                        "updated": "2026-09-04T13:39:28+00:00",
+                        "opt_in_process": "single_opt_in"
+                    },
+                    "relationships": {
+                        "profiles": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/profiles/",
+                                "related": "https://a.klaviyo.com/api/lists/YafG4m/profiles/"
+                            }
+                        },
+                        "tags": {
+                            "data": [],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/tags/",
+                                "related": "https://a.klaviyo.com/api/lists/YafG4m/tags/"
+                            }
+                        },
+                        "flow-triggers": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/lists/YafG4m/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/lists/YafG4m/"
+                    }
+                }
+            ],
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/lists?filter=any%28id%2C%5B%22YafG4m%22%2C%22TjmPN9%22%5D%29&include=tags",
+                "next": null,
+                "prev": "https://a.klaviyo.com/api/lists?filter=any%28id%2C%5B%22YafG4m%22%2C%22TjmPN9%22%5D%29&include=tags&page%5Bcursor%5D=%3CFilters%3A+any%28id%2C%5B%22YafG4m%22%2C%22TjmPN9%22%5D%29%3E"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "lists.list",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,62 @@
+{
+    "operation": "get_bulk_unsuppress_profiles_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/profile-suppression-bulk-delete-jobs/01M1PABK283F7CKTXRWJDEKFM9",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "profile-suppression-bulk-delete-job",
+                "id": "01M1PABK283F7CKTXRWJDEKFM9",
+                "attributes": {
+                    "status": "processing",
+                    "created_at": "2026-09-04T13:40:00.200922+00:00",
+                    "total_count": 0,
+                    "completed_count": 0,
+                    "completed_at": "2026-09-04T13:40:00.454217+00:00",
+                    "skipped_count": 0
+                },
+                "relationships": {
+                    "lists": {
+                        "data": [
+                            {
+                                "type": "list",
+                                "id": "YafG4m"
+                            }
+                        ],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profile-suppression-bulk-delete-jobs/01M1PABK283F7CKTXRWJDEKFM9/relationships/lists/",
+                            "related": "https://a.klaviyo.com/api/profile-suppression-bulk-delete-jobs/01M1PABK283F7CKTXRWJDEKFM9/lists/"
+                        }
+                    },
+                    "segments": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profile-suppression-bulk-delete-jobs/01M1PABK283F7CKTXRWJDEKFM9/relationships/segments/",
+                            "related": "https://a.klaviyo.com/api/profile-suppression-bulk-delete-jobs/01M1PABK283F7CKTXRWJDEKFM9/segments/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/profile-suppression-bulk-delete-jobs/01M1PABK283F7CKTXRWJDEKFM9/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-delete-jobs/01M1PABK283F7CKTXRWJDEKFM9"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.getUnsuppressJob",
+        "recorded": "2026-09-04"
+    }
+}

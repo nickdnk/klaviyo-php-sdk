@@ -1,0 +1,36 @@
+{
+    "operation": "delete_catalog_variant",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-bvar2",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "25b91afe-f546-4a89-9e06-44afe73eacf8",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A variant with id $custom:::$default:::sdk-smoke-090444b5-bvar2 does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogVariants.delete",
+        "recorded": "2026-09-04"
+    }
+}

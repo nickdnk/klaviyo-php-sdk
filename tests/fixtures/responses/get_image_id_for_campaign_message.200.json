@@ -1,0 +1,31 @@
+{
+    "operation": "get_image_id_for_campaign_message",
+    "request": {
+        "method": "GET",
+        "path": "/api/campaign-messages/01M1PA9AY2XPHE5WBCZ5FPW6HM/relationships/image",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "image",
+                "id": "366547581"
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/campaign-messages/01M1PA9AY2XPHE5WBCZ5FPW6HM/relationships/image"
+            }
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaignMessages.imageId",
+        "recorded": "2026-09-04"
+    }
+}

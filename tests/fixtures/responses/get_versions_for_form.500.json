@@ -1,0 +1,38 @@
+{
+    "operation": "get_versions_for_form",
+    "request": {
+        "method": "GET",
+        "path": "/api/forms/UNtbZL/form-versions",
+        "query": {
+            "filter": "any(form_type,[\"popup\",\"embed\"])"
+        }
+    },
+    "response": {
+        "status": 500,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "1",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "b6c56489-ae2b-4b67-b3db-adb8821a7a17",
+                    "status": 500,
+                    "code": "error",
+                    "title": "A server error occurred.",
+                    "detail": "A server error occurred.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "forms.versions",
+        "recorded": "2026-09-04"
+    }
+}

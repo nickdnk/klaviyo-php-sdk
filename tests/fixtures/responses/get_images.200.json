@@ -1,0 +1,47 @@
+{
+    "operation": "get_images",
+    "request": {
+        "method": "GET",
+        "path": "/api/images",
+        "query": {
+            "fields": {
+                "image": "name,hidden"
+            },
+            "filter": "any(id,[366547884,366547886,366547888]),equals(hidden,true)"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "image",
+                    "id": "366547886",
+                    "attributes": {
+                        "name": "sdk-smoke-0904a5e6-img-remote",
+                        "hidden": true
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/images/366547886/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/images?fields%5Bimage%5D=name%2Chidden&filter=any%28id%2C%5B366547884%2C366547886%2C366547888%5D%29%2Cequals%28hidden%2Ctrue%29",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "templates",
+        "step": "images.list",
+        "recorded": "2026-09-04"
+    }
+}

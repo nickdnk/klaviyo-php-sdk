@@ -1,0 +1,36 @@
+{
+    "operation": "get_bulk_import_profiles_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/profile-bulk-import-jobs/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "d2efe0c1-75be-478e-bbb4-5ece861dacfe",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "Invalid job id",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.getBulkImportJob",
+        "recorded": "2026-09-04"
+    }
+}

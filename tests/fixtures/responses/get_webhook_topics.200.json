@@ -1,0 +1,539 @@
+{
+    "operation": "get_webhook_topics",
+    "request": {
+        "method": "GET",
+        "path": "/api/webhook-topics",
+        "query": {
+            "fields": {
+                "webhook-topic": "id"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "webhook-topic",
+                    "id": "event:api.active_on_site",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:api.active_on_site/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:api.sdk_smoke",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:api.sdk_smoke/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:api.sdk_smoke_090430d9",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:api.sdk_smoke_090430d9/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:api.sdk_smoke_09043cf6",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:api.sdk_smoke_09043cf6/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:api.sdk_smoke_09048123",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:api.sdk_smoke_09048123/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:api.sdk_smoke_0904a070",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:api.sdk_smoke_0904a070/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:api.viewed_product",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:api.viewed_product/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.bounced_email",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.bounced_email/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.bounced_push",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.bounced_push/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.clicked_email",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.clicked_email/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.clicked_email_to_unsubscribe",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.clicked_email_to_unsubscribe/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.clicked_sms",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.clicked_sms/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.clicked_text_message",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.clicked_text_message/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.dropped_email",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.dropped_email/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.failed_to_deliver_automated_response_sms",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.failed_to_deliver_automated_response_sms/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.failed_to_deliver_automated_response_text_message",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.failed_to_deliver_automated_response_text_message/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.failed_to_deliver_sms",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.failed_to_deliver_sms/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.failed_to_deliver_text_message",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.failed_to_deliver_text_message/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.manually_suppressed_from_email_marketing",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.manually_suppressed_from_email_marketing/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.manually_unsuppressed_from_email_marketing",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.manually_unsuppressed_from_email_marketing/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.marked_email_as_spam",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.marked_email_as_spam/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.merged_profile",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.merged_profile/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.opened_email",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.opened_email/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.opened_push",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.opened_push/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.opened_text",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.opened_text/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.ready_to_review",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.ready_to_review/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.received_automated_response_sms",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.received_automated_response_sms/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.received_automated_response_text_message",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.received_automated_response_text_message/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.received_email",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.received_email/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.received_push",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.received_push/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.received_sms",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.received_sms/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.received_text_message",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.received_text_message/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.relayed_text_message",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.relayed_text_message/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.sent_sms",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.sent_sms/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.sent_text_message",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.sent_text_message/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.skipped_send",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.skipped_send/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.social_comment",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.social_comment/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.social_dm",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.social_dm/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.social_ugc",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.social_ugc/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.submitted_rating",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.submitted_rating/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.submitted_review",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.submitted_review/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.subscribed_to_back_in_stock",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.subscribed_to_back_in_stock/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.subscribed_to_email_marketing",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.subscribed_to_email_marketing/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.subscribed_to_list",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.subscribed_to_list/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.subscribed_to_sms_marketing",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.subscribed_to_sms_marketing/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.subscribed_to_text_messaging_marketing",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.subscribed_to_text_messaging_marketing/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.unsubscribed_from_email_marketing",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.unsubscribed_from_email_marketing/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.unsubscribed_from_list",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.unsubscribed_from_list/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.unsubscribed_from_sms_marketing",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.unsubscribed_from_sms_marketing/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.unsubscribed_from_text_messaging_marketing",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.unsubscribed_from_text_messaging_marketing/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.unsubscribed_from_text_messaging_transactional",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.unsubscribed_from_text_messaging_transactional/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.updated_email_preferences",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.updated_email_preferences/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:acme.membership_approved",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:acme.membership_approved/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:acme.membership_changed",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:acme.membership_changed/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:acme.membership_rejected",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:acme.membership_rejected/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:acme.membership_scanned",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:acme.membership_scanned/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:acme.perk_redeemed",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:acme.perk_redeemed/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:acme.table_booked",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:acme.table_booked/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:acme.ticket_purchased",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:acme.ticket_purchased/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:stripe.failed_payment",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:stripe.failed_payment/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:stripe.issued_invoice",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:stripe.issued_invoice/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:stripe.refunded_payment",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:stripe.refunded_payment/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:stripe.successfully_paid",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:stripe.successfully_paid/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/webhook-topics?fields%5Bwebhook-topic%5D=id",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "webhookTopics.list",
+        "recorded": "2026-09-04"
+    }
+}

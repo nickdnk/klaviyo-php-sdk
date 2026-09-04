@@ -1,0 +1,502 @@
+{
+    "operation": "create_form",
+    "request": {
+        "method": "POST",
+        "path": "/api/forms",
+        "query": {}
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "1",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "form",
+                "id": "RKZdg3",
+                "attributes": {
+                    "status": "draft",
+                    "ab_test": false,
+                    "name": "sdk-smoke-0904f206-form-flyout",
+                    "definition": {
+                        "versions": [
+                            {
+                                "id": 28242216,
+                                "steps": [
+                                    {
+                                        "id": "01M1PAC1JSTHRC6ZNJ9T8MC0KZ",
+                                        "columns": [
+                                            {
+                                                "id": "01M1PAC1JZYEX436TD7DKKH8PZ",
+                                                "rows": [
+                                                    {
+                                                        "id": "01M1PAC1K4Q8HG0MJQY1ZX6TPA",
+                                                        "blocks": [
+                                                            {
+                                                                "id": "01M1PAC1K7ZK9R4C1RSSM31XMX",
+                                                                "type": "html_text",
+                                                                "styles": {
+                                                                    "padding": {
+                                                                        "left": 6,
+                                                                        "right": 6,
+                                                                        "top": 10,
+                                                                        "bottom": 10
+                                                                    },
+                                                                    "background_color": null
+                                                                },
+                                                                "properties": {
+                                                                    "display_device": [
+                                                                        "desktop",
+                                                                        "mobile"
+                                                                    ],
+                                                                    "classname": null,
+                                                                    "content": "<p>Join our list</p>"
+                                                                }
+                                                            },
+                                                            {
+                                                                "id": "01M1PAC1KAWD9WJVZFFF97KRF1",
+                                                                "type": "email",
+                                                                "styles": {
+                                                                    "padding": {
+                                                                        "left": 6,
+                                                                        "right": 6,
+                                                                        "top": 10,
+                                                                        "bottom": 10
+                                                                    },
+                                                                    "background_color": null
+                                                                },
+                                                                "properties": {
+                                                                    "display_device": [
+                                                                        "desktop",
+                                                                        "mobile"
+                                                                    ],
+                                                                    "classname": null,
+                                                                    "label": "Email",
+                                                                    "show_label": true,
+                                                                    "placeholder": "you@example.com",
+                                                                    "required": true,
+                                                                    "error_messages": null,
+                                                                    "property_name": "$email"
+                                                                }
+                                                            },
+                                                            {
+                                                                "id": "01M1PAC1KEF1PN3PVWMJEDT88V",
+                                                                "type": "button",
+                                                                "styles": {
+                                                                    "padding": {
+                                                                        "left": 6,
+                                                                        "right": 6,
+                                                                        "top": 10,
+                                                                        "bottom": 10
+                                                                    },
+                                                                    "background_color": "#000000",
+                                                                    "width": "fill",
+                                                                    "height": 50,
+                                                                    "alignment": "center",
+                                                                    "hover_background_color": null,
+                                                                    "hover_text_color": null,
+                                                                    "border_styles": {
+                                                                        "radius": 2,
+                                                                        "color": null,
+                                                                        "style": null,
+                                                                        "thickness": null
+                                                                    },
+                                                                    "text_styles": {
+                                                                        "font_family": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
+                                                                        "font_size": 16,
+                                                                        "font_weight": 700,
+                                                                        "text_color": "#FFFFFF",
+                                                                        "character_spacing": 0,
+                                                                        "font_style": null,
+                                                                        "text_decoration": null
+                                                                    },
+                                                                    "color": null,
+                                                                    "drop_shadow": {
+                                                                        "enabled": false,
+                                                                        "color": "#000000",
+                                                                        "blur": 15,
+                                                                        "x_offset": 0,
+                                                                        "y_offset": 0
+                                                                    }
+                                                                },
+                                                                "properties": {
+                                                                    "display_device": [
+                                                                        "desktop",
+                                                                        "mobile"
+                                                                    ],
+                                                                    "classname": null,
+                                                                    "label": "Subscribe",
+                                                                    "additional_fields": []
+                                                                },
+                                                                "action": {
+                                                                    "id": "01M1PAC1KMQT2CXCWGVBG5SAMR",
+                                                                    "submit": true,
+                                                                    "type": "next_step",
+                                                                    "properties": {
+                                                                        "list_id": "VrueCp"
+                                                                    }
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "styles": null
+                                            }
+                                        ],
+                                        "name": "Signup",
+                                        "steps": null
+                                    },
+                                    {
+                                        "id": "01M1PAC1HJK6G1CD8HE0GVC1YD",
+                                        "columns": [
+                                            {
+                                                "id": "01M1PAC1HRVXX9DEHE64PZHNQX",
+                                                "rows": [
+                                                    {
+                                                        "id": "01M1PAC1HY7KHVGQ5QES7SHQ97",
+                                                        "blocks": [
+                                                            {
+                                                                "id": "01M1PAC1J1X1AEAPNE7WTWS714",
+                                                                "type": "html_text",
+                                                                "styles": {
+                                                                    "padding": {
+                                                                        "left": 6,
+                                                                        "right": 6,
+                                                                        "top": 10,
+                                                                        "bottom": 10
+                                                                    },
+                                                                    "background_color": null
+                                                                },
+                                                                "properties": {
+                                                                    "display_device": [
+                                                                        "desktop",
+                                                                        "mobile"
+                                                                    ],
+                                                                    "classname": null,
+                                                                    "content": "<p>Thanks for signing up!</p>"
+                                                                }
+                                                            },
+                                                            {
+                                                                "id": "01M1PAC1J46WG2CZWKTKXPKG5R",
+                                                                "type": "button",
+                                                                "styles": {
+                                                                    "padding": {
+                                                                        "left": 6,
+                                                                        "right": 6,
+                                                                        "top": 10,
+                                                                        "bottom": 10
+                                                                    },
+                                                                    "background_color": null,
+                                                                    "width": "fill",
+                                                                    "height": 50,
+                                                                    "alignment": "center",
+                                                                    "hover_background_color": null,
+                                                                    "hover_text_color": null,
+                                                                    "border_styles": {
+                                                                        "radius": 2,
+                                                                        "color": null,
+                                                                        "style": null,
+                                                                        "thickness": null
+                                                                    },
+                                                                    "text_styles": {
+                                                                        "font_family": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
+                                                                        "font_size": 16,
+                                                                        "font_weight": 700,
+                                                                        "text_color": "#FFFFFF",
+                                                                        "character_spacing": 0,
+                                                                        "font_style": null,
+                                                                        "text_decoration": null
+                                                                    },
+                                                                    "color": null,
+                                                                    "drop_shadow": {
+                                                                        "enabled": false,
+                                                                        "color": "#000000",
+                                                                        "blur": 15,
+                                                                        "x_offset": 0,
+                                                                        "y_offset": 0
+                                                                    }
+                                                                },
+                                                                "properties": {
+                                                                    "display_device": [
+                                                                        "desktop",
+                                                                        "mobile"
+                                                                    ],
+                                                                    "classname": null,
+                                                                    "label": "Close",
+                                                                    "additional_fields": []
+                                                                },
+                                                                "action": {
+                                                                    "id": "01M1PAC1J7422HKWWQRTF0W3J6",
+                                                                    "submit": false,
+                                                                    "type": "close",
+                                                                    "properties": null
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "styles": null
+                                            }
+                                        ],
+                                        "name": "Success",
+                                        "steps": null
+                                    }
+                                ],
+                                "triggers": [
+                                    {
+                                        "id": "01M1PAC1MTC4618DJDGBJSEB9X",
+                                        "properties": [],
+                                        "type": "unidentified_profiles"
+                                    },
+                                    {
+                                        "id": "01M1PAC1N377B4ZN55VAG2YF2P",
+                                        "type": "after_close_or_submit_timeout",
+                                        "properties": {
+                                            "timeout_days": 5
+                                        }
+                                    }
+                                ],
+                                "teasers": [],
+                                "dynamic_button": null,
+                                "name": "V1",
+                                "styles": {
+                                    "wrap_content": false,
+                                    "border_styles": {
+                                        "radius": 2,
+                                        "color": "#000000",
+                                        "style": null,
+                                        "thickness": 0
+                                    },
+                                    "close_button": {
+                                        "background_color": "rgba(180, 187, 195, 0.65)",
+                                        "outline_color": "#FFFFFF",
+                                        "color": "#FFFFFF",
+                                        "stroke": 2,
+                                        "size": 20,
+                                        "margin": {
+                                            "left": 8,
+                                            "right": 8,
+                                            "top": 8,
+                                            "bottom": 8
+                                        }
+                                    },
+                                    "margin": {
+                                        "left": 0,
+                                        "right": 0,
+                                        "top": 0,
+                                        "bottom": 0
+                                    },
+                                    "padding": {
+                                        "left": 20,
+                                        "right": 20,
+                                        "top": 20,
+                                        "bottom": 20
+                                    },
+                                    "minimum_height": 200,
+                                    "width": "medium",
+                                    "custom_width": null,
+                                    "background_image": null,
+                                    "background_color": "#ffffff",
+                                    "input_styles": {
+                                        "text_styles": {
+                                            "font_family": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
+                                            "font_size": 16,
+                                            "font_weight": 400,
+                                            "text_color": "#000000",
+                                            "character_spacing": 0,
+                                            "font_style": null,
+                                            "text_decoration": null
+                                        },
+                                        "label_color": "#303B43",
+                                        "text_color": "#000000",
+                                        "placeholder_color": "#949596",
+                                        "background_color": "#FFFFFF",
+                                        "border_color": "#949596",
+                                        "border_focus_color": "#000000",
+                                        "focus_outline_color": "#1C65AD",
+                                        "corner_radius": 2,
+                                        "field_height": 38
+                                    },
+                                    "drop_shadow": {
+                                        "enabled": false,
+                                        "blur": 30,
+                                        "color": "rgba(0,0,0,0.15)"
+                                    },
+                                    "overlay_color": "rgba(0,0,0,0.4)",
+                                    "rich_text_styles": {
+                                        "body": {
+                                            "font_family": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
+                                            "font_size": 16,
+                                            "font_weight": 400,
+                                            "text_color": "#000000",
+                                            "font_style": null,
+                                            "text_decoration": null,
+                                            "line_spacing": 1,
+                                            "character_spacing": 0,
+                                            "alignment": "left",
+                                            "margin": {
+                                                "left": 0,
+                                                "right": 0,
+                                                "top": 0,
+                                                "bottom": 0
+                                            }
+                                        },
+                                        "link": {
+                                            "color": "#0066cc",
+                                            "decoration": "underline"
+                                        },
+                                        "h1": {
+                                            "font_family": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
+                                            "font_size": 48,
+                                            "font_weight": 700,
+                                            "text_color": "#000000",
+                                            "font_style": null,
+                                            "text_decoration": null,
+                                            "line_spacing": 1,
+                                            "character_spacing": 0,
+                                            "alignment": "left",
+                                            "margin": {
+                                                "left": 0,
+                                                "right": 0,
+                                                "top": 0,
+                                                "bottom": 0
+                                            }
+                                        },
+                                        "h2": {
+                                            "font_family": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
+                                            "font_size": 36,
+                                            "font_weight": 700,
+                                            "text_color": "#000000",
+                                            "font_style": null,
+                                            "text_decoration": null,
+                                            "line_spacing": 1,
+                                            "character_spacing": 0,
+                                            "alignment": "left",
+                                            "margin": {
+                                                "left": 0,
+                                                "right": 0,
+                                                "top": 0,
+                                                "bottom": 0
+                                            }
+                                        },
+                                        "h3": {
+                                            "font_family": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
+                                            "font_size": 28,
+                                            "font_weight": 700,
+                                            "text_color": "#000000",
+                                            "font_style": null,
+                                            "text_decoration": null,
+                                            "line_spacing": 1,
+                                            "character_spacing": 0,
+                                            "alignment": "left",
+                                            "margin": {
+                                                "left": 0,
+                                                "right": 0,
+                                                "top": 0,
+                                                "bottom": 0
+                                            }
+                                        },
+                                        "h4": {
+                                            "font_family": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
+                                            "font_size": 20,
+                                            "font_weight": 700,
+                                            "text_color": "#000000",
+                                            "font_style": null,
+                                            "text_decoration": null,
+                                            "line_spacing": 1,
+                                            "character_spacing": 0,
+                                            "alignment": "left",
+                                            "margin": {
+                                                "left": 0,
+                                                "right": 0,
+                                                "top": 0,
+                                                "bottom": 0
+                                            }
+                                        },
+                                        "h5": {
+                                            "font_family": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
+                                            "font_size": 13,
+                                            "font_weight": 700,
+                                            "text_color": "#000000",
+                                            "font_style": null,
+                                            "text_decoration": null,
+                                            "line_spacing": 1,
+                                            "character_spacing": 0,
+                                            "alignment": "left",
+                                            "margin": {
+                                                "left": 0,
+                                                "right": 0,
+                                                "top": 0,
+                                                "bottom": 0
+                                            }
+                                        },
+                                        "h6": {
+                                            "font_family": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
+                                            "font_size": 11,
+                                            "font_weight": 700,
+                                            "text_color": "#000000",
+                                            "font_style": null,
+                                            "text_decoration": null,
+                                            "line_spacing": 1,
+                                            "character_spacing": 0,
+                                            "alignment": "left",
+                                            "margin": {
+                                                "left": 0,
+                                                "right": 0,
+                                                "top": 0,
+                                                "bottom": 0
+                                            }
+                                        }
+                                    },
+                                    "mobile_overlay": {
+                                        "color": "rgba(20, 20, 20, 0.5)",
+                                        "enabled": false
+                                    },
+                                    "banner_styles": null,
+                                    "custom_css": {
+                                        "enabled": false,
+                                        "css": ""
+                                    }
+                                },
+                                "properties": {
+                                    "side_image_settings": null,
+                                    "click_outside_to_close": [
+                                        "mobile",
+                                        "desktop"
+                                    ],
+                                    "rule_based_trigger_evaluation": "all",
+                                    "record_utm_params_on_submit": true,
+                                    "show_close_button": true,
+                                    "accessible_name": "Smoke signup form"
+                                },
+                                "type": "flyout",
+                                "location": "bottom_right",
+                                "status": "draft",
+                                "ab_test": false,
+                                "specialties": [],
+                                "channel": "WEB",
+                                "message_priority": 1
+                            }
+                        ]
+                    },
+                    "created_at": "2026-09-04T13:40:14.995443+00:00",
+                    "updated_at": "2026-09-04T13:40:14.995463+00:00"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/forms/RKZdg3/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/forms"
+            }
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "forms.create",
+        "recorded": "2026-09-04"
+    }
+}

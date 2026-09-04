@@ -1,0 +1,60 @@
+{
+    "operation": "get_bulk_create_coupon_codes_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/coupon-code-bulk-create-jobs/01M1PAB7CT6X3ZS6R36792JN7Y",
+        "query": {
+            "fields": {
+                "coupon-code-bulk-create-job": "status,created_at,completed_at,total_count,completed_count,failed_count,errors,expires_at",
+                "coupon-code": "unique_code,status,expires_at"
+            },
+            "include": "coupon-codes"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "coupon-code-bulk-create-job",
+                "id": "01M1PAB7CT6X3ZS6R36792JN7Y",
+                "attributes": {
+                    "status": "processing",
+                    "created_at": "2026-09-04T13:39:48.271058+00:00",
+                    "completed_at": null,
+                    "total_count": 5,
+                    "completed_count": 0,
+                    "failed_count": 0,
+                    "errors": [],
+                    "expires_at": "2026-09-11T13:39:48.271058+00:00"
+                },
+                "relationships": {
+                    "coupon-codes": {
+                        "data": [],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs/01M1PAB7CT6X3ZS6R36792JN7Y/relationships/coupon-codes/",
+                            "related": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs/01M1PAB7CT6X3ZS6R36792JN7Y/coupon-codes/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs/01M1PAB7CT6X3ZS6R36792JN7Y/"
+                }
+            },
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs/01M1PAB7CT6X3ZS6R36792JN7Y?fields%5Bcoupon-code-bulk-create-job%5D=status%2Ccreated_at%2Ccompleted_at%2Ctotal_count%2Ccompleted_count%2Cfailed_count%2Cerrors%2Cexpires_at&fields%5Bcoupon-code%5D=unique_code%2Cstatus%2Cexpires_at&include=coupon-codes"
+            }
+        }
+    },
+    "source": {
+        "suite": "coupons",
+        "step": "couponCodes.getBulkCreateJob",
+        "recorded": "2026-09-04"
+    }
+}

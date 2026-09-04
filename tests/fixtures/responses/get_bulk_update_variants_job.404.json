@@ -1,0 +1,36 @@
+{
+    "operation": "get_bulk_update_variants_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-variant-bulk-update-jobs/sdk-smoke-nope-090444b5",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "d06f082f-9132-4c04-b7a1-51e1ab965c25",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A catalog-variant bulk update job with id sdk-smoke-nope-090444b5 does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogVariants.getBulkUpdateJob",
+        "recorded": "2026-09-04"
+    }
+}

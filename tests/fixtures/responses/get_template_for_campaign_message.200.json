@@ -1,0 +1,44 @@
+{
+    "operation": "get_template_for_campaign_message",
+    "request": {
+        "method": "GET",
+        "path": "/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/template",
+        "query": {
+            "fields": {
+                "template": "name,editor_type,html,created"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "template",
+                "id": "RXgJ7k",
+                "attributes": {
+                    "name": "Clone of RhSFjh",
+                    "editor_type": "CODE",
+                    "html": "<html><head></head><body><p>hi</p></body></html>",
+                    "created": "2026-09-04T13:40:02+00:00"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/templates/RXgJ7k/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/template?fields%5Btemplate%5D=name%2Ceditor_type%2Chtml%2Ccreated"
+            }
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaignMessages.template",
+        "recorded": "2026-09-04"
+    }
+}

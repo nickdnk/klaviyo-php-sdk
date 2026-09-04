@@ -1,0 +1,61 @@
+{
+    "operation": "update_catalog_item",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item1",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "catalog-item",
+                "id": "$custom:::$default:::sdk-smoke-090444b5-item1",
+                "attributes": {
+                    "external_id": "sdk-smoke-090444b5-item1",
+                    "title": "SDK Smoke Item One RENAMED 090444b5",
+                    "description": "Updated description.",
+                    "price": 29.5,
+                    "url": "https://example.com/products/sdk-smoke-090444b5-item1?v=2",
+                    "image_full_url": "https://example.com/img/sdk-smoke-090444b5-item1-full.jpg",
+                    "image_thumbnail_url": "https://example.com/img/sdk-smoke-090444b5-item1-thumb.jpg",
+                    "images": [
+                        "https://example.com/img/sdk-smoke-090444b5-item1-3.jpg"
+                    ],
+                    "custom_metadata": {
+                        "colour": "red",
+                        "smokeRun": "090444b5"
+                    },
+                    "published": true,
+                    "created": "2026-09-04T13:38:45.437000+00:00",
+                    "updated": "2026-09-04T13:38:59.419000+00:00"
+                },
+                "relationships": {
+                    "variants": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item1/relationships/variants/",
+                            "related": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item1/variants/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item1/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item1"
+            }
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogItems.update",
+        "recorded": "2026-09-04"
+    }
+}

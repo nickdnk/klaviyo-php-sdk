@@ -1,0 +1,36 @@
+{
+    "operation": "get_catalog_variant",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-variants/$custom:::$default:::sdk-smoke-nope-090444b5",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "348",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "ced5d759-048f-4dc1-b0c2-f02aa217be6c",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A variant with id $custom:::$default:::sdk-smoke-nope-090444b5 does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogVariants.get",
+        "recorded": "2026-09-04"
+    }
+}

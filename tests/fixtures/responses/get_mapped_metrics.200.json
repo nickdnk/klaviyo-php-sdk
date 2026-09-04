@@ -1,0 +1,138 @@
+{
+    "operation": "get_mapped_metrics",
+    "request": {
+        "method": "GET",
+        "path": "/api/mapped-metrics",
+        "query": {
+            "fields": {
+                "mapped-metric": "id,updated",
+                "metric": "name",
+                "custom-metric": "name"
+            },
+            "include": "metric,custom-metric"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "mapped-metric",
+                    "id": "revenue",
+                    "attributes": {
+                        "updated": "2026-09-04T13:04:58.039222+00:00"
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/mapped-metrics/revenue/"
+                    }
+                },
+                {
+                    "type": "mapped-metric",
+                    "id": "viewed_product",
+                    "attributes": {
+                        "updated": "2026-09-04T13:03:57.115276+00:00"
+                    },
+                    "relationships": {
+                        "metric": {
+                            "data": {
+                                "type": "metric",
+                                "id": "WzaXsg"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/mapped-metrics/viewed_product/relationships/metric/",
+                                "related": "https://a.klaviyo.com/api/mapped-metrics/viewed_product/metric/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/mapped-metrics/viewed_product/"
+                    }
+                },
+                {
+                    "type": "mapped-metric",
+                    "id": "added_to_cart",
+                    "attributes": {
+                        "updated": "2026-09-04T13:39:17.591566+00:00"
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/mapped-metrics/added_to_cart/"
+                    }
+                },
+                {
+                    "type": "mapped-metric",
+                    "id": "cancelled_sales",
+                    "attributes": {
+                        "updated": "2026-09-04T13:39:17.591817+00:00"
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/mapped-metrics/cancelled_sales/"
+                    }
+                },
+                {
+                    "type": "mapped-metric",
+                    "id": "ordered_product",
+                    "attributes": {
+                        "updated": "2026-09-04T13:39:17.599267+00:00"
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/mapped-metrics/ordered_product/"
+                    }
+                },
+                {
+                    "type": "mapped-metric",
+                    "id": "refunded_sales",
+                    "attributes": {
+                        "updated": "2026-09-04T13:39:17.599488+00:00"
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/mapped-metrics/refunded_sales/"
+                    }
+                },
+                {
+                    "type": "mapped-metric",
+                    "id": "started_checkout",
+                    "attributes": {
+                        "updated": "2026-09-04T13:39:17.606957+00:00"
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/mapped-metrics/started_checkout/"
+                    }
+                }
+            ],
+            "included": [
+                {
+                    "type": "metric",
+                    "id": "WzaXsg",
+                    "attributes": {
+                        "name": "Viewed Product"
+                    },
+                    "relationships": {
+                        "flow-triggers": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metrics/WzaXsg/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/metrics/WzaXsg/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metrics/WzaXsg/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/mapped-metrics?fields%5Bmapped-metric%5D=id%2Cupdated&fields%5Bmetric%5D=name&fields%5Bcustom-metric%5D=name&include=metric%2Ccustom-metric"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "mappedMetrics.list",
+        "recorded": "2026-09-04"
+    }
+}

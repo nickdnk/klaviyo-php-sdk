@@ -1,0 +1,22 @@
+{
+    "operation": "delete_webhook",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/webhooks/01M1PAC5N9PMXJ7672AC8B75VN",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "webhooks.delete",
+        "recorded": "2026-09-04"
+    }
+}

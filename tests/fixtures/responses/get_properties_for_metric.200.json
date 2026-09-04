@@ -1,0 +1,136 @@
+{
+    "operation": "get_properties_for_metric",
+    "request": {
+        "method": "GET",
+        "path": "/api/metrics/SkDfHe/metric-properties",
+        "query": {
+            "fields": {
+                "metric-property": "label,property,inferred_type"
+            },
+            "additional-fields": {
+                "metric-property": "sample_values"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "metric-property",
+                    "id": "U2tEZkhlLiR2YWx1ZQ",
+                    "attributes": {
+                        "label": "SDK Smoke Value",
+                        "property": "$value",
+                        "inferred_type": "numeric",
+                        "sample_values": null
+                    },
+                    "relationships": {
+                        "metric": {
+                            "data": {
+                                "type": "metric",
+                                "id": "SkDfHe"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLiR2YWx1ZQ/relationships/metric/",
+                                "related": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLiR2YWx1ZQ/metric/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLiR2YWx1ZQ/"
+                    }
+                },
+                {
+                    "type": "metric-property",
+                    "id": "U2tEZkhlLiR2YWx1ZV9jdXJyZW5jeQ",
+                    "attributes": {
+                        "label": "$value_currency",
+                        "property": "$value_currency",
+                        "inferred_type": "string",
+                        "sample_values": null
+                    },
+                    "relationships": {
+                        "metric": {
+                            "data": {
+                                "type": "metric",
+                                "id": "SkDfHe"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLiR2YWx1ZV9jdXJyZW5jeQ/relationships/metric/",
+                                "related": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLiR2YWx1ZV9jdXJyZW5jeQ/metric/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLiR2YWx1ZV9jdXJyZW5jeQ/"
+                    }
+                },
+                {
+                    "type": "metric-property",
+                    "id": "U2tEZkhlLmJ1bGs",
+                    "attributes": {
+                        "label": "bulk",
+                        "property": "bulk",
+                        "inferred_type": "numeric",
+                        "sample_values": null
+                    },
+                    "relationships": {
+                        "metric": {
+                            "data": {
+                                "type": "metric",
+                                "id": "SkDfHe"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLmJ1bGs/relationships/metric/",
+                                "related": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLmJ1bGs/metric/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLmJ1bGs/"
+                    }
+                },
+                {
+                    "type": "metric-property",
+                    "id": "U2tEZkhlLnNrdQ",
+                    "attributes": {
+                        "label": "sku",
+                        "property": "sku",
+                        "inferred_type": "string",
+                        "sample_values": null
+                    },
+                    "relationships": {
+                        "metric": {
+                            "data": {
+                                "type": "metric",
+                                "id": "SkDfHe"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLnNrdQ/relationships/metric/",
+                                "related": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLnNrdQ/metric/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLnNrdQ/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/metrics/SkDfHe/metric-properties?fields%5Bmetric-property%5D=label%2Cproperty%2Cinferred_type&additional-fields%5Bmetric-property%5D=sample_values"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "metrics.properties",
+        "recorded": "2026-09-04"
+    }
+}

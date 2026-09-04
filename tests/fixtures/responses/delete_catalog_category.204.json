@@ -1,0 +1,22 @@
+{
+    "operation": "delete_catalog_category",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/catalog-categories/$custom:::$default:::sdk-smoke-090444b5-cat2",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogCategories.delete",
+        "recorded": "2026-09-04"
+    }
+}

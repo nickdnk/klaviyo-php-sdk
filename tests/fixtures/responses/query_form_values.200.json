@@ -1,0 +1,38 @@
+{
+    "operation": "query_form_values",
+    "request": {
+        "method": "POST",
+        "path": "/api/form-values-reports",
+        "query": {
+            "fields": {
+                "form-values-report": "results"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 2;w=60, 225;w=86400",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "form-values-report",
+                "id": "c06d9585-2f9c-475a-a620-572f6780d2e6",
+                "attributes": {
+                    "results": []
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/form-values-reports?fields%5Bform-values-report%5D=results"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "reports.formValues",
+        "recorded": "2026-09-04"
+    }
+}

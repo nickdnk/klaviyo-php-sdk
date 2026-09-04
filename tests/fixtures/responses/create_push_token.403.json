@@ -1,0 +1,38 @@
+{
+    "operation": "create_push_token",
+    "request": {
+        "method": "POST",
+        "path": "/api/push-tokens",
+        "query": {}
+    },
+    "response": {
+        "status": 403,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "b4e63ebc-1cfd-48e9-9625-4b5c69c750ff",
+                    "status": 403,
+                    "code": "forbidden",
+                    "title": "Forbidden.",
+                    "detail": "Company is not able to process push tokens",
+                    "source": {
+                        "pointer": "/data"
+                    },
+                    "links": [],
+                    "meta": []
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "push_tokens",
+        "step": "pushTokens.create",
+        "recorded": "2026-09-04"
+    }
+}

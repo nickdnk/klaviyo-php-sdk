@@ -1,0 +1,103 @@
+{
+    "operation": "update_campaign",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/campaigns/01M1PA99J4GSD6B3XGYF78793W",
+        "query": {
+            "fields": {
+                "campaign": "name,send_strategy,send_options,tracking_options,audiences,status"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "campaign",
+                "id": "01M1PA99J4GSD6B3XGYF78793W",
+                "attributes": {
+                    "name": "sdk-smoke-09048514-c-renamed",
+                    "send_strategy": {
+                        "method": "static",
+                        "datetime": "2026-10-19T11:30:00+00:00",
+                        "options": {
+                            "is_local": false
+                        }
+                    },
+                    "send_options": {
+                        "use_smart_sending": false,
+                        "ignore_unsubscribes": false
+                    },
+                    "tracking_options": {
+                        "add_tracking_params": false,
+                        "custom_tracking_params": [
+                            {
+                                "type": "static",
+                                "value": "sdk-smoke",
+                                "name": "utm_source"
+                            },
+                            {
+                                "type": "static",
+                                "value": "email",
+                                "name": "utm_medium"
+                            },
+                            {
+                                "type": "dynamic",
+                                "value": "campaign_name",
+                                "name": "utm_campaign"
+                            }
+                        ],
+                        "is_tracking_clicks": false,
+                        "is_tracking_opens": true
+                    },
+                    "audiences": {
+                        "included": [
+                            "VAnKig"
+                        ],
+                        "excluded": [
+                            "UXmGFD"
+                        ]
+                    },
+                    "status": "Draft"
+                },
+                "relationships": {
+                    "campaign-messages": {
+                        "data": [
+                            {
+                                "type": "campaign-message",
+                                "id": "01M1PA99JBS13TE33GQ4YRESFN"
+                            }
+                        ],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/relationships/campaign-messages/",
+                            "related": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/campaign-messages/"
+                        }
+                    },
+                    "tags": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/relationships/tags/",
+                            "related": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/tags/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W?fields%5Bcampaign%5D=name%2Csend_strategy%2Csend_options%2Ctracking_options%2Caudiences%2Cstatus"
+            }
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaigns.update",
+        "recorded": "2026-09-04"
+    }
+}

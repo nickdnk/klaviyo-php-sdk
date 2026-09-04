@@ -1,0 +1,38 @@
+{
+    "operation": "upload_image_from_url",
+    "request": {
+        "method": "POST",
+        "path": "/api/images",
+        "query": {}
+    },
+    "response": {
+        "status": 400,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 100;w=60, 100;w=86400",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "cce6b520-bfb6-43ae-a590-5870c31bb225",
+                    "status": 400,
+                    "code": "invalid",
+                    "title": "Invalid input.",
+                    "detail": "Unable to fetch the URL you entered.",
+                    "source": {
+                        "pointer": "/data/attributes/import_from_url"
+                    },
+                    "links": [],
+                    "meta": []
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "images.uploadFromUrl",
+        "recorded": "2026-09-04"
+    }
+}

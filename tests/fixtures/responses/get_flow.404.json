@@ -1,0 +1,36 @@
+{
+    "operation": "get_flow",
+    "request": {
+        "method": "GET",
+        "path": "/api/flows/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "5f60d9e1-36d1-4625-9336-d8bd044a67ca",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A flow with id NOPE01 does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flows.get",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,90 @@
+{
+    "operation": "get_form_version",
+    "request": {
+        "method": "GET",
+        "path": "/api/form-versions/28242214",
+        "query": {
+            "fields": {
+                "form-version": "ab_test,ab_test.variation_name,created_at,form_type,status,updated_at,variation_name",
+                "form": "name,status,ab_test,created_at,updated_at"
+            },
+            "include": "form"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "form-version",
+                "id": "28242214",
+                "attributes": {
+                    "ab_test": null,
+                    "created_at": "2026-09-04T13:40:14+00:00",
+                    "form_type": "popup",
+                    "status": "draft",
+                    "updated_at": "2026-09-04T13:40:14+00:00",
+                    "variation_name": "V1"
+                },
+                "relationships": {
+                    "form": {
+                        "data": {
+                            "type": "form",
+                            "id": "UNtbZL"
+                        },
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/form-versions/28242214/relationships/form/",
+                            "related": "https://a.klaviyo.com/api/form-versions/28242214/form/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/form-versions/28242214/"
+                }
+            },
+            "included": [
+                {
+                    "type": "form",
+                    "id": "UNtbZL",
+                    "attributes": {
+                        "name": "sdk-smoke-0904f206-form-popup",
+                        "status": "draft",
+                        "ab_test": false,
+                        "created_at": "2026-09-04T13:40:14+00:00",
+                        "updated_at": "2026-09-04T13:40:14+00:00"
+                    },
+                    "relationships": {
+                        "form-versions": {
+                            "data": [
+                                {
+                                    "type": "form-version",
+                                    "id": "28242214"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/forms/UNtbZL/relationships/form-versions/",
+                                "related": "https://a.klaviyo.com/api/forms/UNtbZL/form-versions/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/forms/UNtbZL/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/form-versions/28242214?fields%5Bform-version%5D=ab_test%2Cab_test.variation_name%2Ccreated_at%2Cform_type%2Cstatus%2Cupdated_at%2Cvariation_name&fields%5Bform%5D=name%2Cstatus%2Cab_test%2Ccreated_at%2Cupdated_at&include=form"
+            }
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "formVersions.get",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,88 @@
+{
+    "operation": "get_messages_for_campaign",
+    "request": {
+        "method": "GET",
+        "path": "/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/campaign-messages",
+        "query": {
+            "fields": {
+                "campaign-message": "definition,created_at,updated_at,send_times",
+                "template": "name,editor_type",
+                "image": "name,image_url"
+            },
+            "include": "template,image"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "campaign-message",
+                    "id": "01M1PA99JBS13TE33GQ4YRESFN",
+                    "attributes": {
+                        "definition": {
+                            "channel": "email",
+                            "label": "sdk-smoke-09048514-msg",
+                            "content": {
+                                "subject": "SDK smoke 09048514",
+                                "preview_text": "Preview text for 09048514",
+                                "from_email": "customer@example.com",
+                                "from_label": "SDK Smoke",
+                                "reply_to_email": "customer@example.com",
+                                "cc_email": "customer@example.com",
+                                "bcc_email": "customer@example.com"
+                            }
+                        },
+                        "created_at": "2026-09-04T13:38:44.942300+00:00",
+                        "updated_at": "2026-09-04T13:38:45.263985+00:00",
+                        "send_times": []
+                    },
+                    "relationships": {
+                        "campaign": {
+                            "data": {
+                                "type": "campaign",
+                                "id": "01M1PA99J4GSD6B3XGYF78793W"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/relationships/campaign/",
+                                "related": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/campaign/"
+                            }
+                        },
+                        "template": {
+                            "data": null,
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/relationships/template/",
+                                "related": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/template/"
+                            }
+                        },
+                        "image": {
+                            "data": null,
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/relationships/image/",
+                                "related": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/image/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/"
+                    }
+                }
+            ],
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/campaign-messages?fields%5Bcampaign-message%5D=definition%2Ccreated_at%2Cupdated_at%2Csend_times&fields%5Btemplate%5D=name%2Ceditor_type&fields%5Bimage%5D=name%2Cimage_url&include=template%2Cimage"
+            }
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaigns.messages",
+        "recorded": "2026-09-04"
+    }
+}

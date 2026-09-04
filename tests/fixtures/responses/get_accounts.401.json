@@ -1,0 +1,33 @@
+{
+    "operation": "get_accounts",
+    "request": {
+        "method": "GET",
+        "path": "/api/accounts",
+        "query": {}
+    },
+    "response": {
+        "status": 401,
+        "headers": {
+            "content-type": "application/vnd.api+json"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "493b5b07-ae32-4b40-a986-b067c6cfc898",
+                    "code": "authentication_failed",
+                    "title": "Incorrect authentication credentials.",
+                    "detail": "Incorrect authentication credentials.",
+                    "source": {
+                        "pointer": "/data/"
+                    },
+                    "status": 401
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "oauth.withOAuth",
+        "recorded": "2026-09-04"
+    }
+}

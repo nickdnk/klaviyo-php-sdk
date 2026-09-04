@@ -1,0 +1,40 @@
+{
+    "operation": "update_webhook",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/webhooks/NOPE01",
+        "query": {
+            "fields": {
+                "webhook": "created_at,description,enabled,endpoint_url,name,updated_at"
+            }
+        }
+    },
+    "response": {
+        "status": 403,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "9b6325bb-5896-47b3-a304-6a0786a65a9e",
+                    "status": 403,
+                    "code": "permission_denied",
+                    "title": "You do not have permission to perform this action.",
+                    "detail": "You must have Advanced KDP enabled to use this endpoint.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "webhooks.update",
+        "recorded": "2026-09-04"
+    }
+}

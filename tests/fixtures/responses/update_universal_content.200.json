@@ -1,0 +1,51 @@
+{
+    "operation": "update_universal_content",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/template-universal-content/b0efdc506d1741d8b47c7f45b8c649e6",
+        "query": {
+            "fields": {
+                "template-universal-content": "name,definition"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "template-universal-content",
+                "id": "b0efdc506d1741d8b47c7f45b8c649e6",
+                "attributes": {
+                    "name": "sdk-smoke-0904a5e6-uc-html-renamed",
+                    "definition": {
+                        "content_type": "block",
+                        "type": "html",
+                        "data": {
+                            "content": "<div>sdk-smoke html block updated</div>",
+                            "display_options": {
+                                "show_on": "desktop"
+                            }
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/template-universal-content/b0efdc506d1741d8b47c7f45b8c649e6/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/template-universal-content/b0efdc506d1741d8b47c7f45b8c649e6?fields%5Btemplate-universal-content%5D=name%2Cdefinition"
+            }
+        }
+    },
+    "source": {
+        "suite": "templates",
+        "step": "universalContent.update",
+        "recorded": "2026-09-04"
+    }
+}

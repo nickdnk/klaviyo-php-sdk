@@ -1,0 +1,170 @@
+{
+    "operation": "get_profile",
+    "request": {
+        "method": "GET",
+        "path": "/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA",
+        "query": {
+            "fields": {
+                "profile": "email,first_name,properties,location,created",
+                "list": "name",
+                "segment": "name"
+            },
+            "additional-fields": {
+                "profile": "subscriptions,predictive_analytics"
+            },
+            "include": "lists,segments"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "profile",
+                "id": "01M1PAAR5HBCRHA3NN9NG5WRTA",
+                "attributes": {
+                    "email": "sdk-smoke+09047c86-a@nickdnktech.com",
+                    "first_name": "Smoke",
+                    "properties": {
+                        "plan": "pro",
+                        "tags": [
+                            "x",
+                            "y"
+                        ],
+                        "score": 7
+                    },
+                    "location": {
+                        "address1": "Artillerivej 86",
+                        "address2": null,
+                        "city": "Copenhagen",
+                        "country": "Denmark",
+                        "latitude": 55.66,
+                        "longitude": 12.57,
+                        "region": "Capital Region",
+                        "zip": "2300",
+                        "timezone": "Europe/Copenhagen",
+                        "ip": null
+                    },
+                    "created": "2026-09-04T13:39:33+00:00",
+                    "subscriptions": {
+                        "email": {
+                            "marketing": {
+                                "can_receive_email_marketing": true,
+                                "consent": "NEVER_SUBSCRIBED",
+                                "consent_timestamp": null,
+                                "last_updated": null,
+                                "method": null,
+                                "method_detail": null,
+                                "custom_method_detail": null,
+                                "double_optin": null,
+                                "suppression": [],
+                                "list_suppressions": []
+                            },
+                            "open_tracking": {
+                                "consent": "NEVER_SUBSCRIBED",
+                                "consent_timestamp": null,
+                                "last_updated": null,
+                                "created_timestamp": null,
+                                "metadata": null,
+                                "can_receive": false,
+                                "valid_until": null
+                            },
+                            "click_tracking": {
+                                "consent": "NEVER_SUBSCRIBED",
+                                "consent_timestamp": null,
+                                "last_updated": null,
+                                "created_timestamp": null,
+                                "metadata": null,
+                                "can_receive": false,
+                                "valid_until": null
+                            }
+                        },
+                        "sms": {
+                            "marketing": {
+                                "can_receive_sms_marketing": false,
+                                "consent": "NEVER_SUBSCRIBED",
+                                "consent_timestamp": null,
+                                "method": null,
+                                "method_detail": null,
+                                "last_updated": null
+                            },
+                            "transactional": {
+                                "can_receive_sms_transactional": false,
+                                "consent": "NEVER_SUBSCRIBED",
+                                "consent_timestamp": null,
+                                "method": null,
+                                "method_detail": null,
+                                "last_updated": null
+                            }
+                        },
+                        "mobile_push": {
+                            "marketing": {
+                                "can_receive_push_marketing": false,
+                                "consent": "NEVER_SUBSCRIBED",
+                                "consent_timestamp": null
+                            }
+                        },
+                        "whatsapp": null
+                    },
+                    "predictive_analytics": {
+                        "historic_number_of_orders": null,
+                        "predicted_number_of_orders": null,
+                        "average_days_between_orders": null,
+                        "average_order_value": null,
+                        "historic_clv": null,
+                        "predicted_clv": null,
+                        "total_clv": null,
+                        "churn_probability": null,
+                        "expected_date_of_next_order": null,
+                        "ranked_channel_affinity": null
+                    }
+                },
+                "relationships": {
+                    "lists": {
+                        "data": [],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/lists/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/lists/"
+                        }
+                    },
+                    "segments": {
+                        "data": [],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/segments/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/segments/"
+                        }
+                    },
+                    "push-tokens": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/push-tokens/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/push-tokens/"
+                        }
+                    },
+                    "conversations": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/conversations/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/conversations/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/"
+                }
+            },
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA?fields%5Bprofile%5D=email%2Cfirst_name%2Cproperties%2Clocation%2Ccreated&fields%5Blist%5D=name&fields%5Bsegment%5D=name&additional-fields%5Bprofile%5D=subscriptions%2Cpredictive_analytics&include=lists%2Csegments"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.get",
+        "recorded": "2026-09-04"
+    }
+}

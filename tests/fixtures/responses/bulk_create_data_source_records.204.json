@@ -1,0 +1,22 @@
+{
+    "operation": "bulk_create_data_source_records",
+    "request": {
+        "method": "POST",
+        "path": "/api/data-source-record-bulk-create-jobs",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "3, 3;w=1, 15;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "dataSources.bulkCreateRecords",
+        "recorded": "2026-09-04"
+    }
+}

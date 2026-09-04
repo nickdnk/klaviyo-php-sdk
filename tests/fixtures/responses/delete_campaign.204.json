@@ -1,0 +1,22 @@
+{
+    "operation": "delete_campaign",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/campaigns/01M1PABGG6H1Q8VS6HT47FB10F",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaigns.delete",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "operation": "get_campaign_send_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/campaign-send-jobs/NOPE01",
+        "query": {
+            "fields": {
+                "campaign-send-job": "status"
+            }
+        }
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "ca431592-f5b3-477c-9572-4308115b9e06",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A campaign with id 'NOPE01' does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaigns.getSendJob",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,41 @@
+{
+    "operation": "get_form",
+    "request": {
+        "method": "GET",
+        "path": "/api/forms/UNtbZL",
+        "query": {
+            "fields": {
+                "form": "name"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "form",
+                "id": "UNtbZL",
+                "attributes": {
+                    "name": "sdk-smoke-0904f206-form-popup"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/forms/UNtbZL/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/forms/UNtbZL?fields%5Bform%5D=name"
+            }
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "accounts.executePool",
+        "recorded": "2026-09-04"
+    }
+}

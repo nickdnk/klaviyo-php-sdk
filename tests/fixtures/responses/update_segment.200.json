@@ -1,0 +1,62 @@
+{
+    "operation": "update_segment",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/segments/RvKscW",
+        "query": {
+            "fields": {
+                "segment": "name,is_starred"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60, 100;w=86400",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "segment",
+                "id": "RvKscW",
+                "attributes": {
+                    "name": "sdk-smoke-0904b052-segment-renamed",
+                    "is_starred": false
+                },
+                "relationships": {
+                    "profiles": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/segments/RvKscW/relationships/profiles/",
+                            "related": "https://a.klaviyo.com/api/segments/RvKscW/profiles/"
+                        }
+                    },
+                    "tags": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/segments/RvKscW/relationships/tags/",
+                            "related": "https://a.klaviyo.com/api/segments/RvKscW/tags/"
+                        }
+                    },
+                    "flow-triggers": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/segments/RvKscW/relationships/flow-triggers/",
+                            "related": "https://a.klaviyo.com/api/segments/RvKscW/flow-triggers/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/segments/RvKscW/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/segments/RvKscW?fields%5Bsegment%5D=name%2Cis_starred"
+            }
+        }
+    },
+    "source": {
+        "suite": "segments",
+        "step": "segments.update",
+        "recorded": "2026-09-04"
+    }
+}

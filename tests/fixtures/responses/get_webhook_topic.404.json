@@ -1,0 +1,36 @@
+{
+    "operation": "get_webhook_topic",
+    "request": {
+        "method": "GET",
+        "path": "/api/webhook-topics/event:klaviyo.nope",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "d3f2ed0c-7612-4964-8bb8-f4321db82e0b",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "Not found.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "webhookTopics.get",
+        "recorded": "2026-09-04"
+    }
+}

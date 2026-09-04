@@ -1,0 +1,41 @@
+{
+    "operation": "query_form_series",
+    "request": {
+        "method": "POST",
+        "path": "/api/form-series-reports",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 2;w=60, 225;w=86400",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "form-series-report",
+                "id": "702b69f8-3b4c-47cc-8857-437695caa579",
+                "attributes": {
+                    "results": [],
+                    "date_times": [
+                        "2026-08-03T00:00:00+00:00",
+                        "2026-08-10T00:00:00+00:00",
+                        "2026-08-17T00:00:00+00:00",
+                        "2026-08-24T00:00:00+00:00",
+                        "2026-08-31T00:00:00+00:00"
+                    ]
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/form-series-reports"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "reports.formSeries",
+        "recorded": "2026-09-04"
+    }
+}

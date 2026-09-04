@@ -1,0 +1,44 @@
+{
+    "operation": "get_template_for_flow_message",
+    "request": {
+        "method": "GET",
+        "path": "/api/flow-messages/StDwe4/template",
+        "query": {
+            "fields": {
+                "template": "name,editor_type,html,text"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "template",
+                "id": "Ug5pJx",
+                "attributes": {
+                    "name": "sdk-smoke-09049919-tpl",
+                    "editor_type": "CODE",
+                    "html": "<html><head></head><body><p>Smoke test {{ first_name|default:\"there\" }}</p></body></html>",
+                    "text": "Smoke test"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/templates/Ug5pJx/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/flow-messages/StDwe4/template?fields%5Btemplate%5D=name%2Ceditor_type%2Chtml%2Ctext"
+            }
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flowMessages.template",
+        "recorded": "2026-09-04"
+    }
+}

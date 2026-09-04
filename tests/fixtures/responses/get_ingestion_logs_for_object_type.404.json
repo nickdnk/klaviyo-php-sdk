@@ -1,0 +1,44 @@
+{
+    "operation": "get_ingestion_logs_for_object_type",
+    "request": {
+        "method": "GET",
+        "path": "/api/object-types/01K61DKJ7EKJ0ES9VE456XF5JG/object-ingestion-logs",
+        "query": {
+            "fields": {
+                "object-ingestion-log": "status,event_type,timestamp,summary,errors",
+                "object-record": "record_properties",
+                "object-type": "title"
+            },
+            "filter": "any(status,[\"error\",\"warning\",\"info\"]),any(event_type,[\"validation_error\"]),greater-or-equal(timestamp,2026-09-03T13:41:06+00:00),less-than(timestamp,2026-09-05T13:41:06+00:00)",
+            "include": "object-record,object-type"
+        }
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "9d6c200e-ad7d-40ea-b988-e60a163bf53c",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "Object type `01K61DKJ7EKJ0ES9VE456XF5JG` not found",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectTypes.ingestionLogs",
+        "recorded": "2026-09-04"
+    }
+}

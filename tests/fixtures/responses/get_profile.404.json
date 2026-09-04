@@ -1,0 +1,36 @@
+{
+    "operation": "get_profile",
+    "request": {
+        "method": "GET",
+        "path": "/api/profiles/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "72",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "40840933-36e4-414b-9166-33075c535630",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A profile with id NOPE01 does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.executePool",
+        "recorded": "2026-09-04"
+    }
+}

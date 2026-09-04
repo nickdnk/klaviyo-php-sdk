@@ -1,0 +1,69 @@
+{
+  "name": "nickdnk/klaviyo-php-sdk",
+  "description": "Klaviyo JSON:API client for PHP: typed request/response resources, OAuth with automatic token refresh, retries, bulk job helpers and webhook verification over PSR-18/PSR-17/PSR-7.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "klaviyo",
+    "api",
+    "sdk",
+    "client",
+    "psr-18",
+    "oauth"
+  ],
+  "homepage": "https://github.com/nickdnk/klaviyo-php-sdk",
+  "authors": [
+    {
+      "name": "Nicolai Cornelis",
+      "email": "nickdnk@hotmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.3",
+    "psr/http-client": "^1.0",
+    "psr/http-client-implementation": "^1.0",
+    "psr/http-factory": "^1.0",
+    "psr/http-factory-implementation": "^1.0",
+    "psr/http-message": "^1.1 || ^2.0"
+  },
+  "require-dev": {
+    "guzzlehttp/guzzle": "^8.0",
+    "nyholm/psr7": "^1.8.2",
+    "phpunit/phpunit": "^12.0 || ^13.0"
+  },
+  "suggest": {
+    "guzzlehttp/guzzle": "Picked up automatically as the default transport and gives bulk operations real concurrency.",
+    "nyholm/psr7": "A PSR-17 factory for Psr18Transport when Guzzle is not installed."
+  },
+  "autoload": {
+    "psr-4": {
+      "nickdnk\\Klaviyo\\": "src/"
+    },
+    "exclude-from-classmap": [
+      "/tests/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "nickdnk\\Klaviyo\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": false
+  },
+  "archive": {
+    "exclude": [
+      "/tests",
+      "/scratch",
+      "/.github",
+      "/phpunit.xml.dist",
+      "/.gitignore",
+      "/.gitattributes",
+      "/.idea"
+    ]
+  }
+}

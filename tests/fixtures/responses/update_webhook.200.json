@@ -1,0 +1,57 @@
+{
+    "operation": "update_webhook",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/webhooks/01M1PAC5N9PMXJ7672AC8B75VN",
+        "query": {
+            "fields": {
+                "webhook": "name,description,enabled"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "webhook",
+                "id": "01M1PAC5N9PMXJ7672AC8B75VN",
+                "attributes": {
+                    "name": "sdk-smoke-09045284-hook-renamed",
+                    "description": "sdk smoke 09045284",
+                    "enabled": true
+                },
+                "relationships": {
+                    "webhook-topics": {
+                        "data": [
+                            {
+                                "type": "webhook-topic",
+                                "id": "event:klaviyo.manually_suppressed_from_email_marketing"
+                            },
+                            {
+                                "type": "webhook-topic",
+                                "id": "event:klaviyo.manually_unsuppressed_from_email_marketing"
+                            }
+                        ]
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/webhooks/01M1PAC5N9PMXJ7672AC8B75VN/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/webhooks/01M1PAC5N9PMXJ7672AC8B75VN?fields%5Bwebhook%5D=name%2Cdescription%2Cenabled"
+            }
+        }
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "webhooks.update",
+        "recorded": "2026-09-04"
+    }
+}

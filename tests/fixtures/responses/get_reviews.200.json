@@ -1,0 +1,41 @@
+{
+    "operation": "get_reviews",
+    "request": {
+        "method": "GET",
+        "path": "/api/reviews",
+        "query": {
+            "fields": {
+                "review": "author,content,created,email,images,product,public_reply,rating,review_type,smart_quote,status,title,updated,verified",
+                "event": "datetime,event_properties,timestamp,uuid"
+            },
+            "include": "events",
+            "sort": "-created",
+            "page": {
+                "size": "100"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [],
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/reviews?fields%5Breview%5D=author%2Ccontent%2Ccreated%2Cemail%2Cimages%2Cproduct%2Cpublic_reply%2Crating%2Creview_type%2Csmart_quote%2Cstatus%2Ctitle%2Cupdated%2Cverified&fields%5Bevent%5D=datetime%2Cevent_properties%2Ctimestamp%2Cuuid&include=events&sort=-created&page%5Bsize%5D=100",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "reviews.list",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,78 @@
+{
+    "operation": "get_actions_for_flow",
+    "request": {
+        "method": "GET",
+        "path": "/api/flows/T6EyQF/flow-actions",
+        "query": {
+            "sort": "created",
+            "page": {
+                "size": "1"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "flow-action",
+                    "id": "116466131",
+                    "attributes": {
+                        "created": "2026-09-04T13:40:13+00:00",
+                        "updated": "2026-09-04T13:40:13+00:00",
+                        "definition": {
+                            "id": "116466131",
+                            "type": "time-delay",
+                            "data": {
+                                "unit": "hours",
+                                "value": 2,
+                                "secondary_value": 0,
+                                "timezone": "profile"
+                            },
+                            "links": {
+                                "next": "116466132"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "flow": {
+                            "data": {
+                                "type": "flow",
+                                "id": "T6EyQF"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/flow-actions/116466131/relationships/flow/",
+                                "related": "https://a.klaviyo.com/api/flow-actions/116466131/flow/"
+                            }
+                        },
+                        "flow-messages": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/flow-actions/116466131/relationships/flow-messages/",
+                                "related": "https://a.klaviyo.com/api/flow-actions/116466131/flow-messages/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/flow-actions/116466131/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/flows/T6EyQF/flow-actions?sort=created&page%5Bsize%5D=1",
+                "next": "https://a.klaviyo.com/api/flows/T6EyQF/flow-actions?sort=created&page%5Bsize%5D=1&page%5Bcursor%5D=bmV4dDo6Y3JlYXRlZDo6MjAyNi0wOS0wNCAxMzo0MDoxMyswMDowMDo6aWQ6OjExNjQ2NjEzMQ",
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flows.flowActions",
+        "recorded": "2026-09-04"
+    }
+}

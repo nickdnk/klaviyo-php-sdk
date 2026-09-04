@@ -1,0 +1,37 @@
+{
+    "operation": "get_errors_for_bulk_import_profiles_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/import-errors",
+        "query": {
+            "fields": {
+                "import-error": "code,detail"
+            },
+            "page": {
+                "size": "10"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/import-errors?fields%5Bimport-error%5D=code%2Cdetail&page%5Bsize%5D=10",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.getBulkImportJobErrors",
+        "recorded": "2026-09-04"
+    }
+}

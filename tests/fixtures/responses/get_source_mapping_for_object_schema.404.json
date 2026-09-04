@@ -1,0 +1,40 @@
+{
+    "operation": "get_source_mapping_for_object_schema",
+    "request": {
+        "method": "GET",
+        "path": "/api/object-schemas/01K61DKJ7EKJ0ES9VE456XF5JJ/source-mapping",
+        "query": {
+            "fields": {
+                "source-mapping": "property_mappings,relationship_mappings"
+            }
+        }
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "c732c547-2822-4dff-b47a-9f19b04ccb81",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "object-schema with id `01K61DKJ7EKJ0ES9VE456XF5JJ` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectSchemas.sourceMapping",
+        "recorded": "2026-09-04"
+    }
+}

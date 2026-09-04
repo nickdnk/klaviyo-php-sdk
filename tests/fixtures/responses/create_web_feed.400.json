@@ -1,0 +1,38 @@
+{
+    "operation": "create_web_feed",
+    "request": {
+        "method": "POST",
+        "path": "/api/web-feeds",
+        "query": {}
+    },
+    "response": {
+        "status": 400,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "2aca7ca2-4158-4a01-baaa-05e2a89044da",
+                    "status": 400,
+                    "code": "invalid",
+                    "title": "Invalid input.",
+                    "detail": "'name' must match regex '^[0-9_A-z]+$' ('sdk-smoke-0904f206-feed-dashed' doesn't)",
+                    "source": {
+                        "pointer": "/data/attributes/name"
+                    },
+                    "links": [],
+                    "meta": []
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "webFeeds.create",
+        "recorded": "2026-09-04"
+    }
+}

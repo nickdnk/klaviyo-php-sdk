@@ -1,0 +1,44 @@
+{
+    "operation": "bulk_update_catalog_categories",
+    "request": {
+        "method": "POST",
+        "path": "/api/catalog-category-bulk-update-jobs",
+        "query": {}
+    },
+    "response": {
+        "status": 202,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "catalog-category-bulk-update-job",
+                "id": "01M1PACJJXSCWRE5W310VCNC14",
+                "attributes": {
+                    "status": "processing",
+                    "created_at": "2026-09-04T13:40:32.478236+00:00",
+                    "total_count": 2,
+                    "completed_count": 0,
+                    "failed_count": 0,
+                    "completed_at": null,
+                    "errors": [],
+                    "expires_at": "2026-09-11T13:40:32.478236+00:00"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/catalog-category-bulk-update-jobs/01M1PACJJXSCWRE5W310VCNC14/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/catalog-category-bulk-update-jobs"
+            }
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogCategories.bulkUpdate",
+        "recorded": "2026-09-04"
+    }
+}

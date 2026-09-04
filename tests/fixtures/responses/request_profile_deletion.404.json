@@ -1,0 +1,36 @@
+{
+    "operation": "request_profile_deletion",
+    "request": {
+        "method": "POST",
+        "path": "/api/data-privacy-deletion-jobs",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "294c88c0-9b8e-4317-a637-8b1bf636a63e",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "No profile with email \"sdk-smoke+09047c86-c@nickdnktech.com\" found.  The profile may have already been deleted.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.deleteProfile",
+        "recorded": "2026-09-04"
+    }
+}

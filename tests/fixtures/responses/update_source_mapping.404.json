@@ -1,0 +1,40 @@
+{
+    "operation": "update_source_mapping",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/source-mappings/01K61DKJ7EKJ0ES9VE456XF5JM",
+        "query": {
+            "fields": {
+                "source-mapping": "property_mappings,relationship_mappings"
+            }
+        }
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "5ec333d8-f389-400a-a82f-ebd663438fa3",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "source-mapping with id `01K61DKJ7EKJ0ES9VE456XF5JM` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "sourceMappings.update",
+        "recorded": "2026-09-04"
+    }
+}

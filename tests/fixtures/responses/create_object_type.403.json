@@ -1,0 +1,42 @@
+{
+    "operation": "create_object_type",
+    "request": {
+        "method": "POST",
+        "path": "/api/object-types",
+        "query": {
+            "fields": {
+                "object-type": "title,description,status,namespace,created_at,updated_at"
+            }
+        }
+    },
+    "response": {
+        "status": 403,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "9c458920-bb8b-4907-8008-acfeb8e5a32a",
+                    "status": 403,
+                    "code": "forbidden",
+                    "title": "Forbidden.",
+                    "detail": "Entitlement to create object type not found.",
+                    "source": {
+                        "pointer": "/data"
+                    },
+                    "links": [],
+                    "meta": []
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectTypes.create",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "operation": "get_image",
+    "request": {
+        "method": "GET",
+        "path": "/api/images/99999999999",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "7",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "e325114c-4cb7-4233-927e-ade9c70f33df",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "Not found.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "templates",
+        "step": "images.get",
+        "recorded": "2026-09-04"
+    }
+}

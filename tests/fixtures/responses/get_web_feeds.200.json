@@ -1,0 +1,52 @@
+{
+    "operation": "get_web_feeds",
+    "request": {
+        "method": "GET",
+        "path": "/api/web-feeds",
+        "query": {
+            "sort": "created",
+            "page": {
+                "size": "1"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "web-feed",
+                    "id": "9055661",
+                    "attributes": {
+                        "name": "sdk_smoke_0904f206_feed_json",
+                        "url": "https://help.klaviyo.com/api/v2/help_center/en-us/articles.json",
+                        "request_method": "get",
+                        "content_type": "json",
+                        "created": "2026-09-04T13:40:27+00:00",
+                        "updated": "2026-09-04T13:40:27+00:00",
+                        "status": "ok"
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/web-feeds/9055661/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/web-feeds?sort=created&page%5Bsize%5D=1",
+                "next": "https://a.klaviyo.com/api/web-feeds?sort=created&page%5Bsize%5D=1&page%5Bcursor%5D=bmV4dDo6Y3JlYXRlZDo6MjAyNi0wOS0wNCAxMzo0MDoyNyswMDowMA",
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "webFeeds.list",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "operation": "get_bulk_delete_variants_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-variant-bulk-delete-jobs/sdk-smoke-nope-090444b5",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "ec25699c-6ec2-48f2-9a89-5f84b4906c0a",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A catalog-variant bulk delete job with id sdk-smoke-nope-090444b5 does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogVariants.getBulkDeleteJob",
+        "recorded": "2026-09-04"
+    }
+}

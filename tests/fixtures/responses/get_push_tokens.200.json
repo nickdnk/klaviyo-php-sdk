@@ -1,0 +1,41 @@
+{
+    "operation": "get_push_tokens",
+    "request": {
+        "method": "GET",
+        "path": "/api/push-tokens",
+        "query": {
+            "fields": {
+                "push-token": "token,platform,enablement_status,background,metadata,created,recorded_date",
+                "profile": "email"
+            },
+            "filter": "equals(profile.id,\"01M1PA9B5E0KV093SP65YYK5VN\")",
+            "include": "profile",
+            "page": {
+                "size": "10"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [],
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/push-tokens?fields%5Bpush-token%5D=token%2Cplatform%2Cenablement_status%2Cbackground%2Cmetadata%2Ccreated%2Crecorded_date&fields%5Bprofile%5D=email&filter=equals%28profile.id%2C%2201M1PA9B5E0KV093SP65YYK5VN%22%29&include=profile&page%5Bsize%5D=10",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "push_tokens",
+        "step": "pushTokens.list",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "operation": "delete_web_feed",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/web-feeds/9055661",
+        "query": {}
+    },
+    "response": {
+        "status": 429,
+        "headers": {
+            "retry-after": "1"
+        },
+        "body": {
+            "errors": [
+                {
+                    "detail": "Request was throttled. Expected available in 1 second.",
+                    "meta": [],
+                    "source": {
+                        "pointer": "/data"
+                    },
+                    "links": {
+                        "type": "https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling#rate-limits"
+                    },
+                    "status": 429,
+                    "code": "throttled",
+                    "id": "8ceff2cf-dee4-4d49-8ccb-6b9c3529a752",
+                    "title": "Request was throttled."
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "webFeeds.delete",
+        "recorded": "2026-09-04"
+    }
+}

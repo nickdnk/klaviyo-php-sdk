@@ -1,0 +1,28 @@
+{
+    "operation": "get_profile_type_relationships",
+    "request": {
+        "method": "GET",
+        "path": "/api/object-types/01K61DKJ7EKJ0ES9VE456XF5JG/relationships/profile-object-types",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/object-types/01K61DKJ7EKJ0ES9VE456XF5JG/relationships/profile-object-types"
+            }
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectTypes.profileTypeRelationships",
+        "recorded": "2026-09-04"
+    }
+}

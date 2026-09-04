@@ -1,0 +1,56 @@
+{
+    "operation": "get_tag_groups",
+    "request": {
+        "method": "GET",
+        "path": "/api/tag-groups",
+        "query": {
+            "fields": {
+                "tag-group": "name,exclusive,default"
+            },
+            "filter": "equals(default,true)"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "tag-group",
+                    "id": "e30baa69-f382-4eef-8ff6-222d5c3d9a8a",
+                    "attributes": {
+                        "name": "Ungrouped Tags",
+                        "exclusive": false,
+                        "default": true
+                    },
+                    "relationships": {
+                        "tags": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tag-groups/e30baa69-f382-4eef-8ff6-222d5c3d9a8a/relationships/tags/",
+                                "related": "https://a.klaviyo.com/api/tag-groups/e30baa69-f382-4eef-8ff6-222d5c3d9a8a/tags/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/tag-groups/e30baa69-f382-4eef-8ff6-222d5c3d9a8a/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/tag-groups?fields%5Btag-group%5D=name%2Cexclusive%2Cdefault&filter=equals%28default%2Ctrue%29",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "tags",
+        "step": "tagGroups.list",
+        "recorded": "2026-09-04"
+    }
+}

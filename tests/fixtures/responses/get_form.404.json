@@ -1,0 +1,36 @@
+{
+    "operation": "get_form",
+    "request": {
+        "method": "GET",
+        "path": "/api/forms/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "1",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "3151aa2a-73fa-4d20-ae85-80ceba2eaf69",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A form with id `NOPE01` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "forms.get",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "operation": "get_list_ids_for_bulk_import_profiles_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/relationships/lists",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "list",
+                    "id": "YafG4m"
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/relationships/lists"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.getBulkImportJobListIds",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,72 @@
+{
+    "operation": "get_list",
+    "request": {
+        "method": "GET",
+        "path": "/api/lists/YafG4m",
+        "query": {
+            "fields": {
+                "list": "name,created,updated,opt_in_process"
+            },
+            "additional-fields": {
+                "list": "profile_count"
+            },
+            "include": "tags,flow-triggers"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "list",
+                "id": "YafG4m",
+                "attributes": {
+                    "name": "sdk-smoke-09047c86-list",
+                    "created": "2026-09-04T13:39:28+00:00",
+                    "updated": "2026-09-04T13:39:28+00:00",
+                    "opt_in_process": "single_opt_in",
+                    "profile_count": 0
+                },
+                "relationships": {
+                    "profiles": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/profiles/",
+                            "related": "https://a.klaviyo.com/api/lists/YafG4m/profiles/"
+                        }
+                    },
+                    "tags": {
+                        "data": [],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/tags/",
+                            "related": "https://a.klaviyo.com/api/lists/YafG4m/tags/"
+                        }
+                    },
+                    "flow-triggers": {
+                        "data": [],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/flow-triggers/",
+                            "related": "https://a.klaviyo.com/api/lists/YafG4m/flow-triggers/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/lists/YafG4m/"
+                }
+            },
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/lists/YafG4m?fields%5Blist%5D=name%2Ccreated%2Cupdated%2Copt_in_process&additional-fields%5Blist%5D=profile_count&include=tags%2Cflow-triggers"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "lists.get",
+        "recorded": "2026-09-04"
+    }
+}

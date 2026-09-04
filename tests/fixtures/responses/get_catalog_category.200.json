@@ -1,0 +1,49 @@
+{
+    "operation": "get_catalog_category",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-categories/$custom:::$default:::sdk-smoke-090444b5-bcat2",
+        "query": {
+            "fields": {
+                "catalog-category": "name"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "catalog-category",
+                "id": "$custom:::$default:::sdk-smoke-090444b5-bcat2",
+                "attributes": {
+                    "name": "SDK Smoke Bulk Cat UPDATED sdk-smoke-090444b5-bcat2"
+                },
+                "relationships": {
+                    "items": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/catalog-categories/$custom:::$default:::sdk-smoke-090444b5-bcat2/relationships/items/",
+                            "related": "https://a.klaviyo.com/api/catalog-categories/$custom:::$default:::sdk-smoke-090444b5-bcat2/items/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/catalog-categories/$custom:::$default:::sdk-smoke-090444b5-bcat2/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/catalog-categories/$custom:::$default:::sdk-smoke-090444b5-bcat2?fields%5Bcatalog-category%5D=name"
+            }
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogCategories.get",
+        "recorded": "2026-09-04"
+    }
+}

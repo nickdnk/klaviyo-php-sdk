@@ -1,0 +1,78 @@
+{
+    "operation": "create_segment",
+    "request": {
+        "method": "POST",
+        "path": "/api/segments",
+        "query": {}
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60, 100;w=86400",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "segment",
+                "id": "RNftrZ",
+                "attributes": {
+                    "name": "sdk-smoke-0904b975-s",
+                    "definition": {
+                        "condition_groups": [
+                            {
+                                "conditions": [
+                                    {
+                                        "type": "profile-group-membership",
+                                        "is_member": true,
+                                        "group_ids": [
+                                            "S8LuPz"
+                                        ],
+                                        "timeframe_filter": null
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "created": "2026-09-04T13:38:54.426033+00:00",
+                    "updated": "2026-09-04T13:38:54.426044+00:00",
+                    "is_active": true,
+                    "is_processing": true,
+                    "is_starred": false
+                },
+                "relationships": {
+                    "profiles": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/segments/RNftrZ/relationships/profiles/",
+                            "related": "https://a.klaviyo.com/api/segments/RNftrZ/profiles/"
+                        }
+                    },
+                    "tags": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/segments/RNftrZ/relationships/tags/",
+                            "related": "https://a.klaviyo.com/api/segments/RNftrZ/tags/"
+                        }
+                    },
+                    "flow-triggers": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/segments/RNftrZ/relationships/flow-triggers/",
+                            "related": "https://a.klaviyo.com/api/segments/RNftrZ/flow-triggers/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/segments/RNftrZ/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/segments"
+            }
+        }
+    },
+    "source": {
+        "suite": "tags",
+        "step": "segments.create",
+        "recorded": "2026-09-04"
+    }
+}

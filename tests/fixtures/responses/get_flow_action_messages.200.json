@@ -1,0 +1,96 @@
+{
+    "operation": "get_flow_action_messages",
+    "request": {
+        "method": "GET",
+        "path": "/api/flow-actions/116466132/flow-messages",
+        "query": {
+            "fields": {
+                "flow-message": "channel,definition,created,updated"
+            },
+            "sort": "created",
+            "page": {
+                "size": "50"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "flow-message",
+                    "id": "StDwe4",
+                    "attributes": {
+                        "channel": "Email",
+                        "definition": {
+                            "from_email": "customer@example.com",
+                            "from_label": "Example Org",
+                            "reply_to_email": "customer@example.com",
+                            "cc_email": null,
+                            "bcc_email": null,
+                            "subject_line": "SDK smoke subject",
+                            "preview_text": "SDK smoke preview",
+                            "template_id": "Ug5pJx",
+                            "smart_sending_enabled": true,
+                            "transactional": false,
+                            "add_tracking_params": false,
+                            "custom_tracking_params": null,
+                            "additional_filters": null,
+                            "name": "sdk-smoke-09049919-msg",
+                            "id": "StDwe4"
+                        },
+                        "created": "2026-09-04T13:40:13+00:00",
+                        "updated": "2026-09-04T13:40:13+00:00"
+                    },
+                    "relationships": {
+                        "flow-action": {
+                            "data": {
+                                "type": "flow-action",
+                                "id": "116466132"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/flow-messages/StDwe4/relationships/flow-action/",
+                                "related": "https://a.klaviyo.com/api/flow-messages/StDwe4/flow-action/"
+                            }
+                        },
+                        "template": {
+                            "data": {
+                                "type": "template",
+                                "id": "Ug5pJx"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/flow-messages/StDwe4/relationships/template/",
+                                "related": "https://a.klaviyo.com/api/flow-messages/StDwe4/template/"
+                            }
+                        },
+                        "image": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/flow-messages/StDwe4/relationships/image/",
+                                "related": "https://a.klaviyo.com/api/flow-messages/StDwe4/image/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/flow-messages/StDwe4/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/flow-actions/116466132/flow-messages?fields%5Bflow-message%5D=channel%2Cdefinition%2Ccreated%2Cupdated&sort=created&page%5Bsize%5D=50",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flowActions.messages",
+        "recorded": "2026-09-04"
+    }
+}

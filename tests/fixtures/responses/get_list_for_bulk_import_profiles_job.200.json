@@ -1,0 +1,63 @@
+{
+    "operation": "get_list_for_bulk_import_profiles_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/lists",
+        "query": {
+            "fields": {
+                "list": "name"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "list",
+                    "id": "YafG4m",
+                    "attributes": {
+                        "name": "sdk-smoke-09047c86-list-renamed"
+                    },
+                    "relationships": {
+                        "profiles": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/profiles/",
+                                "related": "https://a.klaviyo.com/api/lists/YafG4m/profiles/"
+                            }
+                        },
+                        "tags": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/tags/",
+                                "related": "https://a.klaviyo.com/api/lists/YafG4m/tags/"
+                            }
+                        },
+                        "flow-triggers": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/lists/YafG4m/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/lists/YafG4m/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/lists?fields%5Blist%5D=name"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.getBulkImportJobLists",
+        "recorded": "2026-09-04"
+    }
+}

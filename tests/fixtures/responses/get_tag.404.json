@@ -1,0 +1,36 @@
+{
+    "operation": "get_tag",
+    "request": {
+        "method": "GET",
+        "path": "/api/tags/00000000-0000-0000-0000-000000000000",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "7bf05113-f6ba-4229-81f8-a82da20af641",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A tag with id 00000000-0000-0000-0000-000000000000 does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "tags",
+        "step": "tags.get",
+        "recorded": "2026-09-04"
+    }
+}

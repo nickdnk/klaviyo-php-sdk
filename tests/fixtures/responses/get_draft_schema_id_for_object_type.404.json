@@ -1,0 +1,36 @@
+{
+    "operation": "get_draft_schema_id_for_object_type",
+    "request": {
+        "method": "GET",
+        "path": "/api/object-types/01K61DKJ7EKJ0ES9VE456XF5JG/relationships/draft-schema",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "14f05399-ff9a-458b-9ace-414f9bde8650",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "object-type with id `01K61DKJ7EKJ0ES9VE456XF5JG` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectTypes.draftSchemaId",
+        "recorded": "2026-09-04"
+    }
+}

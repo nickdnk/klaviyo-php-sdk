@@ -1,0 +1,36 @@
+{
+    "operation": "get_webhook",
+    "request": {
+        "method": "GET",
+        "path": "/api/webhooks/999999999",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "1868e450-c3d4-4260-b4f5-aa7a4dd22fe7",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "Not found.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "webhooks.get",
+        "recorded": "2026-09-04"
+    }
+}

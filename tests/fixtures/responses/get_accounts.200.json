@@ -1,0 +1,60 @@
+{
+    "operation": "get_accounts",
+    "request": {
+        "method": "GET",
+        "path": "/api/accounts",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "account",
+                    "id": "WBhXHN",
+                    "attributes": {
+                        "test_account": true,
+                        "contact_information": {
+                            "default_sender_name": "Example Org",
+                            "default_sender_email": "customer@example.com",
+                            "website_url": "http://www.example.com",
+                            "organization_name": "Example Org",
+                            "street_address": {
+                                "address1": "Artillerivej 86",
+                                "address2": "2.th.",
+                                "city": "Copenhagen",
+                                "region": null,
+                                "country": "Denmark",
+                                "zip": "2300"
+                            }
+                        },
+                        "industry": "Software / SaaS",
+                        "timezone": "Europe/Copenhagen",
+                        "preferred_currency": "DKK",
+                        "public_api_key":"REDACTED",
+                        "locale": "en-US"
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/accounts/WBhXHN/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/accounts",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "oauth.withOAuth",
+        "recorded": "2026-09-04"
+    }
+}

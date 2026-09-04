@@ -1,0 +1,22 @@
+{
+    "operation": "update_tag_group",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/tag-groups/34c01a4a-208c-4428-a80b-4d0b4e0741db",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "tags",
+        "step": "tagGroups.update",
+        "recorded": "2026-09-04"
+    }
+}

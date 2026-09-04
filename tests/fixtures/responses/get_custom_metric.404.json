@@ -1,0 +1,36 @@
+{
+    "operation": "get_custom_metric",
+    "request": {
+        "method": "GET",
+        "path": "/api/custom-metrics/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "e0d661bb-d550-4b99-9d48-57429074aa64",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "Custom metric with id `NOPE01` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "customMetrics.get",
+        "recorded": "2026-09-04"
+    }
+}

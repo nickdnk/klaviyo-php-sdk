@@ -1,0 +1,29 @@
+{
+    "operation": "get_metric_for_mapped_metric",
+    "request": {
+        "method": "GET",
+        "path": "/api/mapped-metrics/revenue/metric",
+        "query": {
+            "fields": {
+                "metric": "name"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": null
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "mappedMetrics.metric",
+        "recorded": "2026-09-04"
+    }
+}

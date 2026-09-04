@@ -1,0 +1,36 @@
+{
+    "operation": "create_object_schema_relationship",
+    "request": {
+        "method": "POST",
+        "path": "/api/object-schemas/01K61DKJ7EKJ0ES9VE456XF5JJ/relationships/object-schemas",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "410abf5a-6db9-4534-89c8-bf203b869a4a",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "object-schema with id `01K61DKJ7EKJ0ES9VE456XF5JK` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectSchemas.createObjectSchemaRelationship",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "operation": "delete_object_type",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/object-types/01K61DKJ7EKJ0ES9VE456XF5JG",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "9355654d-81b5-4312-b181-f15d0f81a9bf",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "object-type with id `01K61DKJ7EKJ0ES9VE456XF5JG` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectTypes.delete",
+        "recorded": "2026-09-04"
+    }
+}

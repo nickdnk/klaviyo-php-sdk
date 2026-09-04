@@ -1,0 +1,35 @@
+{
+    "operation": "get_item_ids_for_catalog_category",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-categories/$custom:::$default:::sdk-smoke-090444b5-cat1/relationships/items",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "348",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "catalog-item",
+                    "id": "$custom:::$default:::sdk-smoke-090444b5-item1"
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/catalog-categories/$custom:::$default:::sdk-smoke-090444b5-cat1/relationships/items",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogCategories.removeItems",
+        "recorded": "2026-09-04"
+    }
+}

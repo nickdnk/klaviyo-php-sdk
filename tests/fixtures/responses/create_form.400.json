@@ -1,0 +1,38 @@
+{
+    "operation": "create_form",
+    "request": {
+        "method": "POST",
+        "path": "/api/forms",
+        "query": {}
+    },
+    "response": {
+        "status": 400,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "828c604e-0305-4bdb-95ec-b956183b4a07",
+                    "status": 400,
+                    "code": "invalid",
+                    "title": "Invalid input.",
+                    "detail": "Versions must have at least two steps",
+                    "source": {
+                        "pointer": "/data/attributes/definition/versions/0"
+                    },
+                    "links": [],
+                    "meta": []
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "forms.create",
+        "recorded": "2026-09-04"
+    }
+}

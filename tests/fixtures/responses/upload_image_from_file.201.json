@@ -1,0 +1,42 @@
+{
+    "operation": "upload_image_from_file",
+    "request": {
+        "method": "POST",
+        "path": "/api/image-upload",
+        "query": {}
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 100;w=60, 500;w=86400",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "image",
+                "id": "366547888",
+                "attributes": {
+                    "name": "sdk-smoke-0904a5e6-img-file",
+                    "image_url": "https://d3k81ch9hvuctc.cloudfront.net/company/WBhXHN/images/8b3b4537-65a8-474e-9b37-7b5c1650ece4.png",
+                    "format": "png",
+                    "size": 70,
+                    "hidden": false,
+                    "updated_at": "2026-09-04T13:39:23.122768+00:00"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/images/366547888/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/image-upload"
+            }
+        }
+    },
+    "source": {
+        "suite": "templates",
+        "step": "images.uploadFromFile",
+        "recorded": "2026-09-04"
+    }
+}

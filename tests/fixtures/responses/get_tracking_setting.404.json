@@ -1,0 +1,36 @@
+{
+    "operation": "get_tracking_setting",
+    "request": {
+        "method": "GET",
+        "path": "/api/tracking-settings/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "cf9747e4-2d3c-43e1-b0b9-1220b52a3191",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "Tracking settings for id `NOPE01` do not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "trackingSettings.get",
+        "recorded": "2026-09-04"
+    }
+}

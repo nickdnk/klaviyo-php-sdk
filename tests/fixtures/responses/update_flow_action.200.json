@@ -1,0 +1,75 @@
+{
+    "operation": "update_flow_action",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/flow-actions/116466131",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "flow-action",
+                "id": "116466131",
+                "attributes": {
+                    "created": "2026-09-04T13:40:13+00:00",
+                    "updated": "2026-09-04T13:40:35.490826+00:00",
+                    "definition": {
+                        "id": "116466131",
+                        "type": "time-delay",
+                        "data": {
+                            "unit": "days",
+                            "value": 3,
+                            "secondary_value": null,
+                            "timezone": "UTC",
+                            "delay_until_time": "09:00:00",
+                            "delay_until_weekdays": [
+                                "monday",
+                                "wednesday",
+                                "friday"
+                            ]
+                        },
+                        "links": {
+                            "next": "116466132"
+                        }
+                    }
+                },
+                "relationships": {
+                    "flow": {
+                        "data": {
+                            "type": "flow",
+                            "id": "T6EyQF"
+                        },
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/flow-actions/116466131/relationships/flow/",
+                            "related": "https://a.klaviyo.com/api/flow-actions/116466131/flow/"
+                        }
+                    },
+                    "flow-messages": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/flow-actions/116466131/relationships/flow-messages/",
+                            "related": "https://a.klaviyo.com/api/flow-actions/116466131/flow-messages/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/flow-actions/116466131/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/flow-actions/116466131"
+            }
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flowActions.update",
+        "recorded": "2026-09-04"
+    }
+}

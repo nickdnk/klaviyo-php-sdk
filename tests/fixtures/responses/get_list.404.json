@@ -1,0 +1,36 @@
+{
+    "operation": "get_list",
+    "request": {
+        "method": "GET",
+        "path": "/api/lists/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "73",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "d01e6c7e-cb4c-48b0-bd3a-5aa228be1db0",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A list with id `NOPE01` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "lists.get",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "operation": "get_catalog_item",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-items/$custom:::$default:::sdk-smoke-nope-pool",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "353cb2fe-5014-45d0-aac6-5c7cd697a7b7",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "An item with id $custom:::$default:::sdk-smoke-nope-pool does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogItems.executePool",
+        "recorded": "2026-09-04"
+    }
+}

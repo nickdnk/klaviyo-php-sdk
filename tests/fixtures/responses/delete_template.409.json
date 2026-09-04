@@ -1,0 +1,38 @@
+{
+    "operation": "delete_template",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/templates/Ug5pJx",
+        "query": {}
+    },
+    "response": {
+        "status": 409,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "1cbffedb-7bf9-4e16-a09d-318ea6c6cdd7",
+                    "status": 409,
+                    "code": "conflict",
+                    "title": "Conflict.",
+                    "detail": "Cannot delete template Ug5pJx while it is attached to\nFlowMessage StDwe4",
+                    "source": {
+                        "pointer": "/data"
+                    },
+                    "links": [],
+                    "meta": []
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "templates.delete",
+        "recorded": "2026-09-04"
+    }
+}

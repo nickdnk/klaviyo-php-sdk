@@ -1,0 +1,22 @@
+{
+    "operation": "bulk_create_events",
+    "request": {
+        "method": "POST",
+        "path": "/api/event-bulk-create-jobs",
+        "query": {}
+    },
+    "response": {
+        "status": 202,
+        "headers": {
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "events.bulkCreate",
+        "recorded": "2026-09-04"
+    }
+}

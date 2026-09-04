@@ -1,0 +1,36 @@
+{
+    "operation": "update_profile_schema_relationship",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/object-schemas/01K61DKJ7EKJ0ES9VE456XF5JJ/relationships/profile-object-schemas",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "b5063673-75e9-4cf3-83f8-1bfd5d0c1773",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "profile-schema relationship with id=`01K61DKJ7EKJ0ES9VE456XF5JP`, origin_schema_id=01K61DKJ7EKJ0ES9VE456XF5JJ does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectSchemas.updateProfileSchemaRelationship",
+        "recorded": "2026-09-04"
+    }
+}

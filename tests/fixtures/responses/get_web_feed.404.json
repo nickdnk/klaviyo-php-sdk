@@ -1,0 +1,36 @@
+{
+    "operation": "get_web_feed",
+    "request": {
+        "method": "GET",
+        "path": "/api/web-feeds/0",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "62b3e003-ab29-481c-963d-8e7336e157f8",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A web feed with id `0` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "webFeeds.get",
+        "recorded": "2026-09-04"
+    }
+}

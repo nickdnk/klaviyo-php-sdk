@@ -1,0 +1,36 @@
+{
+    "operation": "get_data_source",
+    "request": {
+        "method": "GET",
+        "path": "/api/data-sources/01K61DKJ7EKJ0ES9VE456XF5JG",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "2c41ed57-cf3a-4a30-bfa9-a779a4ad8dd4",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "Data source with ID 01K61DKJ7EKJ0ES9VE456XF5JG not found.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "dataSources.get",
+        "recorded": "2026-09-04"
+    }
+}

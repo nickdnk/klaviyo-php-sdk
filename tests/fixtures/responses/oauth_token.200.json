@@ -1,0 +1,26 @@
+{
+    "operation": "oauth_token",
+    "request": {
+        "method": "POST",
+        "path": "/oauth/token",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/json"
+        },
+        "body": {
+            "access_token":"REDACTED",
+            "token_type": "bearer",
+            "expires_in": 3599,
+            "refresh_token":"REDACTED",
+            "scope": "events:read segments:read web-feeds:write conversations:read events:write forms:write images:write push-tokens:write subscriptions:write data-privacy:write metrics:write profiles:write tags:read tags:write campaigns:read custom-objects:write flows:read flows:write metrics:read segments:write tracking-settings:read webhooks:read catalogs:read conversations:write coupon-codes:read coupon-codes:write coupons:read images:read push-tokens:read subscriptions:read accounts:read custom-objects:read profiles:read reviews:read templates:read web-feeds:read webhooks:write lists:write reviews:write tracking-settings:write coupons:write forms:read lists:read templates:write campaigns:write catalogs:write data-privacy:read"
+        }
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "oauth.refreshCredentials",
+        "recorded": "2026-09-04"
+    }
+}

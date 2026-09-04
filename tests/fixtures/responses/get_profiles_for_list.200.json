@@ -1,0 +1,145 @@
+{
+    "operation": "get_profiles_for_list",
+    "request": {
+        "method": "GET",
+        "path": "/api/lists/YafG4m/profiles",
+        "query": {
+            "fields": {
+                "profile": "email,joined_group_at"
+            },
+            "additional-fields": {
+                "profile": "subscriptions"
+            },
+            "filter": "equals(email,\"sdk-smoke+09047c86-a@nickdnktech.com\")",
+            "sort": "joined_group_at",
+            "page": {
+                "size": "1"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "profile",
+                    "id": "01M1PAAR5HBCRHA3NN9NG5WRTA",
+                    "attributes": {
+                        "email": "sdk-smoke+09047c86-a@nickdnktech.com",
+                        "joined_group_at": "2026-09-04T13:39:38+00:00",
+                        "subscriptions": {
+                            "email": {
+                                "marketing": {
+                                    "can_receive_email_marketing": false,
+                                    "consent": "NEVER_SUBSCRIBED",
+                                    "consent_timestamp": null,
+                                    "last_updated": "2026-09-04T13:39:33.601782+00:00",
+                                    "method": null,
+                                    "method_detail": null,
+                                    "custom_method_detail": null,
+                                    "double_optin": null,
+                                    "suppression": [
+                                        {
+                                            "reason": "USER_SUPPRESSED",
+                                            "timestamp": "2026-09-04T13:39:33.601782+00:00"
+                                        }
+                                    ],
+                                    "list_suppressions": []
+                                },
+                                "open_tracking": {
+                                    "consent": "NEVER_SUBSCRIBED",
+                                    "consent_timestamp": null,
+                                    "last_updated": null,
+                                    "created_timestamp": null,
+                                    "metadata": null,
+                                    "can_receive": false,
+                                    "valid_until": null
+                                },
+                                "click_tracking": {
+                                    "consent": "NEVER_SUBSCRIBED",
+                                    "consent_timestamp": null,
+                                    "last_updated": null,
+                                    "created_timestamp": null,
+                                    "metadata": null,
+                                    "can_receive": false,
+                                    "valid_until": null
+                                }
+                            },
+                            "sms": {
+                                "marketing": {
+                                    "can_receive_sms_marketing": false,
+                                    "consent": "NEVER_SUBSCRIBED",
+                                    "consent_timestamp": null,
+                                    "method": null,
+                                    "method_detail": null,
+                                    "last_updated": null
+                                },
+                                "transactional": {
+                                    "can_receive_sms_transactional": false,
+                                    "consent": "NEVER_SUBSCRIBED",
+                                    "consent_timestamp": null,
+                                    "method": null,
+                                    "method_detail": null,
+                                    "last_updated": null
+                                }
+                            },
+                            "mobile_push": {
+                                "marketing": {
+                                    "can_receive_push_marketing": false,
+                                    "consent": "NEVER_SUBSCRIBED",
+                                    "consent_timestamp": null
+                                }
+                            },
+                            "whatsapp": null
+                        }
+                    },
+                    "relationships": {
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/segments/"
+                            }
+                        },
+                        "push-tokens": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/push-tokens/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/push-tokens/"
+                            }
+                        },
+                        "conversation": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/conversation/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/conversation/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/lists/YafG4m/profiles?fields%5Bprofile%5D=email%2Cjoined_group_at&additional-fields%5Bprofile%5D=subscriptions&filter=equals%28email%2C%22sdk-smoke%2B09047c86-a%40nickdnktech.com%22%29&sort=joined_group_at&page%5Bsize%5D=1",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "lists.profiles",
+        "recorded": "2026-09-04"
+    }
+}

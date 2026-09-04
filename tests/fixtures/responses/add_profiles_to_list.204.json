@@ -1,0 +1,22 @@
+{
+    "operation": "add_profiles_to_list",
+    "request": {
+        "method": "POST",
+        "path": "/api/lists/YafG4m/relationships/profiles",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "lists.addProfiles",
+        "recorded": "2026-09-04"
+    }
+}

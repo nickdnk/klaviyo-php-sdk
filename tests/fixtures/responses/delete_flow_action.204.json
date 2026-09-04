@@ -1,0 +1,22 @@
+{
+    "operation": "delete_flow_action",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/flow-actions/116466131",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flowActions.delete",
+        "recorded": "2026-09-04"
+    }
+}

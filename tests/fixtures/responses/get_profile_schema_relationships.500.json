@@ -1,0 +1,36 @@
+{
+    "operation": "get_profile_schema_relationships",
+    "request": {
+        "method": "GET",
+        "path": "/api/object-schemas/01K61DKJ7EKJ0ES9VE456XF5JJ/relationships/profile-object-schemas",
+        "query": {}
+    },
+    "response": {
+        "status": 500,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "a4c22b8f-0515-4a72-8d6d-52dda71e363a",
+                    "status": 500,
+                    "code": "error",
+                    "title": "A server error occurred.",
+                    "detail": "A server error occurred.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectSchemas.profileSchemaRelationships",
+        "recorded": "2026-09-04"
+    }
+}

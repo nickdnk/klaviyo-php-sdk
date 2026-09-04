@@ -1,0 +1,38 @@
+{
+    "operation": "get_mapped_metric",
+    "request": {
+        "method": "GET",
+        "path": "/api/mapped-metrics/nope",
+        "query": {}
+    },
+    "response": {
+        "status": 400,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "8099b241-acfa-4a6d-a5d2-819442438ac2",
+                    "status": 400,
+                    "code": "invalid",
+                    "title": "Invalid input.",
+                    "detail": "'nope' is not a valid choice for 'id'.",
+                    "source": {
+                        "pointer": "/data/attributes/id"
+                    },
+                    "links": [],
+                    "meta": []
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "mappedMetrics.get",
+        "recorded": "2026-09-04"
+    }
+}

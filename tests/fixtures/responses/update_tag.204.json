@@ -1,0 +1,22 @@
+{
+    "operation": "update_tag",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/tags/f837de98-3527-4bae-8226-bda7c2395e29",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "tags",
+        "step": "tags.update",
+        "recorded": "2026-09-04"
+    }
+}

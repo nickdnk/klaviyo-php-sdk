@@ -1,0 +1,81 @@
+{
+    "operation": "get_metric_property",
+    "request": {
+        "method": "GET",
+        "path": "/api/metric-properties/U2tEZkhlLiR2YWx1ZQ",
+        "query": {
+            "fields": {
+                "metric-property": "label,property,inferred_type",
+                "metric": "name"
+            },
+            "additional-fields": {
+                "metric-property": "sample_values"
+            },
+            "include": "metric"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "metric-property",
+                "id": "U2tEZkhlLiR2YWx1ZQ",
+                "attributes": {
+                    "label": "SDK Smoke Value",
+                    "property": "$value",
+                    "inferred_type": "numeric",
+                    "sample_values": []
+                },
+                "relationships": {
+                    "metric": {
+                        "data": {
+                            "type": "metric",
+                            "id": "SkDfHe"
+                        },
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLiR2YWx1ZQ/relationships/metric/",
+                            "related": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLiR2YWx1ZQ/metric/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLiR2YWx1ZQ/"
+                }
+            },
+            "included": [
+                {
+                    "type": "metric",
+                    "id": "SkDfHe",
+                    "attributes": {
+                        "name": "SDK Smoke"
+                    },
+                    "relationships": {
+                        "flow-triggers": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metrics/SkDfHe/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/metrics/SkDfHe/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metrics/SkDfHe/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLiR2YWx1ZQ?fields%5Bmetric-property%5D=label%2Cproperty%2Cinferred_type&fields%5Bmetric%5D=name&additional-fields%5Bmetric-property%5D=sample_values&include=metric"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "metricProperties.get",
+        "recorded": "2026-09-04"
+    }
+}

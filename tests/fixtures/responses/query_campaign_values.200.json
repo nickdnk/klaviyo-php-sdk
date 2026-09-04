@@ -1,0 +1,36 @@
+{
+    "operation": "query_campaign_values",
+    "request": {
+        "method": "POST",
+        "path": "/api/campaign-values-reports",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 2;w=60, 225;w=86400",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "campaign-values-report",
+                "id": "d1a4b623-a90d-491f-89ce-56cca8464b27",
+                "attributes": {
+                    "results": []
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/campaign-values-reports",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "reports.campaignValues",
+        "recorded": "2026-09-04"
+    }
+}

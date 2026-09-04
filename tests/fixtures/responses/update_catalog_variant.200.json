@@ -1,0 +1,68 @@
+{
+    "operation": "update_catalog_variant",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item1-v1",
+        "query": {
+            "fields": {
+                "catalog-variant": "created,custom_metadata,description,external_id,image_full_url,image_thumbnail_url,images,inventory_policy,inventory_quantity,price,published,sku,title,updated,url"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "catalog-variant",
+                "id": "$custom:::$default:::sdk-smoke-090444b5-item1-v1",
+                "attributes": {
+                    "created": "2026-09-04T13:38:46.570000+00:00",
+                    "custom_metadata": {
+                        "smokeRun": "090444b5",
+                        "size": "L"
+                    },
+                    "description": "Updated variant description.",
+                    "external_id": "sdk-smoke-090444b5-item1-v1",
+                    "image_full_url": "",
+                    "image_thumbnail_url": "",
+                    "images": [
+                        "https://example.com/img/updated.jpg"
+                    ],
+                    "inventory_policy": 2,
+                    "inventory_quantity": 42,
+                    "price": 21.5,
+                    "published": true,
+                    "sku": "SKU-UPDATED-090444B5",
+                    "title": "SDK Smoke Variant RENAMED 090444b5",
+                    "updated": "2026-09-04T13:39:00.021000+00:00",
+                    "url": "https://example.com/products/sdk-smoke-090444b5-item1-v1"
+                },
+                "relationships": {
+                    "item": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item1-v1/relationships/item/",
+                            "related": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item1-v1/item/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item1-v1/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item1-v1?fields%5Bcatalog-variant%5D=created%2Ccustom_metadata%2Cdescription%2Cexternal_id%2Cimage_full_url%2Cimage_thumbnail_url%2Cimages%2Cinventory_policy%2Cinventory_quantity%2Cprice%2Cpublished%2Csku%2Ctitle%2Cupdated%2Curl"
+            }
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogVariants.update",
+        "recorded": "2026-09-04"
+    }
+}

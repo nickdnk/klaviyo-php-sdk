@@ -1,0 +1,22 @@
+{
+    "operation": "request_profile_deletion",
+    "request": {
+        "method": "POST",
+        "path": "/api/data-privacy-deletion-jobs",
+        "query": {}
+    },
+    "response": {
+        "status": 202,
+        "headers": {
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "profiles.deleteProfile",
+        "recorded": "2026-09-04"
+    }
+}

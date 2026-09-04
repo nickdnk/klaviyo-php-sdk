@@ -1,0 +1,35 @@
+{
+    "operation": "merge_profiles",
+    "request": {
+        "method": "POST",
+        "path": "/api/profile-merge",
+        "query": {}
+    },
+    "response": {
+        "status": 202,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "profile",
+                "id": "01M1PAAR5HBCRHA3NN9NG5WRTA",
+                "attributes": [],
+                "links": {
+                    "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/profile-merge"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.merge",
+        "recorded": "2026-09-04"
+    }
+}

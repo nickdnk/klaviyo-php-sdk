@@ -1,0 +1,105 @@
+{
+    "operation": "get_segment",
+    "request": {
+        "method": "GET",
+        "path": "/api/segments/RvKscW",
+        "query": {
+            "fields": {
+                "segment": "name,definition,created,updated,is_active,is_processing,is_starred",
+                "tag": "name",
+                "flow": "name"
+            },
+            "additional-fields": {
+                "segment": "profile_count"
+            },
+            "include": "tags,flow-triggers"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "segment",
+                "id": "RvKscW",
+                "attributes": {
+                    "name": "sdk-smoke-0904b052-segment",
+                    "definition": {
+                        "condition_groups": [
+                            {
+                                "conditions": [
+                                    {
+                                        "type": "profile-group-membership",
+                                        "is_member": true,
+                                        "group_ids": [
+                                            "SdpKaX"
+                                        ],
+                                        "timeframe_filter": null
+                                    }
+                                ]
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "type": "profile-property",
+                                        "property": "properties['sdk_smoke_run']",
+                                        "filter": {
+                                            "type": "string",
+                                            "operator": "equals",
+                                            "value": "0904b052"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "created": "2026-09-04T13:38:50+00:00",
+                    "updated": "2026-09-04T13:38:50+00:00",
+                    "is_active": true,
+                    "is_processing": true,
+                    "is_starred": true,
+                    "profile_count": 0
+                },
+                "relationships": {
+                    "profiles": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/segments/RvKscW/relationships/profiles/",
+                            "related": "https://a.klaviyo.com/api/segments/RvKscW/profiles/"
+                        }
+                    },
+                    "tags": {
+                        "data": [],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/segments/RvKscW/relationships/tags/",
+                            "related": "https://a.klaviyo.com/api/segments/RvKscW/tags/"
+                        }
+                    },
+                    "flow-triggers": {
+                        "data": [],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/segments/RvKscW/relationships/flow-triggers/",
+                            "related": "https://a.klaviyo.com/api/segments/RvKscW/flow-triggers/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/segments/RvKscW/"
+                }
+            },
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/segments/RvKscW?fields%5Bsegment%5D=name%2Cdefinition%2Ccreated%2Cupdated%2Cis_active%2Cis_processing%2Cis_starred&fields%5Btag%5D=name&fields%5Bflow%5D=name&additional-fields%5Bsegment%5D=profile_count&include=tags%2Cflow-triggers"
+            }
+        }
+    },
+    "source": {
+        "suite": "segments",
+        "step": "segments.get",
+        "recorded": "2026-09-04"
+    }
+}

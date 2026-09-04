@@ -1,0 +1,170 @@
+{
+    "operation": "get_flow",
+    "request": {
+        "method": "GET",
+        "path": "/api/flows/T6EyQF",
+        "query": {
+            "fields": {
+                "flow": "name,status",
+                "flow-action": "definition,created,updated",
+                "tag": "name"
+            },
+            "include": "flow-actions,tags"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "1",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "flow",
+                "id": "T6EyQF",
+                "attributes": {
+                    "name": "sdk-smoke-09049919-flow",
+                    "status": "draft"
+                },
+                "relationships": {
+                    "flow-actions": {
+                        "data": [
+                            {
+                                "type": "flow-action",
+                                "id": "116466132"
+                            },
+                            {
+                                "type": "flow-action",
+                                "id": "116466131"
+                            }
+                        ],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/flows/T6EyQF/relationships/flow-actions/",
+                            "related": "https://a.klaviyo.com/api/flows/T6EyQF/flow-actions/"
+                        }
+                    },
+                    "tags": {
+                        "data": [],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/flows/T6EyQF/relationships/tags/",
+                            "related": "https://a.klaviyo.com/api/flows/T6EyQF/tags/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/flows/T6EyQF/"
+                }
+            },
+            "included": [
+                {
+                    "type": "flow-action",
+                    "id": "116466132",
+                    "attributes": {
+                        "definition": {
+                            "id": "116466132",
+                            "type": "send-email",
+                            "data": {
+                                "message": {
+                                    "from_email": "customer@example.com",
+                                    "from_label": "Example Org",
+                                    "reply_to_email": "customer@example.com",
+                                    "cc_email": null,
+                                    "bcc_email": null,
+                                    "subject_line": "SDK smoke subject",
+                                    "preview_text": "SDK smoke preview",
+                                    "template_id": "Ug5pJx",
+                                    "smart_sending_enabled": true,
+                                    "transactional": false,
+                                    "add_tracking_params": false,
+                                    "custom_tracking_params": null,
+                                    "additional_filters": null,
+                                    "name": "sdk-smoke-09049919-msg",
+                                    "id": "StDwe4"
+                                },
+                                "status": "draft"
+                            },
+                            "links": {
+                                "next": null
+                            }
+                        },
+                        "created": "2026-09-04T13:40:13+00:00",
+                        "updated": "2026-09-04T13:40:13+00:00"
+                    },
+                    "relationships": {
+                        "flow": {
+                            "data": {
+                                "type": "flow",
+                                "id": "T6EyQF"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/flow-actions/116466132/relationships/flow/",
+                                "related": "https://a.klaviyo.com/api/flow-actions/116466132/flow/"
+                            }
+                        },
+                        "flow-messages": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/flow-actions/116466132/relationships/flow-messages/",
+                                "related": "https://a.klaviyo.com/api/flow-actions/116466132/flow-messages/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/flow-actions/116466132/"
+                    }
+                },
+                {
+                    "type": "flow-action",
+                    "id": "116466131",
+                    "attributes": {
+                        "definition": {
+                            "id": "116466131",
+                            "type": "time-delay",
+                            "data": {
+                                "unit": "hours",
+                                "value": 2,
+                                "secondary_value": 0,
+                                "timezone": "profile"
+                            },
+                            "links": {
+                                "next": "116466132"
+                            }
+                        },
+                        "created": "2026-09-04T13:40:13+00:00",
+                        "updated": "2026-09-04T13:40:13+00:00"
+                    },
+                    "relationships": {
+                        "flow": {
+                            "data": {
+                                "type": "flow",
+                                "id": "T6EyQF"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/flow-actions/116466131/relationships/flow/",
+                                "related": "https://a.klaviyo.com/api/flow-actions/116466131/flow/"
+                            }
+                        },
+                        "flow-messages": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/flow-actions/116466131/relationships/flow-messages/",
+                                "related": "https://a.klaviyo.com/api/flow-actions/116466131/flow-messages/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/flow-actions/116466131/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/flows/T6EyQF?fields%5Bflow%5D=name%2Cstatus&fields%5Bflow-action%5D=definition%2Ccreated%2Cupdated&fields%5Btag%5D=name&include=flow-actions%2Ctags"
+            }
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flows.get",
+        "recorded": "2026-09-04"
+    }
+}

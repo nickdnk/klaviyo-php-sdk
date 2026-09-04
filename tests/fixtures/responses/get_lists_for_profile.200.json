@@ -1,0 +1,65 @@
+{
+    "operation": "get_lists_for_profile",
+    "request": {
+        "method": "GET",
+        "path": "/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/lists",
+        "query": {
+            "fields": {
+                "list": "name"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "list",
+                    "id": "YafG4m",
+                    "attributes": {
+                        "name": "sdk-smoke-09047c86-list-renamed"
+                    },
+                    "relationships": {
+                        "profiles": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/profiles/",
+                                "related": "https://a.klaviyo.com/api/lists/YafG4m/profiles/"
+                            }
+                        },
+                        "tags": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/tags/",
+                                "related": "https://a.klaviyo.com/api/lists/YafG4m/tags/"
+                            }
+                        },
+                        "flow-triggers": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/lists/YafG4m/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/lists/YafG4m/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/lists?fields%5Blist%5D=name",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.lists",
+        "recorded": "2026-09-04"
+    }
+}

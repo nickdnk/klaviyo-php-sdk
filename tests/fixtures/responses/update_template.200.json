@@ -1,0 +1,44 @@
+{
+    "operation": "update_template",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/templates/SpfvU7",
+        "query": {
+            "fields": {
+                "template": "name,html,text,updated"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "template",
+                "id": "SpfvU7",
+                "attributes": {
+                    "name": "sdk-smoke-0904a5e6-tpl-code-renamed",
+                    "html": "<html><head></head><body><h1>Updated {{ first_name }}</h1></body></html>",
+                    "text": "Updated {{ first_name }}",
+                    "updated": "2026-09-04T13:39:09.580249+00:00"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/templates/SpfvU7/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/templates/SpfvU7?fields%5Btemplate%5D=name%2Chtml%2Ctext%2Cupdated"
+            }
+        }
+    },
+    "source": {
+        "suite": "templates",
+        "step": "templates.update",
+        "recorded": "2026-09-04"
+    }
+}

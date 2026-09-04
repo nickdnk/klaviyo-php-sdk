@@ -1,0 +1,22 @@
+{
+    "operation": "delete_tag_group",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/tag-groups/c8aa0a0d-bad4-457f-b709-cf62fdeb9b09",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "tags",
+        "step": "tagGroups.delete",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,17 @@
+/vendor/
+/composer.lock
+/.phpunit.cache/
+/build/
+/.phpunit.result.cache
+/.idea/
+.DS_Store
+# smoke-test tooling is tracked; its outputs and secrets are not
+/scratch/.env
+/scratch/.oauth.json
+/scratch/.oauth-pending.json
+/scratch/logs/
+/scratch/results/
+/scratch/REPORT.md
+/scratch/recordings/
+/scratch/webhooks/logs/
+/scratch/openapi/

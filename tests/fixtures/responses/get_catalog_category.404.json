@@ -1,0 +1,36 @@
+{
+    "operation": "get_catalog_category",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-categories/$custom:::$default:::sdk-smoke-nope-090444b5",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "13de4e25-d7cc-4583-b9bc-08b0ac158fda",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "No category with the ID `$custom:::$default:::sdk-smoke-nope-090444b5` exists.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogCategories.get",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "operation": "get_metric_id_for_event",
+    "request": {
+        "method": "GET",
+        "path": "/api/events/7qWkC6JPz7g/relationships/metric",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "metric",
+                "id": "SkDfHe"
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/events/7qWkC6JPz7g/relationships/metric"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "events.metricId",
+        "recorded": "2026-09-04"
+    }
+}

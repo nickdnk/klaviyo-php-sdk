@@ -1,0 +1,22 @@
+{
+    "operation": "delete_web_feed",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/web-feeds/9055663",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "settings",
+        "step": "webFeeds.delete",
+        "recorded": "2026-09-04"
+    }
+}

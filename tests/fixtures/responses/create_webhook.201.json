@@ -1,0 +1,63 @@
+{
+    "operation": "create_webhook",
+    "request": {
+        "method": "POST",
+        "path": "/api/webhooks",
+        "query": {
+            "fields": {
+                "webhook": "name,endpoint_url,enabled,description,created_at"
+            }
+        }
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "webhook",
+                "id": "01M1PAC5N9PMXJ7672AC8B75VN",
+                "attributes": {
+                    "name": "sdk-smoke-09045284-hook",
+                    "endpoint_url": "https://e444-87-72-102-66.ngrok-free.app/*****",
+                    "enabled": true,
+                    "description": "sdk smoke 09045284",
+                    "created_at": "2026-09-04T13:40:19.268993+00:00"
+                },
+                "relationships": {
+                    "webhook-topics": {
+                        "data": [
+                            {
+                                "type": "webhook-topic",
+                                "id": "event:klaviyo.manually_suppressed_from_email_marketing"
+                            },
+                            {
+                                "type": "webhook-topic",
+                                "id": "event:klaviyo.manually_unsuppressed_from_email_marketing"
+                            },
+                            {
+                                "type": "webhook-topic",
+                                "id": "event:klaviyo.subscribed_to_email_marketing"
+                            }
+                        ]
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/webhooks/01M1PAC5N9PMXJ7672AC8B75VN/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/webhooks?fields%5Bwebhook%5D=name%2Cendpoint_url%2Cenabled%2Cdescription%2Ccreated_at"
+            }
+        }
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "webhooks.create",
+        "recorded": "2026-09-04"
+    }
+}

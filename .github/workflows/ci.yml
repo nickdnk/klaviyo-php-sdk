@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  phpunit:
+    name: PHPUnit (PHP ${{ matrix.php }}, ${{ matrix.dependencies }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4', '8.5']
+        dependencies: [highest]
+        include:
+          - php: '8.3'
+            dependencies: lowest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Validate composer.json
+        run: composer validate --strict --no-check-publish --no-check-lock
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v3
+        with:
+          dependency-versions: ${{ matrix.dependencies }}
+          composer-options: --no-scripts --no-plugins
+
+      - name: Lint
+        run: find src tests -name '*.php' -print0 | xargs -0 -n1 -P4 php -l | { ! grep -v 'No syntax errors'; }
+
+      - name: Run tests
+        run: vendor/bin/phpunit
+
+  coverage:
+    name: Coverage (PHP 8.5)
+    runs-on: ubuntu-latest
+    needs: phpunit
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          coverage: pcov
+          tools: composer:v2
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: --no-scripts --no-plugins
+
+      - name: Run tests with coverage
+        run: vendor/bin/phpunit --coverage-clover build/clover.xml
+
+      - name: Upload to Coveralls
+        uses: coverallsapp/github-action@v2
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        with:
+          file: build/clover.xml
+          format: clover

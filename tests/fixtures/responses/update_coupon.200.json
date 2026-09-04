@@ -1,0 +1,41 @@
+{
+    "operation": "update_coupon",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/coupons/sdk_smoke_09048f53_coupon1",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "1",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "coupon",
+                "id": "sdk_smoke_09048f53_coupon1",
+                "attributes": {
+                    "external_id": "sdk_smoke_09048f53_coupon1",
+                    "description": "SDK smoke coupon 1 — final description",
+                    "monitor_configuration": {
+                        "low_balance_threshold": "250"
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/coupons/sdk_smoke_09048f53_coupon1/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/coupons/sdk_smoke_09048f53_coupon1"
+            }
+        }
+    },
+    "source": {
+        "suite": "coupons",
+        "step": "coupons.update",
+        "recorded": "2026-09-04"
+    }
+}

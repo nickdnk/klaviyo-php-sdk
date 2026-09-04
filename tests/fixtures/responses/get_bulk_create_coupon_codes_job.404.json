@@ -1,0 +1,36 @@
+{
+    "operation": "get_bulk_create_coupon_codes_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/coupon-code-bulk-create-jobs/01GSQPBF74KQ5YTDEPP41T1BZH",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "a51fc257-1dd0-45a6-ac68-51dc73dd544a",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A coupon code bulk create job with the id '01GSQPBF74KQ5YTDEPP41T1BZH' does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "coupons",
+        "step": "couponCodes.getBulkCreateJob",
+        "recorded": "2026-09-04"
+    }
+}

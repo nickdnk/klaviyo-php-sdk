@@ -1,0 +1,40 @@
+{
+    "operation": "create_webhook",
+    "request": {
+        "method": "POST",
+        "path": "/api/webhooks",
+        "query": {
+            "fields": {
+                "webhook": "created_at,description,enabled,endpoint_url,name,updated_at"
+            }
+        }
+    },
+    "response": {
+        "status": 403,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "6c0434b9-a15f-4a49-8422-4e83471d1bd4",
+                    "status": 403,
+                    "code": "permission_denied",
+                    "title": "You do not have permission to perform this action.",
+                    "detail": "You must have Advanced KDP enabled to use this endpoint.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "webhooks.create",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "operation": "create_data_source_record",
+    "request": {
+        "method": "POST",
+        "path": "/api/data-source-record-create-jobs",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "dataSources.createRecord",
+        "recorded": "2026-09-04"
+    }
+}

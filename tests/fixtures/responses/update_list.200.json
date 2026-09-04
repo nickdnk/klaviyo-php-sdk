@@ -1,0 +1,60 @@
+{
+    "operation": "update_list",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/lists/YafG4m",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "list",
+                "id": "YafG4m",
+                "attributes": {
+                    "name": "sdk-smoke-09047c86-list-renamed",
+                    "created": "2026-09-04T13:39:28+00:00",
+                    "updated": "2026-09-04T13:39:31.359707+00:00",
+                    "opt_in_process": "single_opt_in"
+                },
+                "relationships": {
+                    "profiles": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/profiles/",
+                            "related": "https://a.klaviyo.com/api/lists/YafG4m/profiles/"
+                        }
+                    },
+                    "tags": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/tags/",
+                            "related": "https://a.klaviyo.com/api/lists/YafG4m/tags/"
+                        }
+                    },
+                    "flow-triggers": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/flow-triggers/",
+                            "related": "https://a.klaviyo.com/api/lists/YafG4m/flow-triggers/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/lists/YafG4m/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/lists/YafG4m"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "lists.update",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,56 @@
+{
+    "operation": "bulk_suppress_profiles",
+    "request": {
+        "method": "POST",
+        "path": "/api/profile-suppression-bulk-create-jobs",
+        "query": {}
+    },
+    "response": {
+        "status": 202,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "profile-suppression-bulk-create-job",
+                "id": "01M1PACBYASEKY1KPG9G9M7XW1",
+                "attributes": {
+                    "status": "processing",
+                    "created_at": "2026-09-04T13:40:25.675036+00:00",
+                    "total_count": 0,
+                    "completed_count": 0,
+                    "completed_at": "2026-09-04T13:40:25.683021+00:00",
+                    "skipped_count": 0
+                },
+                "relationships": {
+                    "lists": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1PACBYASEKY1KPG9G9M7XW1/relationships/lists/",
+                            "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1PACBYASEKY1KPG9G9M7XW1/lists/"
+                        }
+                    },
+                    "segments": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1PACBYASEKY1KPG9G9M7XW1/relationships/segments/",
+                            "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1PACBYASEKY1KPG9G9M7XW1/segments/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1PACBYASEKY1KPG9G9M7XW1/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs"
+            }
+        }
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "profiles.suppress",
+        "recorded": "2026-09-04"
+    }
+}

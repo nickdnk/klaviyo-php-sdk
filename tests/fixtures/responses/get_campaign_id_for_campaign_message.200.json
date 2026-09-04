@@ -1,0 +1,31 @@
+{
+    "operation": "get_campaign_id_for_campaign_message",
+    "request": {
+        "method": "GET",
+        "path": "/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/relationships/campaign",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "campaign",
+                "id": "01M1PA99J4GSD6B3XGYF78793W"
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/relationships/campaign"
+            }
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaignMessages.campaignId",
+        "recorded": "2026-09-04"
+    }
+}

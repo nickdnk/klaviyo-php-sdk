@@ -1,0 +1,35 @@
+{
+    "operation": "get_tag_ids_for_tag_group",
+    "request": {
+        "method": "GET",
+        "path": "/api/tag-groups/e30baa69-f382-4eef-8ff6-222d5c3d9a8a/relationships/tags",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "tag",
+                    "id": "3153c2aa-8f96-40bb-be8f-6d3573129b95"
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/tag-groups/e30baa69-f382-4eef-8ff6-222d5c3d9a8a/relationships/tags",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "tags",
+        "step": "tagGroups.tagIds",
+        "recorded": "2026-09-04"
+    }
+}

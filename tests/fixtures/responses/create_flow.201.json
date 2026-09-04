@@ -1,0 +1,81 @@
+{
+    "operation": "create_flow",
+    "request": {
+        "method": "POST",
+        "path": "/api/flows",
+        "query": {}
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60, 100;w=86400",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "flow",
+                "id": "T23ivh",
+                "attributes": {
+                    "name": "sdk-smoke-09049919-flow2",
+                    "status": "draft",
+                    "archived": false,
+                    "created": "2026-09-04T13:40:14.296065+00:00",
+                    "updated": "2026-09-04T13:40:14.301129+00:00",
+                    "trigger_type": "Added to List",
+                    "definition": {
+                        "triggers": [
+                            {
+                                "type": "list",
+                                "id": "TNiRNG"
+                            }
+                        ],
+                        "profile_filter": null,
+                        "actions": [
+                            {
+                                "id": "116466133",
+                                "type": "time-delay",
+                                "data": {
+                                    "unit": "days",
+                                    "value": 1,
+                                    "secondary_value": null,
+                                    "timezone": "profile"
+                                },
+                                "links": {
+                                    "next": null
+                                }
+                            }
+                        ],
+                        "entry_action_id": "116466133"
+                    }
+                },
+                "relationships": {
+                    "flow-actions": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/flows/T23ivh/relationships/flow-actions/",
+                            "related": "https://a.klaviyo.com/api/flows/T23ivh/flow-actions/"
+                        }
+                    },
+                    "tags": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/flows/T23ivh/relationships/tags/",
+                            "related": "https://a.klaviyo.com/api/flows/T23ivh/tags/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/flows/T23ivh/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/flows"
+            }
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flows.create",
+        "recorded": "2026-09-04"
+    }
+}

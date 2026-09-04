@@ -1,0 +1,22 @@
+{
+    "operation": "remove_tag_from_campaigns",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/tags/fe22c973-0e88-4ae3-8229-6700b2c0f43f/relationships/campaigns",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "tags.untagCampaigns",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,46 @@
+{
+    "operation": "query_flow_series",
+    "request": {
+        "method": "POST",
+        "path": "/api/flow-series-reports",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 2;w=60, 225;w=86400",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "flow-series-report",
+                "id": "a31196c7-0579-47dd-9bd1-b1715ce174ec",
+                "attributes": {
+                    "results": [],
+                    "date_times": [
+                        "2026-08-28T00:00:00+00:00",
+                        "2026-08-29T00:00:00+00:00",
+                        "2026-08-30T00:00:00+00:00",
+                        "2026-08-31T00:00:00+00:00",
+                        "2026-09-01T00:00:00+00:00",
+                        "2026-09-02T00:00:00+00:00",
+                        "2026-09-03T00:00:00+00:00",
+                        "2026-09-04T00:00:00+00:00"
+                    ]
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/flow-series-reports",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "reports.flowSeries",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "operation": "delete_list",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/lists/UXmGFD",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "lists.delete",
+        "recorded": "2026-09-04"
+    }
+}

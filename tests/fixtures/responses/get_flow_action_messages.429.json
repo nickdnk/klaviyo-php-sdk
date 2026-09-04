@@ -1,0 +1,41 @@
+{
+    "operation": "get_flow_action_messages",
+    "request": {
+        "method": "GET",
+        "path": "/api/flow-actions/116466131/flow-messages",
+        "query": {
+            "page": {
+                "size": "1"
+            }
+        }
+    },
+    "response": {
+        "status": 429,
+        "headers": {
+            "retry-after": "1"
+        },
+        "body": {
+            "errors": [
+                {
+                    "status": 429,
+                    "meta": [],
+                    "links": {
+                        "type": "https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling#rate-limits"
+                    },
+                    "id": "27b0fa06-8c8b-4b36-9204-c782adb4bd5a",
+                    "title": "Request was throttled.",
+                    "code": "throttled",
+                    "source": {
+                        "pointer": "/data"
+                    },
+                    "detail": "Request was throttled. Expected available in 1 second."
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flowActions.messages",
+        "recorded": "2026-09-04"
+    }
+}

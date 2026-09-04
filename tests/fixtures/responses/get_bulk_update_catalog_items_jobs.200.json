@@ -1,0 +1,140 @@
+{
+    "operation": "get_bulk_update_catalog_items_jobs",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-item-bulk-update-jobs",
+        "query": {
+            "fields": {
+                "catalog-item-bulk-update-job": "completed_at,completed_count,created_at,errors,expires_at,failed_count,status,total_count"
+            },
+            "filter": "equals(status,\"complete\")"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "catalog-item-bulk-update-job",
+                    "id": "01M1PAAJVHEDVNSH39P0AVZ4TZ",
+                    "attributes": {
+                        "completed_at": "2026-09-04T13:39:41.460610+00:00",
+                        "completed_count": 2,
+                        "created_at": "2026-09-04T13:39:27.218277+00:00",
+                        "errors": [],
+                        "expires_at": "2026-09-11T13:39:27.218277+00:00",
+                        "failed_count": 0,
+                        "status": "complete",
+                        "total_count": 2
+                    },
+                    "relationships": {
+                        "items": {
+                            "data": [
+                                {
+                                    "type": "catalog-item",
+                                    "id": "$custom:::$default:::sdk-smoke-090444b5-bitem1"
+                                },
+                                {
+                                    "type": "catalog-item",
+                                    "id": "$custom:::$default:::sdk-smoke-090444b5-bitem2"
+                                }
+                            ]
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/catalog-item-bulk-update-jobs/01M1PAAJVHEDVNSH39P0AVZ4TZ/"
+                    }
+                },
+                {
+                    "type": "catalog-item-bulk-update-job",
+                    "id": "01M1P6FZ4R0BFT67W0Y74T6R5P",
+                    "attributes": {
+                        "completed_at": "2026-09-04T12:36:17.933138+00:00",
+                        "completed_count": 2,
+                        "created_at": "2026-09-04T12:32:29.337150+00:00",
+                        "errors": [],
+                        "expires_at": "2026-09-11T12:32:29.337150+00:00",
+                        "failed_count": 0,
+                        "status": "complete",
+                        "total_count": 2
+                    },
+                    "relationships": {
+                        "items": {
+                            "data": [
+                                {
+                                    "type": "catalog-item",
+                                    "id": "$custom:::$default:::sdk-smoke-0904aec8-bitem1"
+                                },
+                                {
+                                    "type": "catalog-item",
+                                    "id": "$custom:::$default:::sdk-smoke-0904aec8-bitem2"
+                                }
+                            ]
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/catalog-item-bulk-update-jobs/01M1P6FZ4R0BFT67W0Y74T6R5P/"
+                    }
+                },
+                {
+                    "type": "catalog-item-bulk-update-job",
+                    "id": "01M1P66X2QYRCCGF6K2G9ESZKT",
+                    "attributes": {
+                        "completed_at": "2026-09-04T12:27:42.891019+00:00",
+                        "completed_count": 0,
+                        "created_at": "2026-09-04T12:27:32.311875+00:00",
+                        "errors": [
+                            {
+                                "id": "6b31915e-9755-4db4-a402-e0b8564e8249",
+                                "code": "invalid",
+                                "meta": {
+                                    "id": "$custom:::$default:::sdk-smoke-0904a3db-bitem1"
+                                },
+                                "title": "Invalid input",
+                                "detail": "An item with the id `$custom:::$default:::sdk-smoke-0904a3db-bitem1` does not exist.",
+                                "source": {
+                                    "pointer": "/data/attributes/items/data/id"
+                                }
+                            },
+                            {
+                                "id": "657408e1-b885-40ae-a071-1c90434c2fa2",
+                                "code": "invalid",
+                                "meta": {
+                                    "id": "$custom:::$default:::sdk-smoke-0904a3db-bitem2"
+                                },
+                                "title": "Invalid input",
+                                "detail": "An item with the id `$custom:::$default:::sdk-smoke-0904a3db-bitem2` does not exist.",
+                                "source": {
+                                    "pointer": "/data/attributes/items/data/id"
+                                }
+                            }
+                        ],
+                        "expires_at": "2026-09-11T12:27:32.311875+00:00",
+                        "failed_count": 2,
+                        "status": "complete",
+                        "total_count": 2
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/catalog-item-bulk-update-jobs/01M1P66X2QYRCCGF6K2G9ESZKT/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/catalog-item-bulk-update-jobs?fields%5Bcatalog-item-bulk-update-job%5D=completed_at%2Ccompleted_count%2Ccreated_at%2Cerrors%2Cexpires_at%2Cfailed_count%2Cstatus%2Ctotal_count&filter=equals%28status%2C%22complete%22%29",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogItems.getBulkUpdateJobs",
+        "recorded": "2026-09-04"
+    }
+}

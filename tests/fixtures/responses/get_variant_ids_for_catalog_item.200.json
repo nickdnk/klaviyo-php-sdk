@@ -1,0 +1,45 @@
+{
+    "operation": "get_variant_ids_for_catalog_item",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item1/relationships/variants",
+        "query": {
+            "filter": "contains(title,\"090444b5\")",
+            "sort": "-created",
+            "page": {
+                "size": "100"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "catalog-variant",
+                    "id": "$custom:::$default:::sdk-smoke-090444b5-item1-v2"
+                },
+                {
+                    "type": "catalog-variant",
+                    "id": "$custom:::$default:::sdk-smoke-090444b5-item1-v1"
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item1/relationships/variants?filter=contains%28title%2C%22090444b5%22%29&sort=-created&page%5Bsize%5D=100",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogItems.variantIds",
+        "recorded": "2026-09-04"
+    }
+}

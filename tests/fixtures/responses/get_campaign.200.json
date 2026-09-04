@@ -1,0 +1,159 @@
+{
+    "operation": "get_campaign",
+    "request": {
+        "method": "GET",
+        "path": "/api/campaigns/01M1PA99J4GSD6B3XGYF78793W",
+        "query": {
+            "fields": {
+                "campaign": "name,status,audiences,send_strategy,send_options,tracking_options,created_at,updated_at,send_time,archived",
+                "campaign-message": "definition,send_times,created_at",
+                "tag": "name"
+            },
+            "include": "campaign-messages,tags"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "campaign",
+                "id": "01M1PA99J4GSD6B3XGYF78793W",
+                "attributes": {
+                    "name": "sdk-smoke-09048514-c",
+                    "status": "Draft",
+                    "audiences": {
+                        "included": [
+                            "VAnKig"
+                        ],
+                        "excluded": []
+                    },
+                    "send_strategy": {
+                        "method": "static",
+                        "datetime": "2026-10-04T09:00:00+00:00",
+                        "options": {
+                            "is_local": false
+                        }
+                    },
+                    "send_options": {
+                        "use_smart_sending": true,
+                        "ignore_unsubscribes": false
+                    },
+                    "tracking_options": {
+                        "add_tracking_params": true,
+                        "custom_tracking_params": [
+                            {
+                                "type": "static",
+                                "value": "sdk-smoke",
+                                "name": "utm_source"
+                            },
+                            {
+                                "type": "static",
+                                "value": "email",
+                                "name": "utm_medium"
+                            },
+                            {
+                                "type": "dynamic",
+                                "value": "campaign_name",
+                                "name": "utm_campaign"
+                            }
+                        ],
+                        "is_tracking_clicks": true,
+                        "is_tracking_opens": true
+                    },
+                    "created_at": "2026-09-04T13:38:44.935203+00:00",
+                    "updated_at": "2026-09-04T13:38:45.575329+00:00",
+                    "send_time": null,
+                    "archived": false
+                },
+                "relationships": {
+                    "campaign-messages": {
+                        "data": [
+                            {
+                                "type": "campaign-message",
+                                "id": "01M1PA99JBS13TE33GQ4YRESFN"
+                            }
+                        ],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/relationships/campaign-messages/",
+                            "related": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/campaign-messages/"
+                        }
+                    },
+                    "tags": {
+                        "data": [],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/relationships/tags/",
+                            "related": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/tags/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/"
+                }
+            },
+            "included": [
+                {
+                    "type": "campaign-message",
+                    "id": "01M1PA99JBS13TE33GQ4YRESFN",
+                    "attributes": {
+                        "definition": {
+                            "channel": "email",
+                            "label": "sdk-smoke-09048514-msg",
+                            "content": {
+                                "subject": "SDK smoke 09048514",
+                                "preview_text": "Preview text for 09048514",
+                                "from_email": "customer@example.com",
+                                "from_label": "SDK Smoke",
+                                "reply_to_email": "customer@example.com",
+                                "cc_email": "customer@example.com",
+                                "bcc_email": "customer@example.com"
+                            }
+                        },
+                        "send_times": [],
+                        "created_at": "2026-09-04T13:38:44.942300+00:00"
+                    },
+                    "relationships": {
+                        "campaign": {
+                            "data": {
+                                "type": "campaign",
+                                "id": "01M1PA99J4GSD6B3XGYF78793W"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/relationships/campaign/",
+                                "related": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/campaign/"
+                            }
+                        },
+                        "template": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/relationships/template/",
+                                "related": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/template/"
+                            }
+                        },
+                        "image": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/relationships/image/",
+                                "related": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/image/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W?fields%5Bcampaign%5D=name%2Cstatus%2Caudiences%2Csend_strategy%2Csend_options%2Ctracking_options%2Ccreated_at%2Cupdated_at%2Csend_time%2Carchived&fields%5Bcampaign-message%5D=definition%2Csend_times%2Ccreated_at&fields%5Btag%5D=name&include=campaign-messages%2Ctags"
+            }
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaigns.get",
+        "recorded": "2026-09-04"
+    }
+}

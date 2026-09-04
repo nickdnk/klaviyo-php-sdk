@@ -1,0 +1,31 @@
+{
+    "operation": "get_object_types",
+    "request": {
+        "method": "GET",
+        "path": "/api/object-types",
+        "query": {
+            "include": "draft-schema"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "1",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [],
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/object-types?include=draft-schema"
+            }
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectTypes.list",
+        "recorded": "2026-09-04"
+    }
+}

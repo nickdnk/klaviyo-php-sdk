@@ -1,0 +1,36 @@
+{
+    "operation": "get_bulk_update_catalog_items_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-item-bulk-update-jobs/sdk-smoke-nope-090444b5",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "c3646c1b-ae3c-4afc-8e26-e17c4a8525c5",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A catalog-item bulk update job with id sdk-smoke-nope-090444b5 does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogItems.getBulkUpdateJob",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "operation": "get_mapped_metric",
+    "request": {
+        "method": "GET",
+        "path": "/api/mapped-metrics/revenue",
+        "query": {
+            "include": "metric,custom-metric"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "mapped-metric",
+                "id": "revenue",
+                "attributes": {
+                    "updated": "2026-09-04T13:04:58.039222+00:00"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/mapped-metrics/revenue/"
+                }
+            },
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/mapped-metrics/revenue?include=metric%2Ccustom-metric"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "mappedMetrics.update",
+        "recorded": "2026-09-04"
+    }
+}

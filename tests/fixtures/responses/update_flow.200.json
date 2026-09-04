@@ -1,0 +1,56 @@
+{
+    "operation": "update_flow",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/flows/T6EyQF",
+        "query": {
+            "fields": {
+                "flow": "name,status"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "flow",
+                "id": "T6EyQF",
+                "attributes": {
+                    "name": "sdk-smoke-09049919-flow",
+                    "status": "manual"
+                },
+                "relationships": {
+                    "flow-actions": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/flows/T6EyQF/relationships/flow-actions/",
+                            "related": "https://a.klaviyo.com/api/flows/T6EyQF/flow-actions/"
+                        }
+                    },
+                    "tags": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/flows/T6EyQF/relationships/tags/",
+                            "related": "https://a.klaviyo.com/api/flows/T6EyQF/tags/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/flows/T6EyQF/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/flows/T6EyQF?fields%5Bflow%5D=name%2Cstatus"
+            }
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flows.update",
+        "recorded": "2026-09-04"
+    }
+}

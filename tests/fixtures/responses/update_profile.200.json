@@ -1,0 +1,76 @@
+{
+    "operation": "update_profile",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA",
+        "query": {
+            "fields": {
+                "profile": "first_name,properties"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "profile",
+                "id": "01M1PAAR5HBCRHA3NN9NG5WRTA",
+                "attributes": {
+                    "first_name": "Smokey",
+                    "properties": {
+                        "tags": [
+                            "z",
+                            "x",
+                            "y"
+                        ],
+                        "score": 8,
+                        "company_id": "WBhXHN"
+                    }
+                },
+                "relationships": {
+                    "lists": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/lists/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/lists/"
+                        }
+                    },
+                    "segments": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/segments/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/segments/"
+                        }
+                    },
+                    "push-tokens": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/push-tokens/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/push-tokens/"
+                        }
+                    },
+                    "conversation": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/conversation/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/conversation/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA?fields%5Bprofile%5D=first_name%2Cproperties"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.update",
+        "recorded": "2026-09-04"
+    }
+}

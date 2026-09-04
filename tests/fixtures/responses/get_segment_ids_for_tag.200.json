@@ -1,0 +1,28 @@
+{
+    "operation": "get_segment_ids_for_tag",
+    "request": {
+        "method": "GET",
+        "path": "/api/tags/f837de98-3527-4bae-8226-bda7c2395e29/relationships/segments",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "1",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/tags/f837de98-3527-4bae-8226-bda7c2395e29/relationships/segments"
+            }
+        }
+    },
+    "source": {
+        "suite": "tags",
+        "step": "tags.segmentIds",
+        "recorded": "2026-09-04"
+    }
+}

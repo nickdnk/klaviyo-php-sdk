@@ -1,0 +1,91 @@
+{
+    "operation": "get_webhooks",
+    "request": {
+        "method": "GET",
+        "path": "/api/webhooks",
+        "query": {
+            "fields": {
+                "webhook": "name,enabled"
+            },
+            "include": "webhook-topics"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "webhook",
+                    "id": "01M1PAC5N9PMXJ7672AC8B75VN",
+                    "attributes": {
+                        "name": "sdk-smoke-09045284-hook",
+                        "enabled": true
+                    },
+                    "relationships": {
+                        "webhook-topics": {
+                            "data": [
+                                {
+                                    "type": "webhook-topic",
+                                    "id": "event:klaviyo.manually_suppressed_from_email_marketing"
+                                },
+                                {
+                                    "type": "webhook-topic",
+                                    "id": "event:klaviyo.manually_unsuppressed_from_email_marketing"
+                                },
+                                {
+                                    "type": "webhook-topic",
+                                    "id": "event:klaviyo.subscribed_to_email_marketing"
+                                }
+                            ]
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhooks/01M1PAC5N9PMXJ7672AC8B75VN/"
+                    }
+                }
+            ],
+            "included": [
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.manually_suppressed_from_email_marketing",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.manually_suppressed_from_email_marketing/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.manually_unsuppressed_from_email_marketing",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.manually_unsuppressed_from_email_marketing/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.subscribed_to_email_marketing",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.subscribed_to_email_marketing/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/webhooks?fields%5Bwebhook%5D=name%2Cenabled&include=webhook-topics",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "webhooks.list",
+        "recorded": "2026-09-04"
+    }
+}

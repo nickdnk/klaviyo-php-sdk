@@ -1,0 +1,75 @@
+{
+    "operation": "query_segment_values",
+    "request": {
+        "method": "POST",
+        "path": "/api/segment-values-reports",
+        "query": {
+            "fields": {
+                "segment-values-report": "results"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 2;w=60, 225;w=86400",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "segment-values-report",
+                "id": "122d75bf-01ac-4577-b8b1-6c73e9c152a7",
+                "attributes": {
+                    "results": [
+                        {
+                            "groupings": {
+                                "segment_id": "RvKscW"
+                            },
+                            "statistics": {
+                                "members_added": 0,
+                                "total_members": 0
+                            }
+                        },
+                        {
+                            "groupings": {
+                                "segment_id": "W8qhB7"
+                            },
+                            "statistics": {
+                                "members_added": 0,
+                                "total_members": 0
+                            }
+                        },
+                        {
+                            "groupings": {
+                                "segment_id": "SAx2Kq"
+                            },
+                            "statistics": {
+                                "members_added": 0,
+                                "total_members": 0
+                            }
+                        },
+                        {
+                            "groupings": {
+                                "segment_id": "SnhZTm"
+                            },
+                            "statistics": {
+                                "members_added": 0,
+                                "total_members": 0
+                            }
+                        }
+                    ]
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/segment-values-reports?fields%5Bsegment-values-report%5D=results"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "reports.segmentValues",
+        "recorded": "2026-09-04"
+    }
+}

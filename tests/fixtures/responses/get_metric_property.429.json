@@ -1,0 +1,37 @@
+{
+    "operation": "get_metric_property",
+    "request": {
+        "method": "GET",
+        "path": "/api/metric-properties/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 429,
+        "headers": {
+            "retry-after": "1"
+        },
+        "body": {
+            "errors": [
+                {
+                    "status": 429,
+                    "meta": [],
+                    "links": {
+                        "type": "https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling#rate-limits"
+                    },
+                    "detail": "Request was throttled. Expected available in 1 second.",
+                    "code": "throttled",
+                    "title": "Request was throttled.",
+                    "source": {
+                        "pointer": "/data"
+                    },
+                    "id": "5f749086-e338-46ae-b647-5f88014bd657"
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "metricProperties.get",
+        "recorded": "2026-09-04"
+    }
+}

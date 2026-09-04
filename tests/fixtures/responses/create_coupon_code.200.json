@@ -1,0 +1,57 @@
+{
+    "operation": "create_coupon_code",
+    "request": {
+        "method": "POST",
+        "path": "/api/coupon-codes",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "348",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "coupon-code",
+                "id": "sdk_smoke_09048f53_coupon1-sdk_smoke_09048f53_code2",
+                "attributes": {
+                    "unique_code": "sdk_smoke_09048f53_code2",
+                    "expires_at": "2026-10-04T13:39:37Z",
+                    "status": "UNASSIGNED"
+                },
+                "relationships": {
+                    "coupon": {
+                        "data": {
+                            "type": "coupon",
+                            "id": "sdk_smoke_09048f53_coupon1"
+                        },
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/coupon-codes/sdk_smoke_09048f53_coupon1-sdk_smoke_09048f53_code2/relationships/coupon/",
+                            "related": "https://a.klaviyo.com/api/coupon-codes/sdk_smoke_09048f53_coupon1-sdk_smoke_09048f53_code2/coupon/"
+                        }
+                    },
+                    "profile": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/coupon-codes/sdk_smoke_09048f53_coupon1-sdk_smoke_09048f53_code2/relationships/profile/",
+                            "related": "https://a.klaviyo.com/api/coupon-codes/sdk_smoke_09048f53_coupon1-sdk_smoke_09048f53_code2/profile/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/coupon-codes/sdk_smoke_09048f53_coupon1-sdk_smoke_09048f53_code2/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/coupon-codes"
+            }
+        }
+    },
+    "source": {
+        "suite": "coupons",
+        "step": "couponCodes.create",
+        "recorded": "2026-09-04"
+    }
+}

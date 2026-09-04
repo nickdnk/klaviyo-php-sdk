@@ -1,0 +1,105 @@
+{
+    "operation": "get_bulk_import_profiles_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw",
+        "query": {
+            "fields": {
+                "profile-bulk-import-job": "status,completed_count,failed_count,total_count"
+            },
+            "include": "lists"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "profile-bulk-import-job",
+                "id": "V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw",
+                "attributes": {
+                    "status": "queued",
+                    "completed_count": 0,
+                    "failed_count": 0,
+                    "total_count": 3
+                },
+                "relationships": {
+                    "lists": {
+                        "data": [
+                            {
+                                "type": "list",
+                                "id": "YafG4m"
+                            }
+                        ],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/relationships/lists/",
+                            "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/lists/"
+                        }
+                    },
+                    "profiles": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/relationships/profiles/",
+                            "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/profiles/"
+                        }
+                    },
+                    "import-errors": {
+                        "links": {
+                            "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/import-errors/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/"
+                }
+            },
+            "included": [
+                {
+                    "type": "list",
+                    "id": "YafG4m",
+                    "attributes": {
+                        "name": "sdk-smoke-09047c86-list-renamed",
+                        "created": "2026-09-04T13:39:28+00:00",
+                        "updated": "2026-09-04T13:39:31+00:00",
+                        "opt_in_process": "single_opt_in"
+                    },
+                    "relationships": {
+                        "profiles": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/profiles/",
+                                "related": "https://a.klaviyo.com/api/lists/YafG4m/profiles/"
+                            }
+                        },
+                        "tags": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/tags/",
+                                "related": "https://a.klaviyo.com/api/lists/YafG4m/tags/"
+                            }
+                        },
+                        "flow-triggers": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/lists/YafG4m/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/lists/YafG4m/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw?fields%5Bprofile-bulk-import-job%5D=status%2Ccompleted_count%2Cfailed_count%2Ctotal_count&include=lists"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.getBulkImportJob",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "operation": "get_tag_ids_for_flow",
+    "request": {
+        "method": "GET",
+        "path": "/api/flows/T6EyQF/relationships/tags",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "tag",
+                    "id": "da4ac434-4e42-417c-8860-19cd2ca68f4e"
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/flows/T6EyQF/relationships/tags"
+            }
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flows.tagIds",
+        "recorded": "2026-09-04"
+    }
+}

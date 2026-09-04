@@ -1,0 +1,39 @@
+{
+    "operation": "get_profile_ids_for_segment",
+    "request": {
+        "method": "GET",
+        "path": "/api/segments/RvKscW/relationships/profiles",
+        "query": {
+            "page": {
+                "size": "1"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "profile",
+                    "id": "01M1PA9DFJNNYT82A7K2AEG8QT"
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/segments/RvKscW/relationships/profiles?page%5Bsize%5D=1",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "segments",
+        "step": "segments.profileIds",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "operation": "get_image_for_campaign_message",
+    "request": {
+        "method": "GET",
+        "path": "/api/campaign-messages/01M1PA9AY2XPHE5WBCZ5FPW6HM/image",
+        "query": {
+            "fields": {
+                "image": "name,image_url,format,size,hidden"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": null
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaignMessages.image",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "operation": "update_campaign_message",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN",
+        "query": {}
+    },
+    "response": {
+        "status": 400,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "0e73835a-b8e2-44c8-951a-f84f6ba5e151",
+                    "status": 400,
+                    "code": "invalid",
+                    "title": "Invalid input.",
+                    "detail": "'render_options' is not a valid field for the resource 'EmailMessageDefinition'.",
+                    "source": {
+                        "pointer": "/data/attributes/definition/render_options"
+                    },
+                    "links": [],
+                    "meta": []
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaignMessages.update",
+        "recorded": "2026-09-04"
+    }
+}

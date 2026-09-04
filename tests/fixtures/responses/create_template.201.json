@@ -1,0 +1,43 @@
+{
+    "operation": "create_template",
+    "request": {
+        "method": "POST",
+        "path": "/api/templates",
+        "query": {}
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "template",
+                "id": "RhSFjh",
+                "attributes": {
+                    "name": "sdk-smoke-09048514-t",
+                    "editor_type": "CODE",
+                    "html": "<html><head></head><body><p>hi</p></body></html>",
+                    "text": "hi",
+                    "amp": null,
+                    "created": "2026-09-04T13:38:43.654748+00:00",
+                    "updated": "2026-09-04T13:38:43.654771+00:00"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/templates/RhSFjh/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/templates"
+            }
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "templates.create",
+        "recorded": "2026-09-04"
+    }
+}

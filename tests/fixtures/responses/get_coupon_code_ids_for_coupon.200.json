@@ -1,0 +1,39 @@
+{
+    "operation": "get_coupon_code_ids_for_coupon",
+    "request": {
+        "method": "GET",
+        "path": "/api/coupons/sdk_smoke_09048f53_coupon1/relationships/coupon-codes",
+        "query": {
+            "page": {
+                "size": "1"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "72",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "coupon-code",
+                    "id": "sdk_smoke_09048f53_coupon1-sdk_smoke_09048f53_code1"
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/coupons/sdk_smoke_09048f53_coupon1/relationships/coupon-codes?page%5Bsize%5D=1",
+                "next": "https://a.klaviyo.com/api/coupons/sdk_smoke_09048f53_coupon1/relationships/coupon-codes?page%5Bsize%5D=1&page%5Bcursor%5D=bmV4dDo6aWQ6OjEwMTk2OTY0",
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "coupons",
+        "step": "coupons.codeIds",
+        "recorded": "2026-09-04"
+    }
+}

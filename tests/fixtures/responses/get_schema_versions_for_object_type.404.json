@@ -1,0 +1,40 @@
+{
+    "operation": "get_schema_versions_for_object_type",
+    "request": {
+        "method": "GET",
+        "path": "/api/object-types/01K61DKJ7EKJ0ES9VE456XF5JG/schema-versions",
+        "query": {
+            "fields": {
+                "object-schema": "title,status,published_at"
+            }
+        }
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "dda61a11-7c54-4f2b-aabf-8eebf249bd24",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "object-type with id `01K61DKJ7EKJ0ES9VE456XF5JG` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectTypes.schemaVersions",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,65 @@
+{
+    "operation": "get_coupon_codes_for_coupon",
+    "request": {
+        "method": "GET",
+        "path": "/api/coupons/sdk_smoke_09048f53_coupon1/coupon-codes",
+        "query": {
+            "page": {
+                "size": "1"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "72",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "coupon-code",
+                    "id": "sdk_smoke_09048f53_coupon1-sdk_smoke_09048f53_code1",
+                    "attributes": {
+                        "unique_code": "sdk_smoke_09048f53_code1",
+                        "expires_at": "2026-10-04T13:39:37+00:00",
+                        "status": "UNASSIGNED"
+                    },
+                    "relationships": {
+                        "coupon": {
+                            "data": {
+                                "type": "coupon",
+                                "id": "sdk_smoke_09048f53_coupon1"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/coupon-codes/sdk_smoke_09048f53_coupon1-sdk_smoke_09048f53_code1/relationships/coupon/",
+                                "related": "https://a.klaviyo.com/api/coupon-codes/sdk_smoke_09048f53_coupon1-sdk_smoke_09048f53_code1/coupon/"
+                            }
+                        },
+                        "profile": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/coupon-codes/sdk_smoke_09048f53_coupon1-sdk_smoke_09048f53_code1/relationships/profile/",
+                                "related": "https://a.klaviyo.com/api/coupon-codes/sdk_smoke_09048f53_coupon1-sdk_smoke_09048f53_code1/profile/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/coupon-codes/sdk_smoke_09048f53_coupon1-sdk_smoke_09048f53_code1/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/coupons/sdk_smoke_09048f53_coupon1/coupon-codes?page%5Bsize%5D=1",
+                "next": "https://a.klaviyo.com/api/coupons/sdk_smoke_09048f53_coupon1/coupon-codes?page%5Bsize%5D=1&page%5Bcursor%5D=bmV4dDo6aWQ6OjEwMTk2OTY0",
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "coupons",
+        "step": "coupons.codes",
+        "recorded": "2026-09-04"
+    }
+}

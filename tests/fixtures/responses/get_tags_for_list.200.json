@@ -1,0 +1,32 @@
+{
+    "operation": "get_tags_for_list",
+    "request": {
+        "method": "GET",
+        "path": "/api/lists/YafG4m/tags",
+        "query": {
+            "fields": {
+                "tag": "name"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/lists/YafG4m/tags?fields%5Btag%5D=name"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "lists.tags",
+        "recorded": "2026-09-04"
+    }
+}

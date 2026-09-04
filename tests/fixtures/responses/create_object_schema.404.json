@@ -1,0 +1,40 @@
+{
+    "operation": "create_object_schema",
+    "request": {
+        "method": "POST",
+        "path": "/api/object-schemas",
+        "query": {
+            "fields": {
+                "object-schema": "title,status,properties,required"
+            }
+        }
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "5e581936-b5f2-40f2-b231-594b1ec50b2c",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "object-type with id `01K61DKJ7EKJ0ES9VE456XF5JG` does not exist",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectSchemas.create",
+        "recorded": "2026-09-04"
+    }
+}

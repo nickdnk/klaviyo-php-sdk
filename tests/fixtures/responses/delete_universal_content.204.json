@@ -1,0 +1,22 @@
+{
+    "operation": "delete_universal_content",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/template-universal-content/bb161d2bff114ddb9b690ac517d5e14e",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "templates",
+        "step": "universalContent.delete",
+        "recorded": "2026-09-04"
+    }
+}

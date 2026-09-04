@@ -1,0 +1,22 @@
+{
+    "operation": "update_image_for_campaign_message",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/campaign-messages/01M1PA9AY2XPHE5WBCZ5FPW6HM/relationships/image",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaignMessages.updateImage",
+        "recorded": "2026-09-04"
+    }
+}

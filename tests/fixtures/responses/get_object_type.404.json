@@ -1,0 +1,42 @@
+{
+    "operation": "get_object_type",
+    "request": {
+        "method": "GET",
+        "path": "/api/object-types/01K61DKJ7EKJ0ES9VE456XF5JG",
+        "query": {
+            "fields": {
+                "object-type": "title,description,status,namespace,created_at,updated_at",
+                "object-schema": "title,status,properties,required,visibility"
+            },
+            "include": "current-schema,draft-schema"
+        }
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "c6d74314-ca98-4de5-bb78-d0e1e4d03017",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "object-type with id `01K61DKJ7EKJ0ES9VE456XF5JG` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectTypes.get",
+        "recorded": "2026-09-04"
+    }
+}

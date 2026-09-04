@@ -1,0 +1,36 @@
+{
+    "operation": "get_campaign",
+    "request": {
+        "method": "GET",
+        "path": "/api/campaigns/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "8",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "1aa8f128-4220-43fa-8c7a-2b1357438c49",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A campaign with id 'NOPE01' does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaigns.get",
+        "recorded": "2026-09-04"
+    }
+}

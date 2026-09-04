@@ -1,0 +1,36 @@
+{
+    "operation": "get_universal_content",
+    "request": {
+        "method": "GET",
+        "path": "/api/template-universal-content/01HWWWKAW4RHXQJCMW4R2KRYR4",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "72",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "0c855c32-8bd1-4eb8-b26c-0e6c0fbb5691",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A universal content with id `01HWWWKAW4RHXQJCMW4R2KRYR4` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "templates",
+        "step": "universalContent.get",
+        "recorded": "2026-09-04"
+    }
+}

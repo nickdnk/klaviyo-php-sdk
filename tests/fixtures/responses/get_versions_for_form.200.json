@@ -1,0 +1,58 @@
+{
+    "operation": "get_versions_for_form",
+    "request": {
+        "method": "GET",
+        "path": "/api/forms/UNtbZL/form-versions",
+        "query": {
+            "filter": "equals(form_type,\"popup\")"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "1",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "form-version",
+                    "id": "28242214",
+                    "attributes": {
+                        "form_type": "popup",
+                        "variation_name": "V1",
+                        "ab_test": null,
+                        "status": "draft",
+                        "created_at": "2026-09-04T13:40:14+00:00",
+                        "updated_at": "2026-09-04T13:40:14+00:00"
+                    },
+                    "relationships": {
+                        "form": {
+                            "data": {
+                                "type": "form",
+                                "id": "UNtbZL"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/form-versions/28242214/relationships/form/",
+                                "related": "https://a.klaviyo.com/api/form-versions/28242214/form/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/form-versions/28242214/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/forms/UNtbZL/form-versions?filter=equals%28form_type%2C%22popup%22%29"
+            }
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "forms.versions",
+        "recorded": "2026-09-04"
+    }
+}

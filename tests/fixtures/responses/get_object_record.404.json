@@ -1,0 +1,40 @@
+{
+    "operation": "get_object_record",
+    "request": {
+        "method": "GET",
+        "path": "/api/object-records/01K61DKJ7EKJ0ES9VE456XF5JG:::sdk-smoke-missing",
+        "query": {
+            "fields": {
+                "object-record": "record_properties"
+            }
+        }
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "357bbbd3-884b-4b65-a954-2c1388173327",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "Object type `01K61DKJ7EKJ0ES9VE456XF5JG` not found",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectRecords.get",
+        "recorded": "2026-09-04"
+    }
+}

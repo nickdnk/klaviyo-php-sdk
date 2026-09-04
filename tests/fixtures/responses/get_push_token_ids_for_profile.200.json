@@ -1,0 +1,28 @@
+{
+    "operation": "get_push_token_ids_for_profile",
+    "request": {
+        "method": "GET",
+        "path": "/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/push-tokens",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/push-tokens"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.pushTokenIds",
+        "recorded": "2026-09-04"
+    }
+}

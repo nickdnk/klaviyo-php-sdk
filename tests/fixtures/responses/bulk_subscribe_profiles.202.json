@@ -1,0 +1,22 @@
+{
+    "operation": "bulk_subscribe_profiles",
+    "request": {
+        "method": "POST",
+        "path": "/api/profile-subscription-bulk-create-jobs",
+        "query": {}
+    },
+    "response": {
+        "status": 202,
+        "headers": {
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.subscribe",
+        "recorded": "2026-09-04"
+    }
+}

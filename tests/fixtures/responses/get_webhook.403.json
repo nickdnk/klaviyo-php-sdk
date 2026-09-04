@@ -1,0 +1,42 @@
+{
+    "operation": "get_webhook",
+    "request": {
+        "method": "GET",
+        "path": "/api/webhooks/NOPE01",
+        "query": {
+            "fields": {
+                "webhook": "created_at,description,enabled,endpoint_url,name,updated_at",
+                "webhook-topic": "id"
+            },
+            "include": "webhook-topics"
+        }
+    },
+    "response": {
+        "status": 403,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "c222d125-4ed8-41ec-94a2-28b2625c2618",
+                    "status": 403,
+                    "code": "permission_denied",
+                    "title": "You do not have permission to perform this action.",
+                    "detail": "You must have Advanced KDP enabled to use this endpoint.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "webhooks.get",
+        "recorded": "2026-09-04"
+    }
+}

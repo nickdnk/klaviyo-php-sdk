@@ -1,0 +1,36 @@
+{
+    "operation": "delete_object_schema_relationship",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/object-schemas/01K61DKJ7EKJ0ES9VE456XF5JJ/relationships/object-schemas",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "1d649a74-df2e-438e-b1de-a9b644d828c2",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "object-schema with id `01K61DKJ7EKJ0ES9VE456XF5JJ` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectSchemas.deleteObjectSchemaRelationship",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,69 @@
+{
+    "operation": "get_campaign_for_campaign_message",
+    "request": {
+        "method": "GET",
+        "path": "/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/campaign",
+        "query": {
+            "fields": {
+                "campaign": "name,status,send_strategy"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "campaign",
+                "id": "01M1PA99J4GSD6B3XGYF78793W",
+                "attributes": {
+                    "name": "sdk-smoke-09048514-c-renamed",
+                    "status": "Draft",
+                    "send_strategy": {
+                        "method": "static",
+                        "datetime": "2026-10-19T11:30:00+00:00",
+                        "options": {
+                            "is_local": false
+                        }
+                    }
+                },
+                "relationships": {
+                    "campaign-messages": {
+                        "data": [
+                            {
+                                "type": "campaign-message",
+                                "id": "01M1PA99JBS13TE33GQ4YRESFN"
+                            }
+                        ],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/relationships/campaign-messages/",
+                            "related": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/campaign-messages/"
+                        }
+                    },
+                    "tags": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/relationships/tags/",
+                            "related": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/tags/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/campaigns/01M1PA99J4GSD6B3XGYF78793W/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/campaign?fields%5Bcampaign%5D=name%2Cstatus%2Csend_strategy"
+            }
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaignMessages.campaign",
+        "recorded": "2026-09-04"
+    }
+}

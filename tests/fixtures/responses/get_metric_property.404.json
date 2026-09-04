@@ -1,0 +1,36 @@
+{
+    "operation": "get_metric_property",
+    "request": {
+        "method": "GET",
+        "path": "/api/metric-properties/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "b24ddf3d-5c29-4947-ae0b-75f21a67194c",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A metric property with id `NOPE01` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "metricProperties.get",
+        "recorded": "2026-09-04"
+    }
+}

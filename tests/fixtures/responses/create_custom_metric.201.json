@@ -1,0 +1,74 @@
+{
+    "operation": "create_custom_metric",
+    "request": {
+        "method": "POST",
+        "path": "/api/custom-metrics",
+        "query": {
+            "fields": {
+                "custom-metric": "name,definition"
+            }
+        }
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60, 15;w=86400",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "custom-metric",
+                "id": "01M1PA9Z9DFGK85H67PJSZZ67V",
+                "attributes": {
+                    "name": "sdk-smoke-09042132-custom",
+                    "definition": {
+                        "aggregation_method": "value",
+                        "metric_groups": [
+                            {
+                                "metric_id": "SkDfHe",
+                                "metric_filters": [
+                                    {
+                                        "property": "sku",
+                                        "filter": {
+                                            "type": "string",
+                                            "operator": "starts-with",
+                                            "value": "A"
+                                        }
+                                    }
+                                ],
+                                "value_property": "$value"
+                            }
+                        ]
+                    }
+                },
+                "relationships": {
+                    "metrics": {
+                        "data": [
+                            {
+                                "type": "metric",
+                                "id": "SkDfHe"
+                            }
+                        ],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/custom-metrics/01M1PA9Z9DFGK85H67PJSZZ67V/relationships/metrics/",
+                            "related": "https://a.klaviyo.com/api/custom-metrics/01M1PA9Z9DFGK85H67PJSZZ67V/metrics/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/custom-metrics/01M1PA9Z9DFGK85H67PJSZZ67V/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/custom-metrics?fields%5Bcustom-metric%5D=name%2Cdefinition"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "customMetrics.create",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,76 @@
+{
+    "operation": "get_profiles",
+    "request": {
+        "method": "GET",
+        "path": "/api/profiles",
+        "query": {
+            "fields": {
+                "profile": "email,external_id"
+            },
+            "filter": "equals(email,\"sdk-smoke+09047c86-a@nickdnktech.com\")",
+            "page": {
+                "size": "20"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "72",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "profile",
+                    "id": "01M1PAAR5HBCRHA3NN9NG5WRTA",
+                    "attributes": {
+                        "email": "sdk-smoke+09047c86-a@nickdnktech.com",
+                        "external_id": "sdk-smoke-09047c86-ext-a"
+                    },
+                    "relationships": {
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/segments/"
+                            }
+                        },
+                        "push-tokens": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/push-tokens/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/push-tokens/"
+                            }
+                        },
+                        "conversations": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/conversations/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/conversations/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/profiles?fields%5Bprofile%5D=email%2Cexternal_id&filter=equals%28email%2C%22sdk-smoke%2B09047c86-a%40nickdnktech.com%22%29&page%5Bsize%5D=20",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.list",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,327 @@
+{
+    "operation": "get_tags",
+    "request": {
+        "method": "GET",
+        "path": "/api/tags",
+        "query": {
+            "filter": "contains(name,\"sdk-smoke-0904b975\")",
+            "include": "tag-group",
+            "sort": "-name"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "1",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "tag",
+                    "id": "b3200a12-69f6-437c-8c7a-e8ac6838429c",
+                    "attributes": {
+                        "name": "sdk-smoke-0904b975-t-shared-2"
+                    },
+                    "relationships": {
+                        "tag-group": {
+                            "data": {
+                                "type": "tag-group",
+                                "id": "34c01a4a-208c-4428-a80b-4d0b4e0741db"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/b3200a12-69f6-437c-8c7a-e8ac6838429c/relationships/tag-group/",
+                                "related": "https://a.klaviyo.com/api/tags/b3200a12-69f6-437c-8c7a-e8ac6838429c/tag-group/"
+                            }
+                        },
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/b3200a12-69f6-437c-8c7a-e8ac6838429c/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/tags/b3200a12-69f6-437c-8c7a-e8ac6838429c/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/b3200a12-69f6-437c-8c7a-e8ac6838429c/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/tags/b3200a12-69f6-437c-8c7a-e8ac6838429c/segments/"
+                            }
+                        },
+                        "campaigns": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/b3200a12-69f6-437c-8c7a-e8ac6838429c/relationships/campaigns/",
+                                "related": "https://a.klaviyo.com/api/tags/b3200a12-69f6-437c-8c7a-e8ac6838429c/campaigns/"
+                            }
+                        },
+                        "flows": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/b3200a12-69f6-437c-8c7a-e8ac6838429c/relationships/flows/",
+                                "related": "https://a.klaviyo.com/api/tags/b3200a12-69f6-437c-8c7a-e8ac6838429c/flows/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/tags/b3200a12-69f6-437c-8c7a-e8ac6838429c/"
+                    }
+                },
+                {
+                    "type": "tag",
+                    "id": "f837de98-3527-4bae-8226-bda7c2395e29",
+                    "attributes": {
+                        "name": "sdk-smoke-0904b975-t-shared"
+                    },
+                    "relationships": {
+                        "tag-group": {
+                            "data": {
+                                "type": "tag-group",
+                                "id": "34c01a4a-208c-4428-a80b-4d0b4e0741db"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/f837de98-3527-4bae-8226-bda7c2395e29/relationships/tag-group/",
+                                "related": "https://a.klaviyo.com/api/tags/f837de98-3527-4bae-8226-bda7c2395e29/tag-group/"
+                            }
+                        },
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/f837de98-3527-4bae-8226-bda7c2395e29/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/tags/f837de98-3527-4bae-8226-bda7c2395e29/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/f837de98-3527-4bae-8226-bda7c2395e29/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/tags/f837de98-3527-4bae-8226-bda7c2395e29/segments/"
+                            }
+                        },
+                        "campaigns": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/f837de98-3527-4bae-8226-bda7c2395e29/relationships/campaigns/",
+                                "related": "https://a.klaviyo.com/api/tags/f837de98-3527-4bae-8226-bda7c2395e29/campaigns/"
+                            }
+                        },
+                        "flows": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/f837de98-3527-4bae-8226-bda7c2395e29/relationships/flows/",
+                                "related": "https://a.klaviyo.com/api/tags/f837de98-3527-4bae-8226-bda7c2395e29/flows/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/tags/f837de98-3527-4bae-8226-bda7c2395e29/"
+                    }
+                },
+                {
+                    "type": "tag",
+                    "id": "d2cdecf0-1682-4358-a76f-a99703569137",
+                    "attributes": {
+                        "name": "sdk-smoke-0904b975-t-excl-b"
+                    },
+                    "relationships": {
+                        "tag-group": {
+                            "data": {
+                                "type": "tag-group",
+                                "id": "c8aa0a0d-bad4-457f-b709-cf62fdeb9b09"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/d2cdecf0-1682-4358-a76f-a99703569137/relationships/tag-group/",
+                                "related": "https://a.klaviyo.com/api/tags/d2cdecf0-1682-4358-a76f-a99703569137/tag-group/"
+                            }
+                        },
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/d2cdecf0-1682-4358-a76f-a99703569137/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/tags/d2cdecf0-1682-4358-a76f-a99703569137/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/d2cdecf0-1682-4358-a76f-a99703569137/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/tags/d2cdecf0-1682-4358-a76f-a99703569137/segments/"
+                            }
+                        },
+                        "campaigns": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/d2cdecf0-1682-4358-a76f-a99703569137/relationships/campaigns/",
+                                "related": "https://a.klaviyo.com/api/tags/d2cdecf0-1682-4358-a76f-a99703569137/campaigns/"
+                            }
+                        },
+                        "flows": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/d2cdecf0-1682-4358-a76f-a99703569137/relationships/flows/",
+                                "related": "https://a.klaviyo.com/api/tags/d2cdecf0-1682-4358-a76f-a99703569137/flows/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/tags/d2cdecf0-1682-4358-a76f-a99703569137/"
+                    }
+                },
+                {
+                    "type": "tag",
+                    "id": "3a42a466-7d24-4bea-934d-e03e0a857771",
+                    "attributes": {
+                        "name": "sdk-smoke-0904b975-t-excl-a"
+                    },
+                    "relationships": {
+                        "tag-group": {
+                            "data": {
+                                "type": "tag-group",
+                                "id": "c8aa0a0d-bad4-457f-b709-cf62fdeb9b09"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/3a42a466-7d24-4bea-934d-e03e0a857771/relationships/tag-group/",
+                                "related": "https://a.klaviyo.com/api/tags/3a42a466-7d24-4bea-934d-e03e0a857771/tag-group/"
+                            }
+                        },
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/3a42a466-7d24-4bea-934d-e03e0a857771/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/tags/3a42a466-7d24-4bea-934d-e03e0a857771/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/3a42a466-7d24-4bea-934d-e03e0a857771/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/tags/3a42a466-7d24-4bea-934d-e03e0a857771/segments/"
+                            }
+                        },
+                        "campaigns": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/3a42a466-7d24-4bea-934d-e03e0a857771/relationships/campaigns/",
+                                "related": "https://a.klaviyo.com/api/tags/3a42a466-7d24-4bea-934d-e03e0a857771/campaigns/"
+                            }
+                        },
+                        "flows": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/3a42a466-7d24-4bea-934d-e03e0a857771/relationships/flows/",
+                                "related": "https://a.klaviyo.com/api/tags/3a42a466-7d24-4bea-934d-e03e0a857771/flows/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/tags/3a42a466-7d24-4bea-934d-e03e0a857771/"
+                    }
+                },
+                {
+                    "type": "tag",
+                    "id": "3153c2aa-8f96-40bb-be8f-6d3573129b95",
+                    "attributes": {
+                        "name": "sdk-smoke-0904b975-t-default"
+                    },
+                    "relationships": {
+                        "tag-group": {
+                            "data": {
+                                "type": "tag-group",
+                                "id": "e30baa69-f382-4eef-8ff6-222d5c3d9a8a"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/3153c2aa-8f96-40bb-be8f-6d3573129b95/relationships/tag-group/",
+                                "related": "https://a.klaviyo.com/api/tags/3153c2aa-8f96-40bb-be8f-6d3573129b95/tag-group/"
+                            }
+                        },
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/3153c2aa-8f96-40bb-be8f-6d3573129b95/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/tags/3153c2aa-8f96-40bb-be8f-6d3573129b95/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/3153c2aa-8f96-40bb-be8f-6d3573129b95/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/tags/3153c2aa-8f96-40bb-be8f-6d3573129b95/segments/"
+                            }
+                        },
+                        "campaigns": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/3153c2aa-8f96-40bb-be8f-6d3573129b95/relationships/campaigns/",
+                                "related": "https://a.klaviyo.com/api/tags/3153c2aa-8f96-40bb-be8f-6d3573129b95/campaigns/"
+                            }
+                        },
+                        "flows": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tags/3153c2aa-8f96-40bb-be8f-6d3573129b95/relationships/flows/",
+                                "related": "https://a.klaviyo.com/api/tags/3153c2aa-8f96-40bb-be8f-6d3573129b95/flows/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/tags/3153c2aa-8f96-40bb-be8f-6d3573129b95/"
+                    }
+                }
+            ],
+            "included": [
+                {
+                    "type": "tag-group",
+                    "id": "34c01a4a-208c-4428-a80b-4d0b4e0741db",
+                    "attributes": {
+                        "name": "sdk-smoke-0904b975-tg-shared-renamed",
+                        "exclusive": false,
+                        "default": false
+                    },
+                    "relationships": {
+                        "tags": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tag-groups/34c01a4a-208c-4428-a80b-4d0b4e0741db/relationships/tags/",
+                                "related": "https://a.klaviyo.com/api/tag-groups/34c01a4a-208c-4428-a80b-4d0b4e0741db/tags/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/tag-groups/34c01a4a-208c-4428-a80b-4d0b4e0741db/"
+                    }
+                },
+                {
+                    "type": "tag-group",
+                    "id": "c8aa0a0d-bad4-457f-b709-cf62fdeb9b09",
+                    "attributes": {
+                        "name": "sdk-smoke-0904b975-tg-excl-renamed",
+                        "exclusive": true,
+                        "default": false
+                    },
+                    "relationships": {
+                        "tags": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tag-groups/c8aa0a0d-bad4-457f-b709-cf62fdeb9b09/relationships/tags/",
+                                "related": "https://a.klaviyo.com/api/tag-groups/c8aa0a0d-bad4-457f-b709-cf62fdeb9b09/tags/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/tag-groups/c8aa0a0d-bad4-457f-b709-cf62fdeb9b09/"
+                    }
+                },
+                {
+                    "type": "tag-group",
+                    "id": "e30baa69-f382-4eef-8ff6-222d5c3d9a8a",
+                    "attributes": {
+                        "name": "Ungrouped Tags",
+                        "exclusive": false,
+                        "default": true
+                    },
+                    "relationships": {
+                        "tags": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/tag-groups/e30baa69-f382-4eef-8ff6-222d5c3d9a8a/relationships/tags/",
+                                "related": "https://a.klaviyo.com/api/tag-groups/e30baa69-f382-4eef-8ff6-222d5c3d9a8a/tags/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/tag-groups/e30baa69-f382-4eef-8ff6-222d5c3d9a8a/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/tags?filter=contains%28name%2C%22sdk-smoke-0904b975%22%29&include=tag-group&sort=-name",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "tags",
+        "step": "tags.list",
+        "recorded": "2026-09-04"
+    }
+}

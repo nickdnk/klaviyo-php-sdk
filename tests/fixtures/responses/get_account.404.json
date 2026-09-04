@@ -1,0 +1,36 @@
+{
+    "operation": "get_account",
+    "request": {
+        "method": "GET",
+        "path": "/api/accounts/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "165d06cf-eda6-4dd7-adab-d05e1667f219",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "Account with id NOPE01 not found.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "accounts.get",
+        "recorded": "2026-09-04"
+    }
+}

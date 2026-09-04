@@ -1,0 +1,33 @@
+{
+    "operation": "get_version_ids_for_form",
+    "request": {
+        "method": "GET",
+        "path": "/api/forms/UNtbZL/relationships/form-versions",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "form-version",
+                    "id": "28242214"
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/forms/UNtbZL/relationships/form-versions"
+            }
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "forms.versionIds",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "operation": "delete_webhook",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/webhooks/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 403,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "ca27f8eb-6a4a-4cfc-ab5f-8ce8f8171d78",
+                    "status": 403,
+                    "code": "permission_denied",
+                    "title": "You do not have permission to perform this action.",
+                    "detail": "You must have Advanced KDP enabled to use this endpoint.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "webhooks.delete",
+        "recorded": "2026-09-04"
+    }
+}

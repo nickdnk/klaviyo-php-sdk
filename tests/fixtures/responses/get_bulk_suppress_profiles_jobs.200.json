@@ -1,0 +1,314 @@
+{
+    "operation": "get_bulk_suppress_profiles_jobs",
+    "request": {
+        "method": "GET",
+        "path": "/api/profile-suppression-bulk-create-jobs",
+        "query": {
+            "fields": {
+                "profile-suppression-bulk-create-job": "status,created_at,total_count"
+            },
+            "filter": "equals(status,\"complete\")"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "profile-suppression-bulk-create-job",
+                    "id": "01M1P9S0FX7Z7QMPS8MH8NPJVF",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T13:29:51.357788+00:00",
+                        "total_count": 1
+                    },
+                    "relationships": {
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P9S0FX7Z7QMPS8MH8NPJVF/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P9S0FX7Z7QMPS8MH8NPJVF/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P9S0FX7Z7QMPS8MH8NPJVF/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P9S0FX7Z7QMPS8MH8NPJVF/segments/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P9S0FX7Z7QMPS8MH8NPJVF/"
+                    }
+                },
+                {
+                    "type": "profile-suppression-bulk-create-job",
+                    "id": "01M1P99Z98RV4PM1XK5YBS9E31",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T13:21:38.601091+00:00",
+                        "total_count": 0
+                    },
+                    "relationships": {
+                        "lists": {
+                            "data": [
+                                {
+                                    "type": "list",
+                                    "id": "SXLisS"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P99Z98RV4PM1XK5YBS9E31/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P99Z98RV4PM1XK5YBS9E31/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P99Z98RV4PM1XK5YBS9E31/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P99Z98RV4PM1XK5YBS9E31/segments/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P99Z98RV4PM1XK5YBS9E31/"
+                    }
+                },
+                {
+                    "type": "profile-suppression-bulk-create-job",
+                    "id": "01M1P99YVMKW8JFBFNTPCN32HE",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T13:21:38.164672+00:00",
+                        "total_count": 1
+                    },
+                    "relationships": {
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P99YVMKW8JFBFNTPCN32HE/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P99YVMKW8JFBFNTPCN32HE/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P99YVMKW8JFBFNTPCN32HE/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P99YVMKW8JFBFNTPCN32HE/segments/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P99YVMKW8JFBFNTPCN32HE/"
+                    }
+                },
+                {
+                    "type": "profile-suppression-bulk-create-job",
+                    "id": "01M1P98RM5ZGWET1CVBVTZ0Z2P",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T13:20:59.014155+00:00",
+                        "total_count": 1
+                    },
+                    "relationships": {
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P98RM5ZGWET1CVBVTZ0Z2P/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P98RM5ZGWET1CVBVTZ0Z2P/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P98RM5ZGWET1CVBVTZ0Z2P/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P98RM5ZGWET1CVBVTZ0Z2P/segments/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P98RM5ZGWET1CVBVTZ0Z2P/"
+                    }
+                },
+                {
+                    "type": "profile-suppression-bulk-create-job",
+                    "id": "01M1P8SHW5HF7V5CTFZA7EP5HQ",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T13:12:40.581567+00:00",
+                        "total_count": 0
+                    },
+                    "relationships": {
+                        "lists": {
+                            "data": [
+                                {
+                                    "type": "list",
+                                    "id": "Sukgut"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8SHW5HF7V5CTFZA7EP5HQ/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8SHW5HF7V5CTFZA7EP5HQ/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8SHW5HF7V5CTFZA7EP5HQ/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8SHW5HF7V5CTFZA7EP5HQ/segments/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8SHW5HF7V5CTFZA7EP5HQ/"
+                    }
+                },
+                {
+                    "type": "profile-suppression-bulk-create-job",
+                    "id": "01M1P8SHFTRHC7EMA6PN2FF3JE",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T13:12:40.187168+00:00",
+                        "total_count": 1
+                    },
+                    "relationships": {
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8SHFTRHC7EMA6PN2FF3JE/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8SHFTRHC7EMA6PN2FF3JE/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8SHFTRHC7EMA6PN2FF3JE/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8SHFTRHC7EMA6PN2FF3JE/segments/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8SHFTRHC7EMA6PN2FF3JE/"
+                    }
+                },
+                {
+                    "type": "profile-suppression-bulk-create-job",
+                    "id": "01M1P8R1PRA8TSJS2WZ5N7J7XS",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T13:11:51.256532+00:00",
+                        "total_count": 1
+                    },
+                    "relationships": {
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8R1PRA8TSJS2WZ5N7J7XS/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8R1PRA8TSJS2WZ5N7J7XS/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8R1PRA8TSJS2WZ5N7J7XS/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8R1PRA8TSJS2WZ5N7J7XS/segments/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P8R1PRA8TSJS2WZ5N7J7XS/"
+                    }
+                },
+                {
+                    "type": "profile-suppression-bulk-create-job",
+                    "id": "01M1P89MXHPB48586SZWJYANQE",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T13:03:59.409305+00:00",
+                        "total_count": 0
+                    },
+                    "relationships": {
+                        "lists": {
+                            "data": [
+                                {
+                                    "type": "list",
+                                    "id": "XP8aR2"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P89MXHPB48586SZWJYANQE/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P89MXHPB48586SZWJYANQE/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P89MXHPB48586SZWJYANQE/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P89MXHPB48586SZWJYANQE/segments/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P89MXHPB48586SZWJYANQE/"
+                    }
+                },
+                {
+                    "type": "profile-suppression-bulk-create-job",
+                    "id": "01M1P89MMQ97BVY1X6N2H7A6BS",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T13:03:59.127334+00:00",
+                        "total_count": 1
+                    },
+                    "relationships": {
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P89MMQ97BVY1X6N2H7A6BS/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P89MMQ97BVY1X6N2H7A6BS/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P89MMQ97BVY1X6N2H7A6BS/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P89MMQ97BVY1X6N2H7A6BS/segments/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P89MMQ97BVY1X6N2H7A6BS/"
+                    }
+                },
+                {
+                    "type": "profile-suppression-bulk-create-job",
+                    "id": "01M1P7QDNF9D80GMJNBQ4KJKY0",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T12:54:02.159985+00:00",
+                        "total_count": 1
+                    },
+                    "relationships": {
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P7QDNF9D80GMJNBQ4KJKY0/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P7QDNF9D80GMJNBQ4KJKY0/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P7QDNF9D80GMJNBQ4KJKY0/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P7QDNF9D80GMJNBQ4KJKY0/segments/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P7QDNF9D80GMJNBQ4KJKY0/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs?fields%5Bprofile-suppression-bulk-create-job%5D=status%2Ccreated_at%2Ctotal_count&filter=equals%28status%2C%22complete%22%29",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.getSuppressJobs",
+        "recorded": "2026-09-04"
+    }
+}

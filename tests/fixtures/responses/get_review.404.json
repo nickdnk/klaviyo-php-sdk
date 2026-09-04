@@ -1,0 +1,42 @@
+{
+    "operation": "get_review",
+    "request": {
+        "method": "GET",
+        "path": "/api/reviews/123456789",
+        "query": {
+            "fields": {
+                "review": "author,content,created,email,images,product,public_reply,rating,review_type,smart_quote,status,title,updated,verified",
+                "event": "datetime,event_properties,timestamp,uuid"
+            },
+            "include": "events"
+        }
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "2d2fe31e-4468-4c90-bd8f-341087e15369",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A review with id `123456789` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "reviews.get",
+        "recorded": "2026-09-04"
+    }
+}

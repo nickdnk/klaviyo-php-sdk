@@ -1,0 +1,58 @@
+{
+    "operation": "create_catalog_item",
+    "request": {
+        "method": "POST",
+        "path": "/api/catalog-items",
+        "query": {}
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "73",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "catalog-item",
+                "id": "$custom:::$default:::sdk-smoke-090444b5-item2",
+                "attributes": {
+                    "external_id": "sdk-smoke-090444b5-item2",
+                    "title": "SDK Smoke Item Two 090444b5",
+                    "description": "Second smoke item.",
+                    "price": 5.5,
+                    "url": "https://example.com/products/sdk-smoke-090444b5-item2",
+                    "image_full_url": "",
+                    "image_thumbnail_url": "",
+                    "images": [],
+                    "custom_metadata": {
+                        "smokeRun": "090444b5"
+                    },
+                    "published": true,
+                    "created": "2026-09-04T13:38:45.914000+00:00",
+                    "updated": "2026-09-04T13:38:45.914000+00:00"
+                },
+                "relationships": {
+                    "variants": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item2/relationships/variants/",
+                            "related": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item2/variants/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item2/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/catalog-items"
+            }
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogItems.create",
+        "recorded": "2026-09-04"
+    }
+}

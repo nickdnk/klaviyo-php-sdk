@@ -1,0 +1,51 @@
+{
+    "operation": "get_metrics_for_custom_metric",
+    "request": {
+        "method": "GET",
+        "path": "/api/custom-metrics/01M1PA9Z9DFGK85H67PJSZZ67V/metrics",
+        "query": {
+            "fields": {
+                "metric": "name"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "metric",
+                    "id": "SkDfHe",
+                    "attributes": {
+                        "name": "SDK Smoke"
+                    },
+                    "relationships": {
+                        "flow-triggers": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metrics/SkDfHe/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/metrics/SkDfHe/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metrics/SkDfHe/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/custom-metrics/01M1PA9Z9DFGK85H67PJSZZ67V/metrics?fields%5Bmetric%5D=name"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "customMetrics.metrics",
+        "recorded": "2026-09-04"
+    }
+}

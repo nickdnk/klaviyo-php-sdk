@@ -1,0 +1,41 @@
+{
+    "operation": "create_coupon",
+    "request": {
+        "method": "POST",
+        "path": "/api/coupons",
+        "query": {}
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "coupon",
+                "id": "sdk_smoke_09048f53_coupon1",
+                "attributes": {
+                    "external_id": "sdk_smoke_09048f53_coupon1",
+                    "description": "SDK smoke coupon 1 — 10% off",
+                    "monitor_configuration": {
+                        "low_balance_threshold": "500"
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/coupons/sdk_smoke_09048f53_coupon1/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/coupons"
+            }
+        }
+    },
+    "source": {
+        "suite": "coupons",
+        "step": "coupons.create",
+        "recorded": "2026-09-04"
+    }
+}

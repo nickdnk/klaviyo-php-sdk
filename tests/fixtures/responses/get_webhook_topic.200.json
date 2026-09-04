@@ -1,0 +1,35 @@
+{
+    "operation": "get_webhook_topic",
+    "request": {
+        "method": "GET",
+        "path": "/api/webhook-topics/event:klaviyo.manually_suppressed_from_email_marketing",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "webhook-topic",
+                "id": "event:klaviyo.manually_suppressed_from_email_marketing",
+                "attributes": [],
+                "links": {
+                    "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.manually_suppressed_from_email_marketing/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.manually_suppressed_from_email_marketing"
+            }
+        }
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "webhookTopics.get",
+        "recorded": "2026-09-04"
+    }
+}

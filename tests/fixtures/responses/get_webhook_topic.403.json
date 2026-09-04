@@ -1,0 +1,40 @@
+{
+    "operation": "get_webhook_topic",
+    "request": {
+        "method": "GET",
+        "path": "/api/webhook-topics/event:klaviyo.opened_email",
+        "query": {
+            "fields": {
+                "webhook-topic": "id"
+            }
+        }
+    },
+    "response": {
+        "status": 403,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "b5fba84f-34a5-4efd-a4a0-971240f65494",
+                    "status": 403,
+                    "code": "permission_denied",
+                    "title": "You do not have permission to perform this action.",
+                    "detail": "You must have Advanced KDP enabled to use this endpoint.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "webhookTopics.get",
+        "recorded": "2026-09-04"
+    }
+}

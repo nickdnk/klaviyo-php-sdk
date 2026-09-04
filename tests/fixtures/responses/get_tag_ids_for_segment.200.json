@@ -1,0 +1,28 @@
+{
+    "operation": "get_tag_ids_for_segment",
+    "request": {
+        "method": "GET",
+        "path": "/api/segments/RvKscW/relationships/tags",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/segments/RvKscW/relationships/tags"
+            }
+        }
+    },
+    "source": {
+        "suite": "segments",
+        "step": "segments.tagIds",
+        "recorded": "2026-09-04"
+    }
+}

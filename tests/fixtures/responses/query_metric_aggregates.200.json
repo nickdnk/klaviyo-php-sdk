@@ -1,0 +1,77 @@
+{
+    "operation": "query_metric_aggregates",
+    "request": {
+        "method": "POST",
+        "path": "/api/metric-aggregates",
+        "query": {
+            "fields": {
+                "metric-aggregate": "data,dates"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "metric-aggregate",
+                "id": "664825546195297352",
+                "attributes": {
+                    "data": [
+                        {
+                            "dimensions": [],
+                            "measurements": {
+                                "count": [
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "sum_value": [
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "unique": [
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ]
+                            }
+                        }
+                    ],
+                    "dates": [
+                        "2026-08-31T22:00:00+00:00",
+                        "2026-09-01T22:00:00+00:00",
+                        "2026-09-02T22:00:00+00:00",
+                        "2026-09-03T22:00:00+00:00",
+                        "2026-09-04T22:00:00+00:00"
+                    ]
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/metric-aggregates/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/metric-aggregates?fields%5Bmetric-aggregate%5D=data%2Cdates",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "metrics.aggregates",
+        "recorded": "2026-09-04"
+    }
+}

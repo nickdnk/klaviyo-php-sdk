@@ -1,0 +1,53 @@
+{
+    "operation": "get_catalog_categories",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-categories",
+        "query": {
+            "filter": "equals(item.id,\"$custom:::$default:::sdk-smoke-090444b5-item1\")"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "348",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "catalog-category",
+                    "id": "$custom:::$default:::sdk-smoke-090444b5-cat1",
+                    "attributes": {
+                        "external_id": "sdk-smoke-090444b5-cat1",
+                        "name": "SDK Smoke Cat One 090444b5",
+                        "updated": "2026-09-04T13:38:44.628000+00:00"
+                    },
+                    "relationships": {
+                        "items": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/catalog-categories/$custom:::$default:::sdk-smoke-090444b5-cat1/relationships/items/",
+                                "related": "https://a.klaviyo.com/api/catalog-categories/$custom:::$default:::sdk-smoke-090444b5-cat1/items/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/catalog-categories/$custom:::$default:::sdk-smoke-090444b5-cat1/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/catalog-categories?filter=equals%28item.id%2C%22%24custom%3A%3A%3A%24default%3A%3A%3Asdk-smoke-090444b5-item1%22%29",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogCategories.list",
+        "recorded": "2026-09-04"
+    }
+}

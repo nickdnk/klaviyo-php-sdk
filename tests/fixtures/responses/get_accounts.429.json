@@ -1,0 +1,37 @@
+{
+    "operation": "get_accounts",
+    "request": {
+        "method": "GET",
+        "path": "/api/accounts",
+        "query": {}
+    },
+    "response": {
+        "status": 429,
+        "headers": {
+            "retry-after": "1"
+        },
+        "body": {
+            "errors": [
+                {
+                    "meta": [],
+                    "code": "throttled",
+                    "detail": "Request was throttled. Expected available in 1 second.",
+                    "links": {
+                        "type": "https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling#rate-limits"
+                    },
+                    "id": "597e706a-7763-42a6-bc0d-b8943814d5bd",
+                    "source": {
+                        "pointer": "/data"
+                    },
+                    "status": 429,
+                    "title": "Request was throttled."
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "accounts.list",
+        "recorded": "2026-09-04"
+    }
+}

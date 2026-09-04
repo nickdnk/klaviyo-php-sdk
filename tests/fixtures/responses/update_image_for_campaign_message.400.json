@@ -1,0 +1,38 @@
+{
+    "operation": "update_image_for_campaign_message",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/campaign-messages/01M1PA99JBS13TE33GQ4YRESFN/relationships/image",
+        "query": {}
+    },
+    "response": {
+        "status": 400,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "a1334d23-2d8d-4ed5-8f95-7d944edc0b11",
+                    "status": 400,
+                    "code": "invalid",
+                    "title": "Invalid input.",
+                    "detail": "Image relationships are only supported for push and SMS messages",
+                    "source": {
+                        "pointer": "/data/relationships/images/"
+                    },
+                    "links": [],
+                    "meta": []
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaignMessages.updateImage",
+        "recorded": "2026-09-04"
+    }
+}

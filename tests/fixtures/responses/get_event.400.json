@@ -1,0 +1,38 @@
+{
+    "operation": "get_event",
+    "request": {
+        "method": "GET",
+        "path": "/api/events/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 400,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "8",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "3f82700e-e8a4-4526-8bd5-402cb905f548",
+                    "status": 400,
+                    "code": "invalid",
+                    "title": "Invalid input.",
+                    "detail": "Invalid Event ID: 'NOPE01'",
+                    "source": {
+                        "pointer": "/data/id"
+                    },
+                    "links": [],
+                    "meta": []
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "events.get",
+        "recorded": "2026-09-04"
+    }
+}

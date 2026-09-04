@@ -1,0 +1,42 @@
+{
+    "operation": "update_image",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/images/366547884",
+        "query": {
+            "fields": {
+                "image": "name,hidden"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "image",
+                "id": "366547884",
+                "attributes": {
+                    "name": "sdk-smoke-0904a5e6-img-url-renamed",
+                    "hidden": true
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/images/366547884/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/images/366547884?fields%5Bimage%5D=name%2Chidden"
+            }
+        }
+    },
+    "source": {
+        "suite": "templates",
+        "step": "images.update",
+        "recorded": "2026-09-04"
+    }
+}

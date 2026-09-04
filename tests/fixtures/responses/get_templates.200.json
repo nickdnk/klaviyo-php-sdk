@@ -1,0 +1,51 @@
+{
+    "operation": "get_templates",
+    "request": {
+        "method": "GET",
+        "path": "/api/templates",
+        "query": {
+            "fields": {
+                "template": "name,created"
+            },
+            "filter": "equals(name,\"sdk-smoke-0904a5e6-tpl-code\")",
+            "sort": "-created",
+            "page": {
+                "size": "10"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "template",
+                    "id": "SpfvU7",
+                    "attributes": {
+                        "name": "sdk-smoke-0904a5e6-tpl-code",
+                        "created": "2026-09-04T13:39:05+00:00"
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/templates/SpfvU7/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/templates?fields%5Btemplate%5D=name%2Ccreated&filter=equals%28name%2C%22sdk-smoke-0904a5e6-tpl-code%22%29&sort=-created&page%5Bsize%5D=10",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "templates",
+        "step": "templates.list",
+        "recorded": "2026-09-04"
+    }
+}

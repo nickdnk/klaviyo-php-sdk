@@ -1,0 +1,41 @@
+{
+    "operation": "get_template",
+    "request": {
+        "method": "GET",
+        "path": "/api/templates/Vm6eis",
+        "query": {
+            "fields": {
+                "template": "name"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "73",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "template",
+                "id": "Vm6eis",
+                "attributes": {
+                    "name": "sdk-smoke-0904a5e6-tpl-dnd"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/templates/Vm6eis/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/templates/Vm6eis?fields%5Btemplate%5D=name"
+            }
+        }
+    },
+    "source": {
+        "suite": "templates",
+        "step": "templates.executePool",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "operation": "delete_coupon_code",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/coupon-codes/sdk_smoke_09048f53_coupon2-sdk_smoke_09048f53_bulk5",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "coupons",
+        "step": "couponCodes.delete",
+        "recorded": "2026-09-04"
+    }
+}

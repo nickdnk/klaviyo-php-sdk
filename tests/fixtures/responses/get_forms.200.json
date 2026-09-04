@@ -1,0 +1,64 @@
+{
+    "operation": "get_forms",
+    "request": {
+        "method": "GET",
+        "path": "/api/forms",
+        "query": {
+            "sort": "created_at",
+            "page": {
+                "size": "1"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "form",
+                    "id": "UNtbZL",
+                    "attributes": {
+                        "name": "sdk-smoke-0904f206-form-popup",
+                        "status": "draft",
+                        "ab_test": false,
+                        "created_at": "2026-09-04T13:40:14+00:00",
+                        "updated_at": "2026-09-04T13:40:14+00:00"
+                    },
+                    "relationships": {
+                        "form-versions": {
+                            "data": [
+                                {
+                                    "type": "form-version",
+                                    "id": "28242214"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/forms/UNtbZL/relationships/form-versions/",
+                                "related": "https://a.klaviyo.com/api/forms/UNtbZL/form-versions/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/forms/UNtbZL/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/forms?sort=created_at&page%5Bsize%5D=1",
+                "next": "https://a.klaviyo.com/api/forms?sort=created_at&page%5Bsize%5D=1&page%5Bcursor%5D=bmV4dDo6Y3JlYXRlZDo6MjAyNi0wOS0wNCAxMzo0MDoxNCswMDowMDo6dXBkYXRlZDo6MjAyNi0wOS0wNCAxMzo0MDoxNCswMDowMA",
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "forms.list",
+        "recorded": "2026-09-04"
+    }
+}

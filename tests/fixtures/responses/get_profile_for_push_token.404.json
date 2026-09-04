@@ -1,0 +1,36 @@
+{
+    "operation": "get_profile_for_push_token",
+    "request": {
+        "method": "GET",
+        "path": "/api/push-tokens/NOPE01/profile",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "1418effa-f6f4-4865-b417-fa81779fbe1d",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "Record with token ID: NOPE01 cannot be found.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "push_tokens",
+        "step": "pushTokens.profile",
+        "recorded": "2026-09-04"
+    }
+}

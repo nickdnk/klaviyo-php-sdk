@@ -1,0 +1,35 @@
+{
+    "operation": "get_action_ids_for_flow",
+    "request": {
+        "method": "GET",
+        "path": "/api/flows/T6EyQF/relationships/flow-actions",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "flow-action",
+                    "id": "116466132"
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/flows/T6EyQF/relationships/flow-actions",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flows.flowActionIds",
+        "recorded": "2026-09-04"
+    }
+}

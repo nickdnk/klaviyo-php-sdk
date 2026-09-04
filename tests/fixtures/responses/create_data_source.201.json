@@ -1,0 +1,40 @@
+{
+    "operation": "create_data_source",
+    "request": {
+        "method": "POST",
+        "path": "/api/data-sources",
+        "query": {}
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "data-source",
+                "id": "01M1PACTCRSM6Z1S7ECC3D5M9H",
+                "attributes": {
+                    "title": "sdk-smoke-090443cf-ds2",
+                    "visibility": "private",
+                    "description": "",
+                    "namespace": "custom-objects"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/data-sources/01M1PACTCRSM6Z1S7ECC3D5M9H/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/data-sources"
+            }
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "dataSources.create",
+        "recorded": "2026-09-04"
+    }
+}

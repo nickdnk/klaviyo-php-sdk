@@ -1,0 +1,56 @@
+{
+    "operation": "get_bulk_update_categories_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-category-bulk-update-jobs/01M1PACJJXSCWRE5W310VCNC14",
+        "query": {
+            "fields": {
+                "catalog-category-bulk-update-job": "completed_at,completed_count,created_at,errors,expires_at,failed_count,status,total_count",
+                "catalog-category": "name"
+            },
+            "include": "categories"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "catalog-category-bulk-update-job",
+                "id": "01M1PACJJXSCWRE5W310VCNC14",
+                "attributes": {
+                    "completed_at": null,
+                    "completed_count": 0,
+                    "created_at": "2026-09-04T13:40:32.478236+00:00",
+                    "errors": [],
+                    "expires_at": "2026-09-11T13:40:32.478236+00:00",
+                    "failed_count": 0,
+                    "status": "processing",
+                    "total_count": 2
+                },
+                "relationships": {
+                    "categories": {
+                        "data": []
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/catalog-category-bulk-update-jobs/01M1PACJJXSCWRE5W310VCNC14/"
+                }
+            },
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/catalog-category-bulk-update-jobs/01M1PACJJXSCWRE5W310VCNC14?fields%5Bcatalog-category-bulk-update-job%5D=completed_at%2Ccompleted_count%2Ccreated_at%2Cerrors%2Cexpires_at%2Cfailed_count%2Cstatus%2Ctotal_count&fields%5Bcatalog-category%5D=name&include=categories"
+            }
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogCategories.getBulkUpdateJob",
+        "recorded": "2026-09-04"
+    }
+}

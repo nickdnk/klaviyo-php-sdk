@@ -1,0 +1,65 @@
+{
+    "operation": "update_custom_metric",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/custom-metrics/01M1PA9Z9DFGK85H67PJSZZ67V",
+        "query": {
+            "fields": {
+                "custom-metric": "name,definition"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60, 15;w=86400",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "custom-metric",
+                "id": "01M1PA9Z9DFGK85H67PJSZZ67V",
+                "attributes": {
+                    "name": "sdk-smoke-09042132-custom-renamed",
+                    "definition": {
+                        "aggregation_method": "count",
+                        "metric_groups": [
+                            {
+                                "metric_id": "SkDfHe",
+                                "metric_filters": [],
+                                "value_property": null
+                            }
+                        ]
+                    }
+                },
+                "relationships": {
+                    "metrics": {
+                        "data": [
+                            {
+                                "type": "metric",
+                                "id": "SkDfHe"
+                            }
+                        ],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/custom-metrics/01M1PA9Z9DFGK85H67PJSZZ67V/relationships/metrics/",
+                            "related": "https://a.klaviyo.com/api/custom-metrics/01M1PA9Z9DFGK85H67PJSZZ67V/metrics/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/custom-metrics/01M1PA9Z9DFGK85H67PJSZZ67V/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/custom-metrics/01M1PA9Z9DFGK85H67PJSZZ67V?fields%5Bcustom-metric%5D=name%2Cdefinition"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "customMetrics.update",
+        "recorded": "2026-09-04"
+    }
+}

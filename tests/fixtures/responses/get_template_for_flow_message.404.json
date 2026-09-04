@@ -1,0 +1,36 @@
+{
+    "operation": "get_template_for_flow_message",
+    "request": {
+        "method": "GET",
+        "path": "/api/flow-messages/NOPE01/template",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "6959302f-2e46-4ef6-8eec-0d69be564da7",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A flow message with id NOPE01 does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flowMessages.template",
+        "recorded": "2026-09-04"
+    }
+}

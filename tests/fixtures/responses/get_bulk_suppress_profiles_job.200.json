@@ -1,0 +1,55 @@
+{
+    "operation": "get_bulk_suppress_profiles_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/profile-suppression-bulk-create-jobs/01M1P9S0FX7Z7QMPS8MH8NPJVF",
+        "query": {
+            "fields": {
+                "profile-suppression-bulk-create-job": "status"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "profile-suppression-bulk-create-job",
+                "id": "01M1P9S0FX7Z7QMPS8MH8NPJVF",
+                "attributes": {
+                    "status": "complete"
+                },
+                "relationships": {
+                    "lists": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P9S0FX7Z7QMPS8MH8NPJVF/relationships/lists/",
+                            "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P9S0FX7Z7QMPS8MH8NPJVF/lists/"
+                        }
+                    },
+                    "segments": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P9S0FX7Z7QMPS8MH8NPJVF/relationships/segments/",
+                            "related": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P9S0FX7Z7QMPS8MH8NPJVF/segments/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P9S0FX7Z7QMPS8MH8NPJVF/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/profile-suppression-bulk-create-jobs/01M1P9S0FX7Z7QMPS8MH8NPJVF?fields%5Bprofile-suppression-bulk-create-job%5D=status"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.getSuppressJob",
+        "recorded": "2026-09-04"
+    }
+}

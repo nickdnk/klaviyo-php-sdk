@@ -1,0 +1,36 @@
+{
+    "operation": "get_flow_action",
+    "request": {
+        "method": "GET",
+        "path": "/api/flow-actions/116466131",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "dac1f83f-830b-4399-b01b-1aa4d3f95d96",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "An action with id 116466131 does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "flows",
+        "step": "flowActions.get",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "operation": "delete_form",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/forms/X9gRMu",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "settings",
+        "step": "forms.delete",
+        "recorded": "2026-09-04"
+    }
+}

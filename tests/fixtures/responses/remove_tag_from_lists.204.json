@@ -1,0 +1,22 @@
+{
+    "operation": "remove_tag_from_lists",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/tags/d2cdecf0-1682-4358-a76f-a99703569137/relationships/lists",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "tags",
+        "step": "tags.tagLists",
+        "recorded": "2026-09-04"
+    }
+}

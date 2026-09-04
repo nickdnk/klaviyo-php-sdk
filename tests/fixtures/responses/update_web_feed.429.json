@@ -1,0 +1,37 @@
+{
+    "operation": "update_web_feed",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/web-feeds/9055661",
+        "query": {}
+    },
+    "response": {
+        "status": 429,
+        "headers": {
+            "retry-after": "1"
+        },
+        "body": {
+            "errors": [
+                {
+                    "detail": "Request was throttled. Expected available in 1 second.",
+                    "code": "throttled",
+                    "links": {
+                        "type": "https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling#rate-limits"
+                    },
+                    "id": "aa327d65-098e-449e-b9b8-9f2d096fc61d",
+                    "meta": [],
+                    "source": {
+                        "pointer": "/data"
+                    },
+                    "title": "Request was throttled.",
+                    "status": 429
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "webFeeds.update",
+        "recorded": "2026-09-04"
+    }
+}

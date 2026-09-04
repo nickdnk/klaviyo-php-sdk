@@ -1,0 +1,36 @@
+{
+    "operation": "bulk_delete_object_records",
+    "request": {
+        "method": "POST",
+        "path": "/api/object-record-bulk-delete-jobs",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "9464cf8f-7a08-43ed-babb-112d6abaa2ae",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "Object type `01K61DKJ7EKJ0ES9VE456XF5JG` not found",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectRecords.bulkDelete",
+        "recorded": "2026-09-04"
+    }
+}

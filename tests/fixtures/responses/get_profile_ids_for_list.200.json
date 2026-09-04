@@ -1,0 +1,35 @@
+{
+    "operation": "get_profile_ids_for_list",
+    "request": {
+        "method": "GET",
+        "path": "/api/lists/YafG4m/relationships/profiles",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "profile",
+                    "id": "01M1PAAR5HBCRHA3NN9NG5WRTA"
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/lists/YafG4m/relationships/profiles",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "lists.profileIds",
+        "recorded": "2026-09-04"
+    }
+}

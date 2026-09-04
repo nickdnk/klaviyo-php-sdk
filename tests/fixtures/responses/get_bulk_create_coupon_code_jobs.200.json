@@ -1,0 +1,165 @@
+{
+    "operation": "get_bulk_create_coupon_code_jobs",
+    "request": {
+        "method": "GET",
+        "path": "/api/coupon-code-bulk-create-jobs",
+        "query": {
+            "fields": {
+                "coupon-code-bulk-create-job": "status,total_count,completed_count,created_at"
+            },
+            "filter": "equals(status,\"complete\")"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "coupon-code-bulk-create-job",
+                    "id": "01M1PAB7CT6X3ZS6R36792JN7Y",
+                    "attributes": {
+                        "status": "complete",
+                        "total_count": 5,
+                        "completed_count": 5,
+                        "created_at": "2026-09-04T13:39:48.271058+00:00"
+                    },
+                    "relationships": {
+                        "coupon-codes": {
+                            "data": [
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_09048f53_coupon2-sdk_smoke_09048f53_bulk1"
+                                },
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_09048f53_coupon2-sdk_smoke_09048f53_bulk2"
+                                },
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_09048f53_coupon2-sdk_smoke_09048f53_bulk3"
+                                },
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_09048f53_coupon2-sdk_smoke_09048f53_bulk4"
+                                },
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_09048f53_coupon2-sdk_smoke_09048f53_bulk5"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs/01M1PAB7CT6X3ZS6R36792JN7Y/relationships/coupon-codes/",
+                                "related": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs/01M1PAB7CT6X3ZS6R36792JN7Y/coupon-codes/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs/01M1PAB7CT6X3ZS6R36792JN7Y/"
+                    }
+                },
+                {
+                    "type": "coupon-code-bulk-create-job",
+                    "id": "01M1P5V0NDT3YF1TBAH1HPDMGK",
+                    "attributes": {
+                        "status": "complete",
+                        "total_count": 5,
+                        "completed_count": 5,
+                        "created_at": "2026-09-04T12:21:02.789084+00:00"
+                    },
+                    "relationships": {
+                        "coupon-codes": {
+                            "data": [
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_09049eb6_coupon2-sdk_smoke_09049eb6_bulk1"
+                                },
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_09049eb6_coupon2-sdk_smoke_09049eb6_bulk2"
+                                },
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_09049eb6_coupon2-sdk_smoke_09049eb6_bulk3"
+                                },
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_09049eb6_coupon2-sdk_smoke_09049eb6_bulk4"
+                                },
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_09049eb6_coupon2-sdk_smoke_09049eb6_bulk5"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs/01M1P5V0NDT3YF1TBAH1HPDMGK/relationships/coupon-codes/",
+                                "related": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs/01M1P5V0NDT3YF1TBAH1HPDMGK/coupon-codes/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs/01M1P5V0NDT3YF1TBAH1HPDMGK/"
+                    }
+                },
+                {
+                    "type": "coupon-code-bulk-create-job",
+                    "id": "01M1P5SNSK0FTS9AJG9EMEHEKD",
+                    "attributes": {
+                        "status": "complete",
+                        "total_count": 5,
+                        "completed_count": 5,
+                        "created_at": "2026-09-04T12:20:18.890399+00:00"
+                    },
+                    "relationships": {
+                        "coupon-codes": {
+                            "data": [
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_0904a679_coupon2-sdk_smoke_0904a679_bulk1"
+                                },
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_0904a679_coupon2-sdk_smoke_0904a679_bulk2"
+                                },
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_0904a679_coupon2-sdk_smoke_0904a679_bulk3"
+                                },
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_0904a679_coupon2-sdk_smoke_0904a679_bulk4"
+                                },
+                                {
+                                    "type": "coupon-code",
+                                    "id": "sdk_smoke_0904a679_coupon2-sdk_smoke_0904a679_bulk5"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs/01M1P5SNSK0FTS9AJG9EMEHEKD/relationships/coupon-codes/",
+                                "related": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs/01M1P5SNSK0FTS9AJG9EMEHEKD/coupon-codes/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs/01M1P5SNSK0FTS9AJG9EMEHEKD/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/coupon-code-bulk-create-jobs?fields%5Bcoupon-code-bulk-create-job%5D=status%2Ctotal_count%2Ccompleted_count%2Ccreated_at&filter=equals%28status%2C%22complete%22%29",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "coupons",
+        "step": "couponCodes.getBulkCreateJobs",
+        "recorded": "2026-09-04"
+    }
+}

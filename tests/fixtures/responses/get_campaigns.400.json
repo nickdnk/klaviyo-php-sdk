@@ -1,0 +1,40 @@
+{
+    "operation": "get_campaigns",
+    "request": {
+        "method": "GET",
+        "path": "/api/campaigns",
+        "query": {
+            "filter": "equals(messages.channel,\"email\"),equals(name,\"sdk-smoke-09048514-c\")"
+        }
+    },
+    "response": {
+        "status": 400,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "8",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "a545b24f-2b04-4271-94b2-a2284c219e33",
+                    "status": 400,
+                    "code": "invalid",
+                    "title": "Invalid input.",
+                    "detail": "'equals' is not an allowed filter operator for name.  Allowed operators are contains",
+                    "source": {
+                        "parameter": "filter"
+                    },
+                    "links": [],
+                    "meta": []
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaigns.list",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "operation": "get_campaign_recipient_estimation_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/campaign-recipient-estimation-jobs/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "8",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "ec177241-1031-43ff-998b-9ba9636dfeac",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A campaign with id 'NOPE01' does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaigns.getRecipientEstimationJob",
+        "recorded": "2026-09-04"
+    }
+}

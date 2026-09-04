@@ -1,0 +1,129 @@
+{
+    "operation": "get_bulk_delete_categories_jobs",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-category-bulk-delete-jobs",
+        "query": {
+            "fields": {
+                "catalog-category-bulk-delete-job": "completed_at,completed_count,created_at,errors,expires_at,failed_count,status,total_count"
+            },
+            "filter": "equals(status,\"complete\")"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "catalog-category-bulk-delete-job",
+                    "id": "01M1PAD836GH3D4SG8HRNCVAK2",
+                    "attributes": {
+                        "completed_at": "2026-09-04T13:41:06.387726+00:00",
+                        "completed_count": 2,
+                        "created_at": "2026-09-04T13:40:54.503797+00:00",
+                        "errors": [],
+                        "expires_at": "2026-09-11T13:40:54.503797+00:00",
+                        "failed_count": 0,
+                        "status": "complete",
+                        "total_count": 2
+                    },
+                    "relationships": {
+                        "categories": {
+                            "data": [
+                                {
+                                    "type": "catalog-category",
+                                    "id": "$custom:::$default:::sdk-smoke-090444b5-bcat1"
+                                },
+                                {
+                                    "type": "catalog-category",
+                                    "id": "$custom:::$default:::sdk-smoke-090444b5-bcat2"
+                                }
+                            ]
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/catalog-category-bulk-delete-jobs/01M1PAD836GH3D4SG8HRNCVAK2/"
+                    }
+                },
+                {
+                    "type": "catalog-category-bulk-delete-job",
+                    "id": "01M1P6S5JX0VBH6BQZ2E1CWS6G",
+                    "attributes": {
+                        "completed_at": "2026-09-04T12:37:45.293349+00:00",
+                        "completed_count": 2,
+                        "created_at": "2026-09-04T12:37:30.845752+00:00",
+                        "errors": [],
+                        "expires_at": "2026-09-11T12:37:30.845752+00:00",
+                        "failed_count": 0,
+                        "status": "complete",
+                        "total_count": 2
+                    },
+                    "relationships": {
+                        "categories": {
+                            "data": [
+                                {
+                                    "type": "catalog-category",
+                                    "id": "$custom:::$default:::sdk-smoke-0904aec8-bcat1"
+                                },
+                                {
+                                    "type": "catalog-category",
+                                    "id": "$custom:::$default:::sdk-smoke-0904aec8-bcat2"
+                                }
+                            ]
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/catalog-category-bulk-delete-jobs/01M1P6S5JX0VBH6BQZ2E1CWS6G/"
+                    }
+                },
+                {
+                    "type": "catalog-category-bulk-delete-job",
+                    "id": "01M1P68N1ZGG209SBHBPAV15CP",
+                    "attributes": {
+                        "completed_at": "2026-09-04T12:28:40.283455+00:00",
+                        "completed_count": 2,
+                        "created_at": "2026-09-04T12:28:29.632587+00:00",
+                        "errors": [],
+                        "expires_at": "2026-09-11T12:28:29.632587+00:00",
+                        "failed_count": 0,
+                        "status": "complete",
+                        "total_count": 2
+                    },
+                    "relationships": {
+                        "categories": {
+                            "data": [
+                                {
+                                    "type": "catalog-category",
+                                    "id": "$custom:::$default:::sdk-smoke-0904a3db-bcat1"
+                                },
+                                {
+                                    "type": "catalog-category",
+                                    "id": "$custom:::$default:::sdk-smoke-0904a3db-bcat2"
+                                }
+                            ]
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/catalog-category-bulk-delete-jobs/01M1P68N1ZGG209SBHBPAV15CP/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/catalog-category-bulk-delete-jobs?fields%5Bcatalog-category-bulk-delete-job%5D=completed_at%2Ccompleted_count%2Ccreated_at%2Cerrors%2Cexpires_at%2Cfailed_count%2Cstatus%2Ctotal_count&filter=equals%28status%2C%22complete%22%29",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogCategories.getBulkDeleteJobs",
+        "recorded": "2026-09-04"
+    }
+}

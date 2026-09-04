@@ -1,0 +1,234 @@
+{
+    "operation": "get_metrics",
+    "request": {
+        "method": "GET",
+        "path": "/api/metrics",
+        "query": {
+            "fields": {
+                "metric": "name,created,updated,integration"
+            },
+            "filter": "equals(integration.name,\"API\")",
+            "include": "flow-triggers"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "metric",
+                    "id": "RK9XjM",
+                    "attributes": {
+                        "name": "SDK Smoke 0904a070",
+                        "created": "2026-09-04T13:20:53+00:00",
+                        "updated": "2026-09-04T13:20:53+00:00",
+                        "integration": {
+                            "object": "integration",
+                            "id": "7FtS4J",
+                            "key": "api",
+                            "name": "API",
+                            "category": "API"
+                        }
+                    },
+                    "relationships": {
+                        "flow-triggers": {
+                            "data": [],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metrics/RK9XjM/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/metrics/RK9XjM/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metrics/RK9XjM/"
+                    }
+                },
+                {
+                    "type": "metric",
+                    "id": "SkDfHe",
+                    "attributes": {
+                        "name": "SDK Smoke",
+                        "created": "2026-09-04T13:38:55+00:00",
+                        "updated": "2026-09-04T13:38:55+00:00",
+                        "integration": {
+                            "object": "integration",
+                            "id": "7FtS4J",
+                            "key": "api",
+                            "name": "API",
+                            "category": "API"
+                        }
+                    },
+                    "relationships": {
+                        "flow-triggers": {
+                            "data": [],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metrics/SkDfHe/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/metrics/SkDfHe/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metrics/SkDfHe/"
+                    }
+                },
+                {
+                    "type": "metric",
+                    "id": "UBpFqv",
+                    "attributes": {
+                        "name": "SDK Smoke 09043cf6",
+                        "created": "2026-09-04T13:03:36+00:00",
+                        "updated": "2026-09-04T13:03:36+00:00",
+                        "integration": {
+                            "object": "integration",
+                            "id": "7FtS4J",
+                            "key": "api",
+                            "name": "API",
+                            "category": "API"
+                        }
+                    },
+                    "relationships": {
+                        "flow-triggers": {
+                            "data": [],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metrics/UBpFqv/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/metrics/UBpFqv/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metrics/UBpFqv/"
+                    }
+                },
+                {
+                    "type": "metric",
+                    "id": "VLZqfS",
+                    "attributes": {
+                        "name": "Active on Site",
+                        "created": "2026-04-07T01:34:26+00:00",
+                        "updated": "2026-04-07T01:34:26+00:00",
+                        "integration": {
+                            "object": "integration",
+                            "id": "7FtS4J",
+                            "key": "api",
+                            "name": "API",
+                            "category": "API"
+                        }
+                    },
+                    "relationships": {
+                        "flow-triggers": {
+                            "data": [],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metrics/VLZqfS/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/metrics/VLZqfS/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metrics/VLZqfS/"
+                    }
+                },
+                {
+                    "type": "metric",
+                    "id": "WzaXsg",
+                    "attributes": {
+                        "name": "Viewed Product",
+                        "created": "2026-04-07T02:26:05+00:00",
+                        "updated": "2026-04-07T02:26:05+00:00",
+                        "integration": {
+                            "object": "integration",
+                            "id": "7FtS4J",
+                            "key": "api",
+                            "name": "API",
+                            "category": "API"
+                        }
+                    },
+                    "relationships": {
+                        "flow-triggers": {
+                            "data": [],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metrics/WzaXsg/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/metrics/WzaXsg/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metrics/WzaXsg/"
+                    }
+                },
+                {
+                    "type": "metric",
+                    "id": "XJBEv6",
+                    "attributes": {
+                        "name": "SDK Smoke 090430d9",
+                        "created": "2026-09-04T13:06:49+00:00",
+                        "updated": "2026-09-04T13:06:49+00:00",
+                        "integration": {
+                            "object": "integration",
+                            "id": "7FtS4J",
+                            "key": "api",
+                            "name": "API",
+                            "category": "API"
+                        }
+                    },
+                    "relationships": {
+                        "flow-triggers": {
+                            "data": [],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metrics/XJBEv6/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/metrics/XJBEv6/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metrics/XJBEv6/"
+                    }
+                },
+                {
+                    "type": "metric",
+                    "id": "Xw99E7",
+                    "attributes": {
+                        "name": "SDK Smoke 09048123",
+                        "created": "2026-09-04T12:52:18+00:00",
+                        "updated": "2026-09-04T12:52:18+00:00",
+                        "integration": {
+                            "object": "integration",
+                            "id": "7FtS4J",
+                            "key": "api",
+                            "name": "API",
+                            "category": "API"
+                        }
+                    },
+                    "relationships": {
+                        "flow-triggers": {
+                            "data": [],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metrics/Xw99E7/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/metrics/Xw99E7/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metrics/Xw99E7/"
+                    }
+                }
+            ],
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/metrics?fields%5Bmetric%5D=name%2Ccreated%2Cupdated%2Cintegration&filter=equals%28integration.name%2C%22API%22%29&include=flow-triggers",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "metrics.list",
+        "recorded": "2026-09-04"
+    }
+}

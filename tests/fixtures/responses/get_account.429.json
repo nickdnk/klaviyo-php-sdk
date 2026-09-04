@@ -1,0 +1,41 @@
+{
+    "operation": "get_account",
+    "request": {
+        "method": "GET",
+        "path": "/api/accounts/WBhXHN",
+        "query": {
+            "fields": {
+                "account": "timezone,locale"
+            }
+        }
+    },
+    "response": {
+        "status": 429,
+        "headers": {
+            "retry-after": "1"
+        },
+        "body": {
+            "errors": [
+                {
+                    "source": {
+                        "pointer": "/data"
+                    },
+                    "meta": [],
+                    "links": {
+                        "type": "https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling#rate-limits"
+                    },
+                    "id": "479ad975-7c35-4f18-b5ff-7eef2abaee22",
+                    "detail": "Request was throttled. Expected available in 1 second.",
+                    "title": "Request was throttled.",
+                    "status": 429,
+                    "code": "throttled"
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "accounts.get",
+        "recorded": "2026-09-04"
+    }
+}

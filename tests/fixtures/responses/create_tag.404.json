@@ -1,0 +1,36 @@
+{
+    "operation": "create_tag",
+    "request": {
+        "method": "POST",
+        "path": "/api/tags",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "2369bc6f-7a16-407b-bdcc-44735d17727c",
+                    "status": 404,
+                    "code": "tag_service_error",
+                    "title": "Tag Service Error",
+                    "detail": "Tag Group with id 00000000-0000-0000-0000-000000000000 not found",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "tags",
+        "step": "tags.create",
+        "recorded": "2026-09-04"
+    }
+}

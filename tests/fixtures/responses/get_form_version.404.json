@@ -1,0 +1,36 @@
+{
+    "operation": "get_form_version",
+    "request": {
+        "method": "GET",
+        "path": "/api/form-versions/1",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "cd50c2db-2c42-4eaf-a75b-0c906f97a71a",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A form version with id `1` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "formVersions.get",
+        "recorded": "2026-09-04"
+    }
+}

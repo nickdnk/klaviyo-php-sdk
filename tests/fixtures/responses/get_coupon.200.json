@@ -1,0 +1,41 @@
+{
+    "operation": "get_coupon",
+    "request": {
+        "method": "GET",
+        "path": "/api/coupons/sdk_smoke_09048f53_coupon1",
+        "query": {
+            "fields": {
+                "coupon": "external_id"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "73",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "coupon",
+                "id": "sdk_smoke_09048f53_coupon1",
+                "attributes": {
+                    "external_id": "sdk_smoke_09048f53_coupon1"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/coupons/sdk_smoke_09048f53_coupon1/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/coupons/sdk_smoke_09048f53_coupon1?fields%5Bcoupon%5D=external_id"
+            }
+        }
+    },
+    "source": {
+        "suite": "coupons",
+        "step": "coupons.get",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "operation": "create_event",
+    "request": {
+        "method": "POST",
+        "path": "/api/events",
+        "query": {}
+    },
+    "response": {
+        "status": 202,
+        "headers": {
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "events.create",
+        "recorded": "2026-09-04"
+    }
+}

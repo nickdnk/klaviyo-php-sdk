@@ -1,0 +1,154 @@
+{
+    "operation": "get_segments",
+    "request": {
+        "method": "GET",
+        "path": "/api/segments",
+        "query": {
+            "filter": "any(name,[\"sdk-smoke-0904b052-segment\",\"sdk-smoke-0904b052-segment2\"]),equals(is_starred,true),greater-than(created,2026-09-03T13:38:53+00:00)",
+            "include": "tags",
+            "sort": "-created"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "73",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "segment",
+                    "id": "SAx2Kq",
+                    "attributes": {
+                        "name": "sdk-smoke-0904b052-segment2",
+                        "definition": {
+                            "condition_groups": [
+                                {
+                                    "conditions": [
+                                        {
+                                            "type": "profile-property",
+                                            "property": "properties['sdk_smoke_run']",
+                                            "filter": {
+                                                "type": "string",
+                                                "operator": "equals",
+                                                "value": "0904b052"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "created": "2026-09-04T13:38:52+00:00",
+                        "updated": "2026-09-04T13:38:52+00:00",
+                        "is_active": true,
+                        "is_processing": true,
+                        "is_starred": false
+                    },
+                    "relationships": {
+                        "profiles": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/segments/SAx2Kq/relationships/profiles/",
+                                "related": "https://a.klaviyo.com/api/segments/SAx2Kq/profiles/"
+                            }
+                        },
+                        "tags": {
+                            "data": [],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/segments/SAx2Kq/relationships/tags/",
+                                "related": "https://a.klaviyo.com/api/segments/SAx2Kq/tags/"
+                            }
+                        },
+                        "flow-triggers": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/segments/SAx2Kq/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/segments/SAx2Kq/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/segments/SAx2Kq/"
+                    }
+                },
+                {
+                    "type": "segment",
+                    "id": "RvKscW",
+                    "attributes": {
+                        "name": "sdk-smoke-0904b052-segment",
+                        "definition": {
+                            "condition_groups": [
+                                {
+                                    "conditions": [
+                                        {
+                                            "type": "profile-group-membership",
+                                            "is_member": true,
+                                            "group_ids": [
+                                                "SdpKaX"
+                                            ],
+                                            "timeframe_filter": null
+                                        }
+                                    ]
+                                },
+                                {
+                                    "conditions": [
+                                        {
+                                            "type": "profile-property",
+                                            "property": "properties['sdk_smoke_run']",
+                                            "filter": {
+                                                "type": "string",
+                                                "operator": "equals",
+                                                "value": "0904b052"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "created": "2026-09-04T13:38:50+00:00",
+                        "updated": "2026-09-04T13:38:50+00:00",
+                        "is_active": true,
+                        "is_processing": true,
+                        "is_starred": true
+                    },
+                    "relationships": {
+                        "profiles": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/segments/RvKscW/relationships/profiles/",
+                                "related": "https://a.klaviyo.com/api/segments/RvKscW/profiles/"
+                            }
+                        },
+                        "tags": {
+                            "data": [],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/segments/RvKscW/relationships/tags/",
+                                "related": "https://a.klaviyo.com/api/segments/RvKscW/tags/"
+                            }
+                        },
+                        "flow-triggers": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/segments/RvKscW/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/segments/RvKscW/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/segments/RvKscW/"
+                    }
+                }
+            ],
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/segments?filter=any%28name%2C%5B%22sdk-smoke-0904b052-segment%22%2C%22sdk-smoke-0904b052-segment2%22%5D%29%2Cequals%28is_starred%2Ctrue%29%2Cgreater-than%28created%2C2026-09-03T13%3A38%3A53%2B00%3A00%29&include=tags&sort=-created",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "segments",
+        "step": "segments.list",
+        "recorded": "2026-09-04"
+    }
+}

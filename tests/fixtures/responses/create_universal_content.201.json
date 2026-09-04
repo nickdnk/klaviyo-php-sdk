@@ -1,0 +1,54 @@
+{
+    "operation": "create_universal_content",
+    "request": {
+        "method": "POST",
+        "path": "/api/template-universal-content",
+        "query": {
+            "fields": {
+                "template-universal-content": "name,definition,created,updated"
+            }
+        }
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "template-universal-content",
+                "id": "b0efdc506d1741d8b47c7f45b8c649e6",
+                "attributes": {
+                    "name": "sdk-smoke-0904a5e6-uc-html",
+                    "definition": {
+                        "content_type": "block",
+                        "type": "html",
+                        "data": {
+                            "content": "<div>sdk-smoke html block {{ first_name }}</div>",
+                            "display_options": {
+                                "show_on": "all",
+                                "visible_check": ""
+                            }
+                        }
+                    },
+                    "created": "2026-09-04T13:39:16.505612+00:00",
+                    "updated": "2026-09-04T13:39:16.505633+00:00"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/template-universal-content/b0efdc506d1741d8b47c7f45b8c649e6/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/template-universal-content?fields%5Btemplate-universal-content%5D=name%2Cdefinition%2Ccreated%2Cupdated"
+            }
+        }
+    },
+    "source": {
+        "suite": "templates",
+        "step": "universalContent.create",
+        "recorded": "2026-09-04"
+    }
+}

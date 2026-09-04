@@ -1,0 +1,28 @@
+{
+    "operation": "get_ids_for_flows_triggered_by_metric",
+    "request": {
+        "method": "GET",
+        "path": "/api/metrics/SkDfHe/relationships/flow-triggers",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/metrics/SkDfHe/relationships/flow-triggers"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "metrics.flowTriggerIds",
+        "recorded": "2026-09-04"
+    }
+}

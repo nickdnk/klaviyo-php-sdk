@@ -1,0 +1,31 @@
+{
+    "operation": "get_metric_id_for_metric_property",
+    "request": {
+        "method": "GET",
+        "path": "/api/metric-properties/U2tEZkhlLiR2YWx1ZQ/relationships/metric",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "metric",
+                "id": "SkDfHe"
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/metric-properties/U2tEZkhlLiR2YWx1ZQ/relationships/metric"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "metricProperties.metricId",
+        "recorded": "2026-09-04"
+    }
+}

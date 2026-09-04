@@ -1,0 +1,60 @@
+{
+    "operation": "get_metric",
+    "request": {
+        "method": "GET",
+        "path": "/api/metrics/SkDfHe",
+        "query": {
+            "fields": {
+                "metric": "name,integration",
+                "flow": "name"
+            },
+            "include": "flow-triggers"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "metric",
+                "id": "SkDfHe",
+                "attributes": {
+                    "name": "SDK Smoke",
+                    "integration": {
+                        "object": "integration",
+                        "id": "7FtS4J",
+                        "key": "api",
+                        "name": "API",
+                        "category": "API"
+                    }
+                },
+                "relationships": {
+                    "flow-triggers": {
+                        "data": [],
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/metrics/SkDfHe/relationships/flow-triggers/",
+                            "related": "https://a.klaviyo.com/api/metrics/SkDfHe/flow-triggers/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/metrics/SkDfHe/"
+                }
+            },
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/metrics/SkDfHe?fields%5Bmetric%5D=name%2Cintegration&fields%5Bflow%5D=name&include=flow-triggers"
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "metrics.get",
+        "recorded": "2026-09-04"
+    }
+}

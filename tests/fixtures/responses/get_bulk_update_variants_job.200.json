@@ -1,0 +1,56 @@
+{
+    "operation": "get_bulk_update_variants_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-variant-bulk-update-jobs/01M1PAE95Z5E8NC8132HJD7D5C",
+        "query": {
+            "fields": {
+                "catalog-variant-bulk-update-job": "completed_at,completed_count,created_at,errors,expires_at,failed_count,status,total_count",
+                "catalog-variant": "title,price"
+            },
+            "include": "variants"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "catalog-variant-bulk-update-job",
+                "id": "01M1PAE95Z5E8NC8132HJD7D5C",
+                "attributes": {
+                    "completed_at": null,
+                    "completed_count": 0,
+                    "created_at": "2026-09-04T13:41:28.384201+00:00",
+                    "errors": [],
+                    "expires_at": "2026-09-11T13:41:28.384201+00:00",
+                    "failed_count": 0,
+                    "status": "processing",
+                    "total_count": 2
+                },
+                "relationships": {
+                    "variants": {
+                        "data": []
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/catalog-variant-bulk-update-jobs/01M1PAE95Z5E8NC8132HJD7D5C/"
+                }
+            },
+            "included": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/catalog-variant-bulk-update-jobs/01M1PAE95Z5E8NC8132HJD7D5C?fields%5Bcatalog-variant-bulk-update-job%5D=completed_at%2Ccompleted_count%2Ccreated_at%2Cerrors%2Cexpires_at%2Cfailed_count%2Cstatus%2Ctotal_count&fields%5Bcatalog-variant%5D=title%2Cprice&include=variants"
+            }
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogVariants.getBulkUpdateJob",
+        "recorded": "2026-09-04"
+    }
+}

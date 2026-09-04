@@ -1,0 +1,44 @@
+{
+    "operation": "get_tag_groups",
+    "request": {
+        "method": "GET",
+        "path": "/api/tag-groups",
+        "query": {
+            "sort": "id",
+            "page": {
+                "size": "1",
+                "cursor": "bmV4dDo6aWQ6OjM0YzAxYTRhLTIwOGMtNDQyOC1hODBiLTRkMGI0ZTA3NDFkYg"
+            }
+        }
+    },
+    "response": {
+        "status": 429,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "retry-after": "1"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "b2fc60a7-552f-42a3-89f9-5104b068d70d",
+                    "status": 429,
+                    "code": "throttled",
+                    "title": "Request was throttled.",
+                    "detail": "Request was throttled. Expected available in 1 second.",
+                    "source": {
+                        "pointer": "/data"
+                    },
+                    "links": {
+                        "type": "https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling#rate-limits"
+                    },
+                    "meta": []
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "tags",
+        "step": "tagGroups.list",
+        "recorded": "2026-09-04"
+    }
+}

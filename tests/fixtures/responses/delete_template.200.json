@@ -1,0 +1,22 @@
+{
+    "operation": "delete_template",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/templates/RhSFjh",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "templates.delete",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "operation": "get_flows_triggered_by_segment",
+    "request": {
+        "method": "GET",
+        "path": "/api/segments/RvKscW/flow-triggers",
+        "query": {
+            "fields": {
+                "flow": "name"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [],
+            "links": {
+                "self": "https://a.klaviyo.com/api/segments/RvKscW/flow-triggers?fields%5Bflow%5D=name"
+            }
+        }
+    },
+    "source": {
+        "suite": "segments",
+        "step": "segments.flowTriggers",
+        "recorded": "2026-09-04"
+    }
+}

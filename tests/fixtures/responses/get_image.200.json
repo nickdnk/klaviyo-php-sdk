@@ -1,0 +1,41 @@
+{
+    "operation": "get_image",
+    "request": {
+        "method": "GET",
+        "path": "/api/images/366547888",
+        "query": {
+            "fields": {
+                "image": "name"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "image",
+                "id": "366547888",
+                "attributes": {
+                    "name": "sdk-smoke-0904a5e6-img-file"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/images/366547888/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/images/366547888?fields%5Bimage%5D=name"
+            }
+        }
+    },
+    "source": {
+        "suite": "templates",
+        "step": "images.executePool",
+        "recorded": "2026-09-04"
+    }
+}

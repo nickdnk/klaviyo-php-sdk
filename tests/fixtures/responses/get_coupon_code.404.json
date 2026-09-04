@@ -1,0 +1,36 @@
+{
+    "operation": "get_coupon_code",
+    "request": {
+        "method": "GET",
+        "path": "/api/coupon-codes/sdk_smoke_09048f53_coupon1-sdk-smoke-nope",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "30bb2f87-df21-4f29-8148-b22e44c3456a",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A coupon code with given identifier 'sdk_smoke_09048f53_coupon1-sdk-smoke-nope' does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "coupons",
+        "step": "couponCodes.get",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,76 @@
+{
+    "operation": "get_webhook",
+    "request": {
+        "method": "GET",
+        "path": "/api/webhooks/01M1PAC5N9PMXJ7672AC8B75VN",
+        "query": {
+            "include": "webhook-topics"
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "1, 1;w=1, 15;w=60",
+            "ratelimit-remaining": "0",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "webhook",
+                "id": "01M1PAC5N9PMXJ7672AC8B75VN",
+                "attributes": {
+                    "name": "sdk-smoke-09045284-hook-renamed",
+                    "description": "sdk smoke 09045284",
+                    "endpoint_url": "https://e444-87-72-102-66.ngrok-free.app/*****",
+                    "enabled": true,
+                    "created_at": "2026-09-04T13:40:19.268993+00:00",
+                    "updated_at": "2026-09-04T13:40:22.281863+00:00"
+                },
+                "relationships": {
+                    "webhook-topics": {
+                        "data": [
+                            {
+                                "type": "webhook-topic",
+                                "id": "event:klaviyo.manually_suppressed_from_email_marketing"
+                            },
+                            {
+                                "type": "webhook-topic",
+                                "id": "event:klaviyo.manually_unsuppressed_from_email_marketing"
+                            }
+                        ]
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/webhooks/01M1PAC5N9PMXJ7672AC8B75VN/"
+                }
+            },
+            "included": [
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.manually_suppressed_from_email_marketing",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.manually_suppressed_from_email_marketing/"
+                    }
+                },
+                {
+                    "type": "webhook-topic",
+                    "id": "event:klaviyo.manually_unsuppressed_from_email_marketing",
+                    "attributes": [],
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/webhook-topics/event:klaviyo.manually_unsuppressed_from_email_marketing/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/webhooks/01M1PAC5N9PMXJ7672AC8B75VN?include=webhook-topics"
+            }
+        }
+    },
+    "source": {
+        "suite": "oauth_webhooks",
+        "step": "webhooks.get",
+        "recorded": "2026-09-04"
+    }
+}

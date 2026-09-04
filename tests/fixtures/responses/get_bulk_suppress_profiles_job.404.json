@@ -1,0 +1,36 @@
+{
+    "operation": "get_bulk_suppress_profiles_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/profile-suppression-bulk-create-jobs/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "73",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "b37da775-abe8-4f6d-b772-b2d370a7e867",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A bulk profile suppression job with the id 'NOPE01' does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.getSuppressJob",
+        "recorded": "2026-09-04"
+    }
+}

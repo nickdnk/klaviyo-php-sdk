@@ -1,0 +1,42 @@
+{
+    "operation": "get_forms",
+    "request": {
+        "method": "GET",
+        "path": "/api/forms",
+        "query": {
+            "sort": "created_at",
+            "page": {
+                "size": "1"
+            }
+        }
+    },
+    "response": {
+        "status": 429,
+        "headers": {
+            "retry-after": "1"
+        },
+        "body": {
+            "errors": [
+                {
+                    "code": "throttled",
+                    "id": "7f675528-498e-492a-8dcc-16c50b37cea3",
+                    "title": "Request was throttled.",
+                    "status": 429,
+                    "meta": [],
+                    "links": {
+                        "type": "https://developers.klaviyo.com/en/docs/rate_limits_and_error_handling#rate-limits"
+                    },
+                    "detail": "Request was throttled. Expected available in 1 second.",
+                    "source": {
+                        "pointer": "/data"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "settings",
+        "step": "forms.list",
+        "recorded": "2026-09-04"
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "operation": "create_profile",
+    "request": {
+        "method": "POST",
+        "path": "/api/profiles",
+        "query": {}
+    },
+    "response": {
+        "status": 409,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "73",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "b08dae82-3713-47ef-95ca-1aba4a402195",
+                    "status": 409,
+                    "code": "duplicate_profile",
+                    "title": "Conflict.",
+                    "detail": "A profile already exists with one of these identifiers.",
+                    "source": {
+                        "pointer": "/data/attributes"
+                    },
+                    "links": [],
+                    "meta": {
+                        "duplicate_profile_id": "01M1PAAR5HBCRHA3NN9NG5WRTA"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.create",
+        "recorded": "2026-09-04"
+    }
+}

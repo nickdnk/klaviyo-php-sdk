@@ -1,0 +1,37 @@
+{
+    "operation": "refresh_campaign_recipient_estimation",
+    "request": {
+        "method": "POST",
+        "path": "/api/campaign-recipient-estimation-jobs",
+        "query": {}
+    },
+    "response": {
+        "status": 202,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "campaign-recipient-estimation-job",
+                "id": "01M1PA99J4GSD6B3XGYF78793W",
+                "attributes": {
+                    "status": "processing"
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/campaign-recipient-estimation-jobs/01M1PA99J4GSD6B3XGYF78793W/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/campaign-recipient-estimation-jobs"
+            }
+        }
+    },
+    "source": {
+        "suite": "campaigns",
+        "step": "campaigns.refreshRecipientEstimation",
+        "recorded": "2026-09-04"
+    }
+}

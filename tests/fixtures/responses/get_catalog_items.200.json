@@ -1,0 +1,207 @@
+{
+    "operation": "get_catalog_items",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-items",
+        "query": {
+            "fields": {
+                "catalog-item": "created,custom_metadata,description,external_id,image_full_url,image_thumbnail_url,images,price,published,title,updated,url",
+                "catalog-variant": "sku,price"
+            },
+            "filter": "any(ids,[\"$custom:::$default:::sdk-smoke-090444b5-item1\",\"$custom:::$default:::sdk-smoke-090444b5-item2\"])",
+            "include": "variants",
+            "sort": "created",
+            "page": {
+                "size": "100"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "catalog-item",
+                    "id": "$custom:::$default:::sdk-smoke-090444b5-item1",
+                    "attributes": {
+                        "created": "2026-09-04T13:38:45.437000+00:00",
+                        "custom_metadata": {
+                            "colour": "blue",
+                            "smokeRun": "090444b5",
+                            "weightKg": 1.25
+                        },
+                        "description": "First smoke item.",
+                        "external_id": "sdk-smoke-090444b5-item1",
+                        "image_full_url": "https://example.com/img/sdk-smoke-090444b5-item1-full.jpg",
+                        "image_thumbnail_url": "https://example.com/img/sdk-smoke-090444b5-item1-thumb.jpg",
+                        "images": [
+                            "https://example.com/img/sdk-smoke-090444b5-item1-1.jpg",
+                            "https://example.com/img/sdk-smoke-090444b5-item1-2.jpg"
+                        ],
+                        "price": 19.99,
+                        "published": true,
+                        "title": "SDK Smoke Item One 090444b5",
+                        "updated": "2026-09-04T13:38:45.437000+00:00",
+                        "url": "https://example.com/products/sdk-smoke-090444b5-item1"
+                    },
+                    "relationships": {
+                        "variants": {
+                            "data": [
+                                {
+                                    "type": "catalog-variant",
+                                    "id": "$custom:::$default:::sdk-smoke-090444b5-item1-v1"
+                                },
+                                {
+                                    "type": "catalog-variant",
+                                    "id": "$custom:::$default:::sdk-smoke-090444b5-item1-v2"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item1/relationships/variants/",
+                                "related": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item1/variants/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item1/"
+                    }
+                },
+                {
+                    "type": "catalog-item",
+                    "id": "$custom:::$default:::sdk-smoke-090444b5-item2",
+                    "attributes": {
+                        "created": "2026-09-04T13:38:45.914000+00:00",
+                        "custom_metadata": {
+                            "smokeRun": "090444b5"
+                        },
+                        "description": "Second smoke item.",
+                        "external_id": "sdk-smoke-090444b5-item2",
+                        "image_full_url": "",
+                        "image_thumbnail_url": "",
+                        "images": [],
+                        "price": 5.5,
+                        "published": true,
+                        "title": "SDK Smoke Item Two 090444b5",
+                        "updated": "2026-09-04T13:38:45.914000+00:00",
+                        "url": "https://example.com/products/sdk-smoke-090444b5-item2"
+                    },
+                    "relationships": {
+                        "variants": {
+                            "data": [
+                                {
+                                    "type": "catalog-variant",
+                                    "id": "$custom:::$default:::sdk-smoke-090444b5-item2-v1"
+                                },
+                                {
+                                    "type": "catalog-variant",
+                                    "id": "$custom:::$default:::sdk-smoke-090444b5-item2-v2"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item2/relationships/variants/",
+                                "related": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item2/variants/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/catalog-items/$custom:::$default:::sdk-smoke-090444b5-item2/"
+                    }
+                }
+            ],
+            "included": [
+                {
+                    "type": "catalog-variant",
+                    "id": "$custom:::$default:::sdk-smoke-090444b5-item1-v1",
+                    "attributes": {
+                        "sku": "SKU-090444B5-ITEM1-V1",
+                        "price": 19.99
+                    },
+                    "relationships": {
+                        "item": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item1-v1/relationships/item/",
+                                "related": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item1-v1/item/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item1-v1/"
+                    }
+                },
+                {
+                    "type": "catalog-variant",
+                    "id": "$custom:::$default:::sdk-smoke-090444b5-item1-v2",
+                    "attributes": {
+                        "sku": "SKU-090444B5-ITEM1-V2",
+                        "price": 24.99
+                    },
+                    "relationships": {
+                        "item": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item1-v2/relationships/item/",
+                                "related": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item1-v2/item/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item1-v2/"
+                    }
+                },
+                {
+                    "type": "catalog-variant",
+                    "id": "$custom:::$default:::sdk-smoke-090444b5-item2-v1",
+                    "attributes": {
+                        "sku": "SKU-090444B5-ITEM2-V1",
+                        "price": 5.5
+                    },
+                    "relationships": {
+                        "item": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item2-v1/relationships/item/",
+                                "related": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item2-v1/item/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item2-v1/"
+                    }
+                },
+                {
+                    "type": "catalog-variant",
+                    "id": "$custom:::$default:::sdk-smoke-090444b5-item2-v2",
+                    "attributes": {
+                        "sku": "SKU-090444B5-ITEM2-V2",
+                        "price": 6.5
+                    },
+                    "relationships": {
+                        "item": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item2-v2/relationships/item/",
+                                "related": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item2-v2/item/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/catalog-variants/$custom:::$default:::sdk-smoke-090444b5-item2-v2/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/catalog-items?fields%5Bcatalog-item%5D=created%2Ccustom_metadata%2Cdescription%2Cexternal_id%2Cimage_full_url%2Cimage_thumbnail_url%2Cimages%2Cprice%2Cpublished%2Ctitle%2Cupdated%2Curl&fields%5Bcatalog-variant%5D=sku%2Cprice&filter=any%28ids%2C%5B%22%24custom%3A%3A%3A%24default%3A%3A%3Asdk-smoke-090444b5-item1%22%2C%22%24custom%3A%3A%3A%24default%3A%3A%3Asdk-smoke-090444b5-item2%22%5D%29&include=variants&sort=created&page%5Bsize%5D=100",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogItems.list",
+        "recorded": "2026-09-04"
+    }
+}

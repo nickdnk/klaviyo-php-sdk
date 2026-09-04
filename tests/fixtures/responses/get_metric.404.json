@@ -1,0 +1,36 @@
+{
+    "operation": "get_metric",
+    "request": {
+        "method": "GET",
+        "path": "/api/metrics/NOPE01",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "8",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "8439db6a-e72b-4ade-8381-5a58837f6c72",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "Metric with id NOPE01 does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "metrics.get",
+        "recorded": "2026-09-04"
+    }
+}

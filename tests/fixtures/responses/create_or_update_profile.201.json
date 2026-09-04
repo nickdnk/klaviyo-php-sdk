@@ -1,0 +1,91 @@
+{
+    "operation": "create_or_update_profile",
+    "request": {
+        "method": "POST",
+        "path": "/api/profile-import",
+        "query": {}
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "profile",
+                "id": "01M1PAAWG9ZV3P6AA4RTJZWYAK",
+                "attributes": {
+                    "email": "sdk-smoke+09047c86-b@nickdnktech.com",
+                    "phone_number": null,
+                    "external_id": null,
+                    "anonymous_id": null,
+                    "whatsapp_bsuid": null,
+                    "first_name": "Bee",
+                    "last_name": null,
+                    "organization": null,
+                    "locale": null,
+                    "title": null,
+                    "image": null,
+                    "created": "2026-09-04T13:39:37.131026+00:00",
+                    "updated": "2026-09-04T13:39:37.131044+00:00",
+                    "last_event_date": null,
+                    "location": {
+                        "address1": null,
+                        "address2": null,
+                        "city": null,
+                        "country": null,
+                        "latitude": null,
+                        "longitude": null,
+                        "region": null,
+                        "zip": null,
+                        "timezone": null,
+                        "ip": null
+                    },
+                    "properties": {
+                        "source": "import"
+                    }
+                },
+                "relationships": {
+                    "lists": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAWG9ZV3P6AA4RTJZWYAK/relationships/lists/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAWG9ZV3P6AA4RTJZWYAK/lists/"
+                        }
+                    },
+                    "segments": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAWG9ZV3P6AA4RTJZWYAK/relationships/segments/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAWG9ZV3P6AA4RTJZWYAK/segments/"
+                        }
+                    },
+                    "push-tokens": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAWG9ZV3P6AA4RTJZWYAK/relationships/push-tokens/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAWG9ZV3P6AA4RTJZWYAK/push-tokens/"
+                        }
+                    },
+                    "conversation": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAWG9ZV3P6AA4RTJZWYAK/relationships/conversation/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAWG9ZV3P6AA4RTJZWYAK/conversation/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/profiles/01M1PAAWG9ZV3P6AA4RTJZWYAK/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/profile-import"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.import",
+        "recorded": "2026-09-04"
+    }
+}

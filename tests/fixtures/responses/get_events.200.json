@@ -1,0 +1,215 @@
+{
+    "operation": "get_events",
+    "request": {
+        "method": "GET",
+        "path": "/api/events",
+        "query": {
+            "fields": {
+                "event": "timestamp,datetime,event_properties,uuid",
+                "metric": "name",
+                "profile": "email"
+            },
+            "filter": "equals(metric_id,\"SkDfHe\")",
+            "include": "metric,profile",
+            "sort": "-datetime",
+            "page": {
+                "size": "2"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "event",
+                    "id": "7qWkC6JPz7g",
+                    "attributes": {
+                        "timestamp": 1788529135,
+                        "datetime": "2026-09-04T13:38:55+00:00",
+                        "event_properties": {
+                            "sku": "D4",
+                            "bulk": true,
+                            "$value_currency": "EUR",
+                            "$event_id": "sdk-smoke-09042132-bulk-1",
+                            "$value": 3
+                        },
+                        "uuid": "f9204180-a865-11f1-8001-eb4883aa7288"
+                    },
+                    "relationships": {
+                        "profile": {
+                            "data": {
+                                "type": "profile",
+                                "id": "01M1PA9MBA7VB258TP74BXMQTG"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/events/7qWkC6JPz7g/relationships/profile/",
+                                "related": "https://a.klaviyo.com/api/events/7qWkC6JPz7g/profile/"
+                            }
+                        },
+                        "metric": {
+                            "data": {
+                                "type": "metric",
+                                "id": "SkDfHe"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/events/7qWkC6JPz7g/relationships/metric/",
+                                "related": "https://a.klaviyo.com/api/events/7qWkC6JPz7g/metric/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/events/7qWkC6JPz7g/"
+                    }
+                },
+                {
+                    "type": "event",
+                    "id": "7qWkY8hhfKA",
+                    "attributes": {
+                        "timestamp": 1788529134,
+                        "datetime": "2026-09-04T13:38:54+00:00",
+                        "event_properties": {
+                            "sku": "C3",
+                            "$event_id": "sdk-smoke-09042132-evt-3",
+                            "$value": 0
+                        },
+                        "uuid": "f887ab00-a865-11f1-8001-02861bc035fc"
+                    },
+                    "relationships": {
+                        "profile": {
+                            "data": {
+                                "type": "profile",
+                                "id": "01M1PA9KFVRQEFP614XWVXGVY7"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/events/7qWkY8hhfKA/relationships/profile/",
+                                "related": "https://a.klaviyo.com/api/events/7qWkY8hhfKA/profile/"
+                            }
+                        },
+                        "metric": {
+                            "data": {
+                                "type": "metric",
+                                "id": "SkDfHe"
+                            },
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/events/7qWkY8hhfKA/relationships/metric/",
+                                "related": "https://a.klaviyo.com/api/events/7qWkY8hhfKA/metric/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/events/7qWkY8hhfKA/"
+                    }
+                }
+            ],
+            "included": [
+                {
+                    "type": "metric",
+                    "id": "SkDfHe",
+                    "attributes": {
+                        "name": "SDK Smoke"
+                    },
+                    "relationships": {
+                        "flow-triggers": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/metrics/SkDfHe/relationships/flow-triggers/",
+                                "related": "https://a.klaviyo.com/api/metrics/SkDfHe/flow-triggers/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/metrics/SkDfHe/"
+                    }
+                },
+                {
+                    "type": "profile",
+                    "id": "01M1PA9MBA7VB258TP74BXMQTG",
+                    "attributes": {
+                        "email": "sdk-smoke+09042132-ev2@nickdnktech.com"
+                    },
+                    "relationships": {
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/segments/"
+                            }
+                        },
+                        "push-tokens": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/relationships/push-tokens/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/push-tokens/"
+                            }
+                        },
+                        "conversation": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/relationships/conversation/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/conversation/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profiles/01M1PA9MBA7VB258TP74BXMQTG/"
+                    }
+                },
+                {
+                    "type": "profile",
+                    "id": "01M1PA9KFVRQEFP614XWVXGVY7",
+                    "attributes": {
+                        "email": "sdk-smoke+09042132-ev@nickdnktech.com"
+                    },
+                    "relationships": {
+                        "lists": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PA9KFVRQEFP614XWVXGVY7/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PA9KFVRQEFP614XWVXGVY7/lists/"
+                            }
+                        },
+                        "segments": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PA9KFVRQEFP614XWVXGVY7/relationships/segments/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PA9KFVRQEFP614XWVXGVY7/segments/"
+                            }
+                        },
+                        "push-tokens": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PA9KFVRQEFP614XWVXGVY7/relationships/push-tokens/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PA9KFVRQEFP614XWVXGVY7/push-tokens/"
+                            }
+                        },
+                        "conversation": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profiles/01M1PA9KFVRQEFP614XWVXGVY7/relationships/conversation/",
+                                "related": "https://a.klaviyo.com/api/profiles/01M1PA9KFVRQEFP614XWVXGVY7/conversation/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profiles/01M1PA9KFVRQEFP614XWVXGVY7/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/events?fields%5Bevent%5D=timestamp%2Cdatetime%2Cevent_properties%2Cuuid&fields%5Bmetric%5D=name&fields%5Bprofile%5D=email&filter=equals%28metric_id%2C%22SkDfHe%22%29&include=metric%2Cprofile&sort=-datetime&page%5Bsize%5D=2",
+                "next": "https://a.klaviyo.com/api/events?fields%5Bevent%5D=timestamp%2Cdatetime%2Cevent_properties%2Cuuid&fields%5Bmetric%5D=name&fields%5Bprofile%5D=email&filter=equals%28metric_id%2C%22SkDfHe%22%29&include=metric%2Cprofile&sort=-datetime&page%5Bsize%5D=2&page%5Bcursor%5D=WzE3ODg1MjkxMzQsICI3cVdrWThoaGZLQSIsIHRydWVd",
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "metrics",
+        "step": "events.list",
+        "recorded": "2026-09-04"
+    }
+}

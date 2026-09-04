@@ -1,0 +1,98 @@
+{
+    "operation": "create_or_update_profile",
+    "request": {
+        "method": "POST",
+        "path": "/api/profile-import",
+        "query": {}
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "73",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": {
+                "type": "profile",
+                "id": "01M1PAAR5HBCRHA3NN9NG5WRTA",
+                "attributes": {
+                    "email": "sdk-smoke+09047c86-a@nickdnktech.com",
+                    "phone_number": null,
+                    "external_id": "sdk-smoke-09047c86-ext-a",
+                    "anonymous_id": null,
+                    "whatsapp_bsuid": null,
+                    "first_name": "Smokey",
+                    "last_name": "Imported",
+                    "organization": "nickdnk",
+                    "locale": "en-US",
+                    "title": "QA",
+                    "image": "https://www.klaviyo.com/favicon.ico",
+                    "created": "2026-09-04T13:39:33+00:00",
+                    "updated": "2026-09-04T13:39:37.451531+00:00",
+                    "last_event_date": null,
+                    "location": {
+                        "address1": "Artillerivej 86",
+                        "address2": null,
+                        "city": "Copenhagen",
+                        "country": "Denmark",
+                        "latitude": 55.66,
+                        "longitude": 12.57,
+                        "region": "Capital Region",
+                        "zip": "2300",
+                        "timezone": "Europe/Copenhagen",
+                        "ip": null
+                    },
+                    "properties": {
+                        "tags": [
+                            "x",
+                            "y",
+                            "z",
+                            "imp"
+                        ],
+                        "score": 8,
+                        "company_id": "WBhXHN"
+                    }
+                },
+                "relationships": {
+                    "lists": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/lists/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/lists/"
+                        }
+                    },
+                    "segments": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/segments/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/segments/"
+                        }
+                    },
+                    "push-tokens": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/push-tokens/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/push-tokens/"
+                        }
+                    },
+                    "conversation": {
+                        "links": {
+                            "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/relationships/conversation/",
+                            "related": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/conversation/"
+                        }
+                    }
+                },
+                "links": {
+                    "self": "https://a.klaviyo.com/api/profiles/01M1PAAR5HBCRHA3NN9NG5WRTA/"
+                }
+            },
+            "links": {
+                "self": "https://a.klaviyo.com/api/profile-import"
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.import",
+        "recorded": "2026-09-04"
+    }
+}

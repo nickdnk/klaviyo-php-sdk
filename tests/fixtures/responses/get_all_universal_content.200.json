@@ -1,0 +1,51 @@
+{
+    "operation": "get_all_universal_content",
+    "request": {
+        "method": "GET",
+        "path": "/api/template-universal-content",
+        "query": {
+            "fields": {
+                "template-universal-content": "name,created"
+            },
+            "filter": "equals(name,\"sdk-smoke-0904a5e6-uc-html\")",
+            "sort": "-created",
+            "page": {
+                "size": "100"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "75, 75;w=1, 750;w=60",
+            "ratelimit-remaining": "74",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "template-universal-content",
+                    "id": "b0efdc506d1741d8b47c7f45b8c649e6",
+                    "attributes": {
+                        "name": "sdk-smoke-0904a5e6-uc-html",
+                        "created": "2026-09-04T13:39:16.505612+00:00"
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/template-universal-content/b0efdc506d1741d8b47c7f45b8c649e6/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/template-universal-content?fields%5Btemplate-universal-content%5D=name%2Ccreated&filter=equals%28name%2C%22sdk-smoke-0904a5e6-uc-html%22%29&sort=-created&page%5Bsize%5D=100",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "templates",
+        "step": "universalContent.list",
+        "recorded": "2026-09-04"
+    }
+}

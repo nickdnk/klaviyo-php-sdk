@@ -1,0 +1,220 @@
+{
+    "operation": "get_bulk_import_profiles_jobs",
+    "request": {
+        "method": "GET",
+        "path": "/api/profile-bulk-import-jobs",
+        "query": {
+            "fields": {
+                "profile-bulk-import-job": "status,created_at"
+            },
+            "filter": "equals(status,\"complete\")",
+            "sort": "-created_at",
+            "page": {
+                "size": "10"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "10, 10;w=1, 150;w=60",
+            "ratelimit-remaining": "9",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "data": [
+                {
+                    "type": "profile-bulk-import-job",
+                    "id": "V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T13:40:01.031525+00:00"
+                    },
+                    "relationships": {
+                        "lists": {
+                            "data": [
+                                {
+                                    "type": "list",
+                                    "id": "YafG4m"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/lists/"
+                            }
+                        },
+                        "profiles": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/relationships/profiles/",
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/profiles/"
+                            }
+                        },
+                        "import-errors": {
+                            "links": {
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/import-errors/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLlBIV0tSRC4xNzg4NTI5MjAxLkVHZEk1Tw/"
+                    }
+                },
+                {
+                    "type": "profile-bulk-import-job",
+                    "id": "V0JoWEhOX21haW50ZW5hbmNlLldWRlpsNy4xNzg4NTI4MTAxLkoxekRFSg",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T13:21:41.006785+00:00"
+                    },
+                    "relationships": {
+                        "lists": {
+                            "data": [
+                                {
+                                    "type": "list",
+                                    "id": "SXLisS"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLldWRlpsNy4xNzg4NTI4MTAxLkoxekRFSg/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLldWRlpsNy4xNzg4NTI4MTAxLkoxekRFSg/lists/"
+                            }
+                        },
+                        "profiles": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLldWRlpsNy4xNzg4NTI4MTAxLkoxekRFSg/relationships/profiles/",
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLldWRlpsNy4xNzg4NTI4MTAxLkoxekRFSg/profiles/"
+                            }
+                        },
+                        "import-errors": {
+                            "links": {
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLldWRlpsNy4xNzg4NTI4MTAxLkoxekRFSg/import-errors/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLldWRlpsNy4xNzg4NTI4MTAxLkoxekRFSg/"
+                    }
+                },
+                {
+                    "type": "profile-bulk-import-job",
+                    "id": "V0JoWEhOX21haW50ZW5hbmNlLjl6MGYyWS4xNzg4NTI3NTYzLk9jcGR0Vw",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T13:12:43.644391+00:00"
+                    },
+                    "relationships": {
+                        "lists": {
+                            "data": [
+                                {
+                                    "type": "list",
+                                    "id": "Sukgut"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLjl6MGYyWS4xNzg4NTI3NTYzLk9jcGR0Vw/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLjl6MGYyWS4xNzg4NTI3NTYzLk9jcGR0Vw/lists/"
+                            }
+                        },
+                        "profiles": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLjl6MGYyWS4xNzg4NTI3NTYzLk9jcGR0Vw/relationships/profiles/",
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLjl6MGYyWS4xNzg4NTI3NTYzLk9jcGR0Vw/profiles/"
+                            }
+                        },
+                        "import-errors": {
+                            "links": {
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLjl6MGYyWS4xNzg4NTI3NTYzLk9jcGR0Vw/import-errors/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLjl6MGYyWS4xNzg4NTI3NTYzLk9jcGR0Vw/"
+                    }
+                },
+                {
+                    "type": "profile-bulk-import-job",
+                    "id": "V0JoWEhOX21haW50ZW5hbmNlLkNKZ3QxNC4xNzg4NTI3MDQxLnpBNkp4Zw",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T13:04:01.530124+00:00"
+                    },
+                    "relationships": {
+                        "lists": {
+                            "data": [
+                                {
+                                    "type": "list",
+                                    "id": "XP8aR2"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLkNKZ3QxNC4xNzg4NTI3MDQxLnpBNkp4Zw/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLkNKZ3QxNC4xNzg4NTI3MDQxLnpBNkp4Zw/lists/"
+                            }
+                        },
+                        "profiles": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLkNKZ3QxNC4xNzg4NTI3MDQxLnpBNkp4Zw/relationships/profiles/",
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLkNKZ3QxNC4xNzg4NTI3MDQxLnpBNkp4Zw/profiles/"
+                            }
+                        },
+                        "import-errors": {
+                            "links": {
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLkNKZ3QxNC4xNzg4NTI3MDQxLnpBNkp4Zw/import-errors/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLkNKZ3QxNC4xNzg4NTI3MDQxLnpBNkp4Zw/"
+                    }
+                },
+                {
+                    "type": "profile-bulk-import-job",
+                    "id": "V0JoWEhOX21haW50ZW5hbmNlLjRjcm9haC4xNzg4NTI2NDQ0LnVTcXF3dQ",
+                    "attributes": {
+                        "status": "complete",
+                        "created_at": "2026-09-04T12:54:04.111190+00:00"
+                    },
+                    "relationships": {
+                        "lists": {
+                            "data": [
+                                {
+                                    "type": "list",
+                                    "id": "TQE8hK"
+                                }
+                            ],
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLjRjcm9haC4xNzg4NTI2NDQ0LnVTcXF3dQ/relationships/lists/",
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLjRjcm9haC4xNzg4NTI2NDQ0LnVTcXF3dQ/lists/"
+                            }
+                        },
+                        "profiles": {
+                            "links": {
+                                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLjRjcm9haC4xNzg4NTI2NDQ0LnVTcXF3dQ/relationships/profiles/",
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLjRjcm9haC4xNzg4NTI2NDQ0LnVTcXF3dQ/profiles/"
+                            }
+                        },
+                        "import-errors": {
+                            "links": {
+                                "related": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLjRjcm9haC4xNzg4NTI2NDQ0LnVTcXF3dQ/import-errors/"
+                            }
+                        }
+                    },
+                    "links": {
+                        "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs/V0JoWEhOX21haW50ZW5hbmNlLjRjcm9haC4xNzg4NTI2NDQ0LnVTcXF3dQ/"
+                    }
+                }
+            ],
+            "links": {
+                "self": "https://a.klaviyo.com/api/profile-bulk-import-jobs?fields%5Bprofile-bulk-import-job%5D=status%2Ccreated_at&filter=equals%28status%2C%22complete%22%29&sort=-created_at&page%5Bsize%5D=10",
+                "next": null,
+                "prev": null
+            }
+        }
+    },
+    "source": {
+        "suite": "profiles_lists",
+        "step": "profiles.getBulkImportJobs",
+        "recorded": "2026-09-04"
+    }
+}

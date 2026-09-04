@@ -1,0 +1,36 @@
+{
+    "operation": "get_bulk_delete_categories_job",
+    "request": {
+        "method": "GET",
+        "path": "/api/catalog-category-bulk-delete-jobs/sdk-smoke-nope-090444b5",
+        "query": {}
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "350, 350;w=1, 3500;w=60",
+            "ratelimit-remaining": "349",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "4ba6cf88-6769-4ffa-a64a-d6bf66c4cc4e",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "A catalog-category bulk delete job with id sdk-smoke-nope-090444b5 does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "catalogs",
+        "step": "catalogCategories.getBulkDeleteJob",
+        "recorded": "2026-09-04"
+    }
+}

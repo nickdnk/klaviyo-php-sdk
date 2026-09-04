@@ -1,0 +1,40 @@
+{
+    "operation": "update_object_schema",
+    "request": {
+        "method": "PATCH",
+        "path": "/api/object-schemas/01K61DKJ7EKJ0ES9VE456XF5JJ",
+        "query": {
+            "fields": {
+                "object-schema": "title,description,status,properties,required"
+            }
+        }
+    },
+    "response": {
+        "status": 404,
+        "headers": {
+            "content-type": "application/vnd.api+json",
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": {
+            "errors": [
+                {
+                    "id": "f0f21274-7004-49d7-a06a-a8fff4163275",
+                    "status": 404,
+                    "code": "not_found",
+                    "title": "Not found.",
+                    "detail": "object-schema with id `01K61DKJ7EKJ0ES9VE456XF5JJ` does not exist.",
+                    "source": {
+                        "pointer": "/data/"
+                    }
+                }
+            ]
+        }
+    },
+    "source": {
+        "suite": "custom_objects",
+        "step": "objectSchemas.update",
+        "recorded": "2026-09-04"
+    }
+}

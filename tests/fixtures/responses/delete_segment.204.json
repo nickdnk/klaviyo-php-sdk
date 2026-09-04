@@ -1,0 +1,22 @@
+{
+    "operation": "delete_segment",
+    "request": {
+        "method": "DELETE",
+        "path": "/api/segments/SAx2Kq",
+        "query": {}
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "ratelimit-limit": "3, 3;w=1, 60;w=60",
+            "ratelimit-remaining": "2",
+            "ratelimit-reset": "0"
+        },
+        "body": null
+    },
+    "source": {
+        "suite": "segments",
+        "step": "segments.delete",
+        "recorded": "2026-09-04"
+    }
+}
