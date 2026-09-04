@@ -7,24 +7,26 @@
 [![PHP](https://img.shields.io/packagist/dependency-v/nickdnk/klaviyo-php-sdk/php)](composer.json)
 [![License](https://img.shields.io/packagist/l/nickdnk/klaviyo-php-sdk)](LICENSE)
 
-This is a custom PHP client for the [Klaviyo API](https://developers.klaviyo.com/en/reference/api_overview). Klaviyo
-publishes an official, generated package ([`klaviyo/api`](https://github.com/klaviyo/klaviyo-api-php)); this one differs
-in what it offers:
+This is a custom PHP client for the [Klaviyo API](https://developers.klaviyo.com/en/reference/api_overview).
 
-- Request and response classes for every endpoint instead of associative arrays.
-- Relationships and `include`d resources hydrate into objects.
-- OAuth with automatic token refresh. The official package supports API keys only.
-- Webhook signature verification and parsing. Not available in the official package.
-- Any PSR-18 HTTP client; Guzzle is optional.
-- Retries per Klaviyo's rate-limit guidance, and a request pool for bulk work.
+Klaviyo publishes an official, generated package, [`klaviyo/api`](https://github.com/klaviyo/klaviyo-api-php). This one
+differs from it in a few ways:
 
-Limitations:
+- Every endpoint has a request class and a typed response class. The official package works with associative arrays.
+- Relationships and `include`d resources are hydrated into objects.
+- OAuth is built in, including automatic token refresh. The official package supports API keys only.
+- Webhook deliveries can be verified and parsed. The official package has no webhook support.
+- Any PSR-18 HTTP client can be used. Guzzle is optional.
+- Retries follow Klaviyo's published rate-limit guidance.
+- A request pool sends bulk work concurrently.
 
-- Not an official Klaviyo project.
-- Pinned to one API revision per major version (see below). New endpoints appear here later than in the official
+Things to know before choosing it:
+
+- It is not an official Klaviyo project.
+- It is pinned to one API revision per major version (see below). New endpoints appear here later than in the official
   package.
-- Verified against a live test account, but features that account could not enable (custom object types, push tokens)
-  were only checked as far as their error responses.
+- Every endpoint was exercised against a live test account. Features that account could not enable, such as custom
+  object types and push tokens, were only checked as far as their error responses.
 
 Requires PHP 8.3 or newer.
 
@@ -35,13 +37,13 @@ composer require guzzlehttp/guzzle   # optional; any PSR-18 client works
 
 ## API revision
 
-Klaviyo versions its API with dated revisions and keeps old revisions available for a long time.
+Klaviyo versions its API with dated revisions and keeps old revisions available for a long time. This package pins one:
 
 - Every request is sent with `revision: 2026-07-15` (`APIClient::API_REVISION`).
-- Request and response classes model that
-  revision's [OpenAPI document](https://raw.githubusercontent.com/klaviyo/openapi/a6d7b76168b2410d8f2cbb0bf6e01996dae37318/openapi/stable.json).
-- The revision changes only with a new major version of this package; the changelog names the new revision. Within a
-  major version the revision never changes, whatever date you update on.
+- The request and response classes model that revision's
+  [OpenAPI document](https://raw.githubusercontent.com/klaviyo/openapi/a6d7b76168b2410d8f2cbb0bf6e01996dae37318/openapi/stable.json).
+- The revision only changes with a new major version of this package. The changelog names the new revision.
+- Within a major version the revision never changes, no matter when you update.
 
 ## Authentication
 
@@ -54,8 +56,13 @@ $client = new APIClient('eyJhbGci...');      // bearer token managed elsewhere, 
 
 ### OAuth
 
-Pass the stored credentials, the app's client id and secret, and a callback that persists new credentials. The callback
-is the only point where the SDK calls back into your code.
+`withOAuth()` takes three things:
+
+- the credentials you stored for the account,
+- your app's client id and secret,
+- a callback that stores new credentials whenever the client refreshes them.
+
+The callback is the only point where the SDK calls back into your code.
 
 ```php
 use nickdnk\Klaviyo\APIClient;
@@ -86,12 +93,20 @@ $client = APIClient::withOAuth(
 );
 ```
 
-On a 401 the client refreshes the tokens, calls `onRefresh`, and retries once; a second 401 is a
-`ClientException`. A failed refresh throws `OAuthException`, whose `isInvalidGrant()` means the user must re-authorize.
-Always persist the whole `OAuthCredentials` object: the access token changes on every refresh and the refresh token may
-rotate.
+What happens on a 401:
 
-To refresh before the token expires, e.g. ahead of a long job:
+1. The client calls Klaviyo's token endpoint with the refresh token.
+2. Your `onRefresh` callback receives the new `OAuthCredentials`.
+3. The original request is retried once with the new access token.
+4. If that retry is also a 401, you get a `ClientException`.
+
+If the refresh itself fails you get an `OAuthException`. Its `isInvalidGrant()` returns true when the refresh token was
+revoked or expired, meaning the user has to connect the account again.
+
+Always store the whole `OAuthCredentials` object. The access token changes on every refresh, and the refresh token may
+rotate in the future.
+
+You can also refresh ahead of time, for example before a long job:
 
 ```php
 if ($client->getCredentials()->isExpired(graceSeconds: 120)) {
@@ -99,10 +114,15 @@ if ($client->getCredentials()->isExpired(graceSeconds: 120)) {
 }
 ```
 
-Several processes sharing one connection: lock around `refreshCredentials()`; after waiting on the lock, reload from
-storage and call `setCredentials()` instead of refreshing again.
+If several processes share one Klaviyo connection:
 
-Connecting an account (authorization code + PKCE):
+- Put your own lock around `refreshCredentials()`.
+- After waiting on the lock, reload the credentials from storage instead of refreshing again.
+- Hand them to the client with `setCredentials()`.
+
+#### Connecting an account
+
+This is the authorization-code flow with PKCE:
 
 ```php
 use nickdnk\Klaviyo\APIClient;
@@ -122,14 +142,20 @@ $credentials = APIClient::exchangeCodeForToken($clientId, $clientSecret, $_GET['
 // persist $credentials as shown under OAuth above
 ```
 
-Disconnecting an account: `APIClient::revokeToken($clientId, $clientSecret, $credentials->refreshToken)`
-invalidates both tokens; then delete what you stored.
+#### Disconnecting an account
+
+Call `APIClient::revokeToken($clientId, $clientSecret, $credentials->refreshToken)`. It invalidates the refresh token
+and the access token. Then delete the credentials you stored.
 
 ## Requests
 
-Each API area is a property on the client (`$client->profiles`, `$client->campaigns`, …; all are declared on `APIClient`
-for autocompletion). Request bodies are `Resources\Request\*` objects, responses hydrate into `Resources\Response\*`
-objects, and `get()` returns `null` on 404.
+Each API area is a property on the client, such as `$client->profiles` or `$client->campaigns`. All of them are declared
+on `APIClient`, so your IDE lists them.
+
+- Request bodies are objects from `Resources\Request`.
+- Responses are hydrated into objects from `Resources\Response`.
+- `get()` returns `null` when the resource does not exist.
+- `list()` returns `['data' => [...], 'links' => ?PaginationLinks]`.
 
 ```php
 use nickdnk\Klaviyo\Filter;
@@ -162,14 +188,19 @@ while ($next = $page['links']?->next) {
 }
 ```
 
-`page[size]` limits vary by endpoint (10 for lists, segments and templates; 20 for web feeds; 25 for tag groups; 50 for
-tags and flows; 100 elsewhere; metric, mapped-metric, object-type and bulk-job listings take no page size). Klaviyo
-answers 400 when exceeded.
+The maximum `page[size]` differs per endpoint, and Klaviyo answers 400 when it is exceeded:
+
+- 10 for lists, segments and templates
+- 20 for web feeds
+- 25 for tag groups
+- 50 for tags and flows
+- 100 for most other endpoints
+- no page size at all for metrics, mapped metrics, object types and bulk-job listings (cursor only)
 
 ### Queries and filters
 
-`Query` collects the JSON:API query parameters and `Filter` builds Klaviyo's filter expressions with the quoting the API
-expects, so user input never gets concatenated into a filter string.
+`Query` collects the query parameters of a request. `Filter` builds Klaviyo's filter expressions and takes care of the
+quoting, so you never concatenate user input into a filter string yourself.
 
 ```php
 use nickdnk\Klaviyo\Filter;
@@ -200,18 +231,32 @@ Filter operators and what they serialise to:
 | `Filter::has('phone_number')`                                         | `has(phone_number)`                                             |
 | `Filter::all($a, $b)`                                                 | `a,b` (Klaviyo's AND; there is no OR)                           |
 
-Values: strings are double-quoted and escaped, ints/floats/bools are literal, `DateTimeInterface` becomes an unquoted
-ISO 8601 timestamp, arrays become `[...]`. A `Filter` is `Stringable`, and `Query::filter()`
-also takes a raw string for expressions the builder doesn't cover.
+How values are written:
 
-Which fields and operators an endpoint accepts is per endpoint (Klaviyo's reference lists them) and the API answers 400
-for anything else; for example lists and segments allow only `equals`/`any` on
-`name`, campaigns only `contains`, and `campaigns.list` requires an `equals(messages.channel,...)` filter.
+- Strings are double-quoted and escaped.
+- Integers, floats and booleans are written as they are.
+- `DateTimeInterface` becomes an unquoted ISO 8601 timestamp.
+- Arrays become `[...]`.
+
+A `Filter` is `Stringable`. `Query::filter()` also accepts a raw string for expressions the builder does not cover.
+
+Each endpoint accepts its own set of fields and operators, listed in Klaviyo's API reference. Anything else is a 400.
+Some examples from the live run:
+
+- Lists and segments allow only `equals` and `any` on `name`.
+- Campaigns allow only `contains` on `name`.
+- `campaigns.list` requires an `equals(messages.channel, ...)` filter.
 
 ### Relationships and `include`
 
-`getRelationship($name)` returns a `Relationship` with `data` (a resource, a list, or `null` for an empty to-one),
-`links` and `ids()`. Without `include=` the members carry only `id`; with it they are fully hydrated in place:
+`getRelationship($name)` returns a `Relationship` object:
+
+- `data` is a single resource, a list of resources, or `null` for an empty to-one relation.
+- `links` holds the relationship URLs.
+- `ids()` returns the related ids.
+
+Without `include`, the related resources carry only their `id`. With `include`, they arrive fully hydrated in the same
+place:
 
 ```php
 use nickdnk\Klaviyo\Filter;
@@ -226,12 +271,15 @@ foreach ($page['data'][0]->getRelationship('campaign-messages')->data as $messag
 }
 ```
 
-An empty to-many relation has `data === []`; a relation returned as links only has `hasData === false`.
+Two cases look similar but are not:
+
+- An empty to-many relation has `data === []`.
+- A relation Klaviyo returned as links only, without inlining `data`, has `hasData === false`.
 
 ### Clearing a value
 
-Request bodies omit `null` and empty-array properties. Where a PATCH needs an explicit `null` or `[]`
-to clear a field, use `Explicit`:
+Request bodies leave out properties that are `null` or an empty array. Some PATCH endpoints need an explicit `null` or
+`[]` to clear a field. Use `Explicit` for those:
 
 ```php
 use nickdnk\Klaviyo\Resources\Request\UpdateTrackingSetting;
@@ -247,12 +295,13 @@ $client->trackingSettings->update($update);
 
 ### Errors
 
-| Exception             | When                                                                                                |
-|-----------------------|-----------------------------------------------------------------------------------------------------|
-| `ClientException`     | 4xx: `getHttpStatus()`, `getErrors()` as `KlaviyoError[]`, `getFirstError()`, `getErrorsWithCode()` |
-| `ServerException`     | 5xx after retries                                                                                   |
-| `ConnectionException` | transport failure after retries; `getPrevious()` is the PSR-18 exception                            |
-| `OAuthException`      | 4xx from the token endpoint; `isInvalidGrant()`                                                     |
+All exceptions extend `nickdnk\Klaviyo\Exceptions\BaseException`.
+
+- `ClientException`: a 4xx answer from the API. `getHttpStatus()` gives the status. `getErrors()` gives the JSON:API
+  errors as `KlaviyoError` objects, with `getFirstError()` and `getErrorsWithCode()` as shortcuts.
+- `ServerException`: a 5xx answer that survived the retries.
+- `ConnectionException`: the transport failed after the retries. `getPrevious()` is the PSR-18 exception.
+- `OAuthException`: a 4xx answer from the token endpoint. Check `isInvalidGrant()`.
 
 ```php
 use nickdnk\Klaviyo\Exceptions\ClientException;
@@ -273,9 +322,9 @@ try {
 
 ### Concurrency
 
-Every service method accepts `returnRequest: true` and hands back the PSR-7 request instead of sending it.
-`executePool()` sends a batch concurrently (Guzzle) and returns results in order, with an exception object in place of a
-failed entry.
+Every service method accepts `returnRequest: true`. It then returns the prepared PSR-7 request instead of sending it.
+`executePool()` sends a batch of such requests concurrently and returns the results in the same order. A failed entry
+is an exception object in that position, not a thrown exception.
 
 ```php
 use nickdnk\Klaviyo\APIClient;
@@ -293,13 +342,19 @@ $results = $client->executePool($requests, concurrency: 5);   // Profile[] in in
 APIClient::assertNoExceptions($results);
 ```
 
-`executePoolLazy($items, $toRequest)` builds requests as they are sent, keeping memory flat for large batches.
+`executePoolLazy($items, $toRequest)` does the same but builds each request just before it is sent. Use it for large
+batches to keep memory flat.
 
 ### Retries and rate limits
 
-429, 503, the CDN's 504/524 and network failures are retried: after `Retry-After` when Klaviyo sends it, otherwise with
-exponential backoff (`2s × 2^(attempt−1)`, capped at 60 s, ±50 % jitter), ten attempts in total. Other 4xx and 5xx are
-final.
+The client retries these on its own:
+
+- 429 (rate limited) and 503, which is what Klaviyo's guidance asks for
+- 504 and 524, gateway timeouts from Klaviyo's CDN
+- network failures
+
+When Klaviyo sends a `Retry-After` header, the client waits exactly that long. Otherwise it backs off exponentially
+(`2s × 2^(attempt−1)`, capped at 60 s, with ±50 % jitter). Ten attempts in total. Every other 4xx or 5xx is final.
 
 ```php
 use nickdnk\Klaviyo\APIClient;
@@ -314,9 +369,10 @@ if ($client->getLastRateLimit()?->isNearlyExhausted(5)) {   // RateLimit-Limit /
 
 ## Transports
 
-With Guzzle installed nothing needs configuring. Otherwise wrap a PSR-18 client; the PSR-17 factories are discovered
-from `nyholm/psr7` or `guzzlehttp/psr7` when omitted. PSR-18 has no asynchronous send, so `executePool()` runs
-sequentially on that transport.
+With Guzzle installed, nothing needs configuring. Any other PSR-18 client can be wrapped in a `Psr18Transport`.
+
+- PSR-17 factories are discovered from `nyholm/psr7` or `guzzlehttp/psr7` when you do not pass them.
+- PSR-18 has no asynchronous send, so `executePool()` runs one request at a time on that transport.
 
 ```php
 use nickdnk\Klaviyo\APIClient;
@@ -327,15 +383,20 @@ $http = new Psr18Client();   // also a PSR-17 factory; pass factories explicitly
 $client = APIClient::withApiKey('pk_...', Psr18Transport::create($http, requestFactory: $http, streamFactory: $http));
 ```
 
-`APIClient::setDefaultTransport()` sets a process-wide default; `APIClient::withTransport($transport, $fn)`
-scopes one to a callback, which suits tests built on Guzzle's `MockHandler`.
+Two helpers exist for tests and frameworks:
+
+- `APIClient::setDefaultTransport()` sets a process-wide default transport.
+- `APIClient::withTransport($transport, $fn)` uses a transport only inside the callback. This suits tests built on
+  Guzzle's `MockHandler`.
 
 ## Webhooks
 
-Webhook endpoints (`$client->webhooks`, `$client->webhookTopics`) are only available to OAuth-app tokens; a private API
-key gets 403. Topics are an account-specific resource: Klaviyo's system topics plus one per metric on the account
-(`event:api.viewed_product`). The system topics exist as constants on
-`WebhookTopic`.
+A few things to know first:
+
+- `$client->webhooks` and `$client->webhookTopics` only work with an OAuth token. A private API key gets a 403.
+- Topics are an account-specific resource. `webhookTopics->list()` returns Klaviyo's system topics plus one topic per
+  metric on the account, for example `event:api.viewed_product`.
+- The system topics are available as constants on `WebhookTopic`.
 
 ```php
 use nickdnk\Klaviyo\APIClient;
@@ -363,10 +424,13 @@ function handleKlaviyoWebhook(ServerRequestInterface $request, string $secret): 
 }
 ```
 
-`parseWebhookRequest()` checks the `Klaviyo-Signature` HMAC (SHA-256 over body + `Klaviyo-Timestamp`)
-and rejects deliveries older than `$tolerance` seconds (300). The age check reads the body's
-`meta.timestamp`; the `Klaviyo-Timestamp` header is used only as HMAC input because, as of 2026-09-04, Klaviyo sends it
-with a wrong clock.
+What `parseWebhookRequest()` verifies:
+
+- The `Klaviyo-Signature` header must match the HMAC-SHA256 of the body plus the `Klaviyo-Timestamp` header, keyed
+  with your secret.
+- The delivery must be younger than `$tolerance` seconds (300 by default). This check reads the body's
+  `meta.timestamp`, not the header: as of 2026-09-04 Klaviyo sends the `Klaviyo-Timestamp` header with a wrong clock,
+  so it is only usable as HMAC input.
 
 ## Development
 
@@ -375,9 +439,9 @@ composer install
 composer test
 ```
 
-`tests/fixtures/responses` holds real API responses recorded against a test account and replayed by the tests;
-`tests/fixtures/README.md` explains how to refresh them. `scratch/` contains the live smoke-test tooling (not shipped in
-the Composer dist).
+- `tests/fixtures/responses` holds real API responses recorded against a test account. The tests replay them.
+  `tests/fixtures/README.md` explains how to refresh them.
+- `scratch/` contains the live smoke-test tooling. It is not part of the Composer dist.
 
 ## Contributing
 
@@ -388,8 +452,12 @@ Issues and pull requests are welcome, in particular for:
   the spec diff, the smoke suites and a fixture refresh (see `scratch/README.md`).
 - Anything the live run could not verify on the test account (custom objects, push tokens, SMS).
 
-For a PR: keep `composer test` green, add or update a test for the change, and mention the API revision you tested
-against. Do not commit credentials or unscrubbed recordings.
+For a pull request:
+
+- Keep `composer test` green.
+- Add or update a test for the change.
+- Mention the API revision you tested against.
+- Do not commit credentials or unscrubbed recordings.
 
 ## License
 
