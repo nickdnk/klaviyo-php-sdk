@@ -13,9 +13,14 @@ use nickdnk\Klaviyo\Services\Traits\HasCreate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Back in stock notification signups against one catalog variant
- * ({@see CatalogVariantService}). Write-only: Klaviyo exposes no read endpoint for the
- * subscriptions an account holds, so a subscription is fire-and-forget once created.
+ * Back in stock notification signups, created against one catalog variant
+ * ({@see CatalogVariantService}) because inventory is tracked per variant.
+ *
+ * - Write-only: Klaviyo exposes no endpoint for reading or cancelling existing subscriptions.
+ * - Creating one enrols the profile in the account's back in stock flow; the notification itself
+ *   is sent by that flow, not by this call.
+ *
+ * @link https://developers.klaviyo.com/en/reference/catalogs_api_overview
  */
 class BackInStockSubscriptionService extends BaseService
 {
@@ -23,8 +28,7 @@ class BackInStockSubscriptionService extends BaseService
     use HasCreate;
 
     /**
-     * Klaviyo answers 202 with an empty body. The profile is matched or created from the
-     * identifiers on the subscription's profile.
+     * Klaviyo matches or creates the profile from the identifiers on the subscription.
      *
      * @link https://developers.klaviyo.com/en/reference/create_back_in_stock_subscription
      * @throws ClientException

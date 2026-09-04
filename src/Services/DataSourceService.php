@@ -20,8 +20,16 @@ use nickdnk\Klaviyo\Services\Traits\HasList;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Data sources — the upstream feeds custom object records are ingested from — and the two
- * ingestion job families that push records into them.
+ * Data sources are the upstream feeds custom object records are ingested from, and this service
+ * also hosts the two jobs that push records into them.
+ *
+ * - Ingestion is asynchronous: a job answers immediately and its outcome is read from
+ *   {@see ObjectTypeService::ingestionLogs()}.
+ * - {@see self::createRecord()} takes one record, {@see self::bulkCreateRecords()} up to 500.
+ * - The ingested records themselves are read through {@see ObjectRecordService} or
+ *   {@see ObjectTypeService::records()}.
+ *
+ * @link https://developers.klaviyo.com/en/reference/custom_objects_api_overview
  */
 class DataSourceService extends BaseService
 {
@@ -80,9 +88,7 @@ class DataSourceService extends BaseService
     // region Record ingestion
 
     /**
-     * Ingests one record, at most 512KB. Klaviyo answers 204 with an empty body; the record
-     * surfaces later via {@see ObjectTypeService::records()} and failures via
-     * {@see ObjectTypeService::ingestionLogs()}.
+     * One record, at most 512 KB. Ingestion is asynchronous; failures show up in the object type's ingestion logs.
      *
      * @link https://developers.klaviyo.com/en/reference/create_data_source_record
      * @throws ClientException
@@ -98,7 +104,7 @@ class DataSourceService extends BaseService
     }
 
     /**
-     * Ingests up to 500 records in one job. Klaviyo answers 204 with an empty body.
+     * Up to 500 records per job. Ingestion is asynchronous; failures show up in the object type's ingestion logs.
      *
      * @link https://developers.klaviyo.com/en/reference/bulk_create_data_source_records
      * @throws ClientException

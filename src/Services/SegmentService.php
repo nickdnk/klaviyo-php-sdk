@@ -24,9 +24,15 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Segments are dynamic profile groups defined by a condition tree, so membership is
- * derived rather than assigned: there is no add / remove profile endpoint, only reads of
- * the current members.
+ * Segments are profile groups defined by a condition tree, so membership is derived rather than
+ * assigned ({@see ListService} is the assigned kind).
+ *
+ * - There is no add or remove endpoint, only reads of the current members.
+ * - A new segment reports `is_processing = false` immediately, but its members appear minutes
+ *   later.
+ * - `page[size]` caps at 10, and `name` accepts only `any` and `equals`.
+ *
+ * @link https://developers.klaviyo.com/en/reference/segments_api_overview
  */
 class SegmentService extends BaseService
 {
@@ -54,9 +60,8 @@ class SegmentService extends BaseService
     }
 
     /**
-     * `profile_count` is excluded by default; request it with
-     * `(new Query())->additionalFields('segment', 'profile_count')`, which drops the
-     * endpoint's rate limit to 1/s.
+     * `profile_count` is excluded by default; asking for it with
+     * `additionalFields('segment', 'profile_count')` drops this endpoint's rate limit to 1/s.
      *
      * @link https://developers.klaviyo.com/en/reference/get_segment
      * @throws ClientException
@@ -86,8 +91,6 @@ class SegmentService extends BaseService
     }
 
     /**
-     * Klaviyo answers 200 with the updated segment.
-     *
      * @link https://developers.klaviyo.com/en/reference/update_segment
      * @throws ClientException
      * @throws ConnectionException
@@ -104,8 +107,6 @@ class SegmentService extends BaseService
     // region Relationships
 
     /**
-     * Profiles currently in the segment, paginated.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_profiles_for_segment
      * @return array{data: Profile[], links: ?PaginationLinks}|RequestInterface
      * @throws ClientException
@@ -166,8 +167,6 @@ class SegmentService extends BaseService
     }
 
     /**
-     * Flows triggered by additions to this segment.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_flows_triggered_by_segment
      * @return array{data: Flow[], links: ?PaginationLinks}|RequestInterface
      * @throws ClientException

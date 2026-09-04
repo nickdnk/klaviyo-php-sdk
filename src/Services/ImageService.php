@@ -20,10 +20,17 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * The image library backing template and campaign content. Images arrive one of two ways:
- * {@see self::uploadFromUrl()} has Klaviyo fetch a url or data uri as JSON:API, while
- * {@see self::uploadFromFile()} posts the bytes to the separate `image-upload` endpoint as
- * `multipart/form-data`. Both answer with the stored image and its hosted `image_url`.
+ * The image library that backs template and campaign content. {@see self::uploadFromUrl()} has
+ * Klaviyo fetch a url or data uri, while {@see self::uploadFromFile()} posts the bytes as
+ * `multipart/form-data`; both answer with the stored image and its hosted `image_url`.
+ *
+ * - Images cannot be deleted, only hidden, and hidden images are omitted from listings unless
+ *   you filter `equals(hidden,true)`.
+ * - {@see self::update()} replaces the whole resource, so send every attribute you want to keep:
+ *   patching `hidden` alone clears `name`.
+ * - Remote urls must point at a jpeg, png or gif.
+ *
+ * @link https://developers.klaviyo.com/en/reference/images_api_overview
  */
 class ImageService extends BaseService
 {
@@ -79,7 +86,7 @@ class ImageService extends BaseService
     }
 
     /**
-     * Klaviyo fetches the image itself from a url or data uri.
+     * Klaviyo fetches the image itself, from an http url or a data uri.
      *
      * @link https://developers.klaviyo.com/en/reference/upload_image_from_url
      * @throws ClientException
@@ -95,9 +102,8 @@ class ImageService extends BaseService
     }
 
     /**
-     * POST /api/image-upload, the one Klaviyo endpoint that takes `multipart/form-data`
-     * instead of JSON:API: the raw bytes go in the `file` part, `name` and `hidden` follow
-     * as plain form fields (booleans as `true` / `false` strings).
+     * Takes the raw bytes, not a path, and is the one endpoint that sends `multipart/form-data`
+     * instead of JSON:API.
      *
      * @link https://developers.klaviyo.com/en/reference/upload_image_from_file
      * @param string $contents raw image bytes

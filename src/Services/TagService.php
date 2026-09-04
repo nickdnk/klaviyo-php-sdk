@@ -30,9 +30,12 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Tags label campaigns, flows, lists and segments. A tag belongs to exactly one tag group
- * ({@see TagGroupService}); tagging and untagging is the relationship trio on
- * `tags/{id}/relationships/{campaigns|flows|lists|segments}`.
+ * Tags label campaigns, flows, lists and segments, and each tag belongs to exactly one tag group
+ * ({@see TagGroupService}), defaulting to the account's default group.
+ *
+ * - Tagging and untagging goes through the relationship methods here, not through the tagged
+ *   resource.
+ * - An account can hold at most 500 tags.
  */
 class TagService extends BaseService
 {
@@ -88,8 +91,6 @@ class TagService extends BaseService
     }
 
     /**
-     * Klaviyo answers 204 with an empty body, so a successful update returns null.
-     *
      * @link https://developers.klaviyo.com/en/reference/update_tag
      * @throws ClientException
      * @throws ConnectionException
@@ -302,8 +303,6 @@ class TagService extends BaseService
     // region Tag group
 
     /**
-     * The tag group the tag belongs to.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_tag_group_for_tag
      * @throws ClientException
      * @throws ConnectionException

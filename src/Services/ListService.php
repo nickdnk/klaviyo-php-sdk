@@ -24,6 +24,18 @@ use nickdnk\Klaviyo\Services\Traits\HasRelationships;
 use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * Lists hold profiles you put in them, as opposed to the derived membership of a segment
+ * ({@see SegmentService}).
+ *
+ * - {@see self::addProfiles()} and {@see self::removeProfiles()} take up to 1000 profiles per
+ *   call.
+ * - Membership and consent are separate: adding a profile here does not subscribe it, which is
+ *   {@see ProfileService::subscribe()}.
+ * - `page[size]` caps at 10 for lists themselves, and `name` accepts only `any` and `equals`.
+ *
+ * @link https://developers.klaviyo.com/en/reference/lists_api_overview
+ */
 class ListService extends BaseService
 {
     use HasCreate;
@@ -135,8 +147,6 @@ class ListService extends BaseService
     }
 
     /**
-     * Flows triggered by additions to this list.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_flows_triggered_by_list
      * @return array{data: Flow[], links: ?PaginationLinks}|RequestInterface
      * @throws ClientException

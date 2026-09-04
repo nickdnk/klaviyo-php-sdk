@@ -22,11 +22,12 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Coupons are the reusable definition (`external_id`, description); the individual codes
- * handed to profiles live in {@see CouponCodeService}. A coupon's codes are reachable from
- * here through {@see self::codes()} / {@see self::codeIds()}.
+ * Coupons are the reusable definition; the codes handed to profiles live in
+ * {@see CouponCodeService} and are reachable through {@see self::codes()}.
  *
- * `delete()` comes from {@see HasDelete} and answers 204.
+ * - `external_id` must match `^[0-9_A-z]+$`, and so must an id in the path, so a hyphenated id
+ *   answers 400 rather than 404.
+ * - `monitor_configuration.low_balance_threshold` must be at least 100.
  */
 class CouponService extends BaseService
 {

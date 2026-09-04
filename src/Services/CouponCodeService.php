@@ -25,13 +25,12 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * The individual codes belonging to a coupon. {@see self::create()} makes one code
- * synchronously; {@see self::bulkCreate()} queues up to 1000 at a time as a
- * `coupon-code-bulk-create-job` whose progress is polled with
- * {@see self::getBulkCreateJob()}.
+ * The individual codes handed out to profiles, each belonging to a coupon
+ * ({@see CouponService}).
  *
- * `delete()` comes from {@see HasDelete}; Klaviyo rejects it with a 4xx when the code is
- * already assigned to a profile.
+ * - {@see self::create()} makes one code synchronously; {@see self::bulkCreate()} queues up to
+ *   1000 per job, with at most 100 jobs queued per account.
+ * - A code already assigned to a profile cannot be deleted.
  */
 class CouponCodeService extends BaseService
 {
@@ -47,8 +46,7 @@ class CouponCodeService extends BaseService
     private const string PATH_BULK_CREATE_JOBS = 'coupon-code-bulk-create-jobs';
 
     /**
-     * Klaviyo requires a filter on either coupon(s) or profile(s), e.g.
-     * `any(coupon.id,["10OFF"])` or `any(profile.id,["p1"])`.
+     * A filter on coupons or profiles is required, e.g. `any(coupon.id,["10OFF"])`.
      *
      * @link https://developers.klaviyo.com/en/reference/get_coupon_codes
      * @return array{data: CouponCode[], links: ?PaginationLinks}|RequestInterface
@@ -151,7 +149,7 @@ class CouponCodeService extends BaseService
     public function bulkCreate(BulkCreateCouponCodesJob $job, bool $returnRequest = false): CouponCodeBulkCreateJob|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_CREATE_JOBS)->submit($job, $returnRequest);
+        return $this->bulkJobSubmit(self::PATH_BULK_CREATE_JOBS, $job, $returnRequest);
 
     }
 
@@ -166,7 +164,7 @@ class CouponCodeService extends BaseService
     public function getBulkCreateJobs(?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_CREATE_JOBS)->list($query, $next, $returnRequest);
+        return $this->bulkJobList(self::PATH_BULK_CREATE_JOBS, $query, $next, $returnRequest);
 
     }
 
@@ -180,7 +178,7 @@ class CouponCodeService extends BaseService
     public function getBulkCreateJob(string $jobId, ?Query $query = null, bool $returnRequest = false): CouponCodeBulkCreateJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_BULK_CREATE_JOBS)->get($jobId, $query, $returnRequest);
+        return $this->bulkJobGet(self::PATH_BULK_CREATE_JOBS, $jobId, $query, $returnRequest);
 
     }
 

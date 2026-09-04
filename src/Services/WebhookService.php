@@ -19,6 +19,20 @@ use nickdnk\Klaviyo\Services\Traits\HasList;
 use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * Webhooks are HTTP callbacks Klaviyo posts events to. A subscription names its topics
+ * ({@see WebhookTopicService}) and carries the secret its deliveries are signed with, which
+ * {@see \nickdnk\Klaviyo\APIClient::parseWebhookRequest()} verifies.
+ *
+ * - Access is gated to Advanced KDP accounts and to OAuth apps Klaviyo has allowlisted; anything
+ *   else answers 403. A webhook created by an OAuth app is scoped to that app.
+ * - The subscribed topics add their own scope requirements: the event topics need `events:read`.
+ * - `endpoint_url` comes back masked as `https://host/*****`, and the secret is never returned.
+ * - Deliveries are account-wide and batched, so one callback can carry events for several
+ *   profiles.
+ *
+ * @link https://developers.klaviyo.com/en/reference/webhooks_api_overview
+ */
 class WebhookService extends BaseService
 {
     use HasCreate;

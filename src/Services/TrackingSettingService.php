@@ -17,10 +17,11 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * The account's UTM tracking settings: which `utm_*` parameters Klaviyo appends to links in
- * campaign and flow sends. An account has exactly one setting, keyed by the account id, so
- * {@see self::list()} answers with a single-entry collection and is the way to discover that
- * id before a {@see self::get()} or {@see self::update()}.
+ * The account's UTM tracking settings: which `utm_*` parameters Klaviyo appends to the links in
+ * campaign and flow sends.
+ *
+ * An account has exactly one setting, keyed by the account id, so {@see self::list()} answers a
+ * single-entry collection and is how you discover that id.
  *
  * @link https://help.klaviyo.com/hc/en-us/articles/115005247808
  */

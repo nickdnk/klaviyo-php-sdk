@@ -46,6 +46,30 @@ jobs:
       - name: Run tests
         run: vendor/bin/phpunit
 
+  psr18-without-guzzle:
+    name: PSR-18 only (no Guzzle, PHP 8.3)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies without Guzzle
+        run: |
+          composer remove --dev --no-update --no-interaction guzzlehttp/guzzle
+          composer update --no-interaction --no-scripts --no-plugins
+
+      - name: Fail if Guzzle is still installed
+        run: test ! -d vendor/guzzlehttp/guzzle
+
+      - name: Run the PSR-18 tests
+        run: vendor/bin/phpunit --group psr18
+
   coverage:
     name: Coverage (PHP 8.5)
     runs-on: ubuntu-latest

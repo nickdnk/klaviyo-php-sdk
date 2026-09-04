@@ -22,10 +22,15 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Email templates, both code and drag-and-drop. The block tree of a drag-and-drop template is
- * excluded by default: ask for it with `additional-fields[template]=definition`.
+ * Email templates, both hand-written HTML and drag-and-drop.
  *
- * `delete()` (DELETE /api/templates/{id}, delete_template) comes from {@see HasDelete}.
+ * - The block tree of a drag-and-drop template is left out by default: ask for it with
+ *   `additional-fields[template]=definition`.
+ * - HTML is normalised on write, so what you read back is not byte-identical to what you sent.
+ * - A template that a flow send action copied answers 409 on delete, and keeps doing so after
+ *   that flow is gone.
+ *
+ * @link https://developers.klaviyo.com/en/reference/templates_api_overview
  */
 class TemplateService extends BaseService
 {
@@ -35,6 +40,9 @@ class TemplateService extends BaseService
     use HasGet;
     use HasList;
     use HasUpdate;
+
+    private const string PATH_CLONE  = 'template-clone';
+    private const string PATH_RENDER = 'template-render';
 
     /**
      * @link https://developers.klaviyo.com/en/reference/get_templates
@@ -66,7 +74,7 @@ class TemplateService extends BaseService
     }
 
     /**
-     * An account is capped at 1,000 API-created templates; past that Klaviyo rejects the request.
+     * An account is capped at 1,000 API-created templates.
      *
      * @link https://developers.klaviyo.com/en/reference/create_template
      * @throws ClientException
@@ -96,8 +104,6 @@ class TemplateService extends BaseService
     }
 
     /**
-     * Copies the template the request's id points at. Klaviyo answers 201 with the copy.
-     *
      * @link https://developers.klaviyo.com/en/reference/clone_template
      * @throws ClientException
      * @throws ConnectionException
@@ -107,15 +113,14 @@ class TemplateService extends BaseService
     public function clone(TemplateClone $clone, bool $returnRequest = false): Template|RequestInterface
     {
 
-        $result = $this->request('POST', 'template-clone', $clone, returnRequest: $returnRequest);
+        $result = $this->request('POST', self::PATH_CLONE, $clone, returnRequest: $returnRequest);
 
         return $result instanceof RequestInterface ? $result : $result['data'];
 
     }
 
     /**
-     * Renders the template against a context and answers with its AMP, HTML and plain-text
-     * output on a transient template resource — nothing is stored.
+     * Renders the template against a context and returns a transient resource; nothing is stored.
      *
      * @link https://developers.klaviyo.com/en/reference/render_template
      * @throws ClientException
@@ -126,7 +131,7 @@ class TemplateService extends BaseService
     public function render(TemplateRender $render, bool $returnRequest = false): Template|RequestInterface
     {
 
-        $result = $this->request('POST', 'template-render', $render, returnRequest: $returnRequest);
+        $result = $this->request('POST', self::PATH_RENDER, $render, returnRequest: $returnRequest);
 
         return $result instanceof RequestInterface ? $result : $result['data'];
 

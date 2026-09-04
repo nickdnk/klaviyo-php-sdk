@@ -15,6 +15,11 @@ use nickdnk\Klaviyo\Resources\Request\SubscriptionCreateJob;
 use nickdnk\Klaviyo\Resources\Request\SubscriptionDeleteJob;
 use nickdnk\Klaviyo\Resources\Shared\WebhookTopic;
 use PHPUnit\Framework\TestCase;
+use nickdnk\Klaviyo\Resources\Request\ProfileObjectSchemaRelationship;
+use nickdnk\Klaviyo\Resources\Request\SuppressionCreateJob;
+use nickdnk\Klaviyo\Resources\Request\SuppressionDeleteJob;
+use nickdnk\Klaviyo\Resources\Request\UpdateReview;
+use nickdnk\Klaviyo\Resources\Shared\CampaignSendStrategy;
 
 /**
  * Constructor conveniences added after the live smoke run: list relationships on the profile
@@ -161,6 +166,62 @@ class RequestHelpersTest extends TestCase
 
         self::assertTrue(json_decode(json_encode(new CreateTagGroup('g', true)), true)['attributes']['exclusive']);
         self::assertArrayNotHasKey('exclusive', json_decode(json_encode(new CreateTagGroup('g')), true)['attributes']);
+
+    }
+
+    public function testMarketingConsentCarriesConsentedAtOnlyWhenGiven(): void
+    {
+
+        self::assertSame(['consent' => 'SUBSCRIBED'], (new MarketingConsent('SUBSCRIBED'))->jsonSerialize());
+        self::assertSame(['consent' => 'SUBSCRIBED', 'consented_at' => '2026-01-01T00:00:00+00:00'], (new MarketingConsent('SUBSCRIBED', '2026-01-01T00:00:00+00:00'))->jsonSerialize());
+
+    }
+
+
+    public function testProfileObjectSchemaRelationshipMeta(): void
+    {
+
+        $json = (new ProfileObjectSchemaRelationship('profile', 'rel_1', 'owner', 'The owning profile'))->jsonSerialize();
+        self::assertSame('profile', $json['id']);
+        self::assertSame(['relationship_id' => 'rel_1', 'name' => 'owner', 'description' => 'The owning profile'], $json['meta']);
+        self::assertArrayNotHasKey('meta', (new ProfileObjectSchemaRelationship('profile'))->jsonSerialize());
+
+    }
+
+
+    public function testSuppressionJobsCarryListOrSegmentRelationship(): void
+    {
+
+        $create = json_decode(json_encode(new SuppressionCreateJob([], segmentId: 'S1')), true);
+        self::assertSame(['data' => ['type' => 'segment', 'id' => 'S1']], $create['relationships']['segment']);
+        self::assertArrayNotHasKey('profiles', $create['attributes'] ?? []);
+
+        $delete = json_decode(json_encode(new SuppressionDeleteJob(['a@example.com'], listId: 'L1', segmentId: 'S1')), true);
+        self::assertSame('a@example.com', $delete['attributes']['profiles']['data'][0]['attributes']['email']);
+        self::assertSame('L1', $delete['relationships']['list']['data']['id']);
+        self::assertSame('S1', $delete['relationships']['segment']['data']['id']);
+        self::assertSame('profile-suppression-bulk-delete-job', $delete['type']);
+
+    }
+
+
+    public function testUpdateReviewStatusBody(): void
+    {
+
+        self::assertArrayNotHasKey('attributes', (new UpdateReview('r1'))->jsonSerialize(), 'no status → nothing to send');
+        $json = (new UpdateReview('r1', 'rejected', 'spam', 'Looks automated'))->jsonSerialize();
+        self::assertSame('r1', $json['id']);
+        self::assertSame('rejected', $json['attributes']['status']['value']);
+        self::assertSame(['reason' => 'spam', 'status_explanation' => 'Looks automated'], $json['attributes']['status']['rejection_reason']);
+
+    }
+
+
+    public function testCampaignSendStrategies(): void
+    {
+
+        self::assertSame(['method' => 'immediate'], CampaignSendStrategy::immediate()->jsonSerialize());
+        self::assertSame(['method' => 'smart_send_time', 'date' => '2026-12-24'], CampaignSendStrategy::smartSendTime('2026-12-24')->jsonSerialize());
 
     }
 

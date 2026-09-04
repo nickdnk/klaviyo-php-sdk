@@ -34,6 +34,8 @@ use nickdnk\Klaviyo\Resources\Shared\Relationship;
 use nickdnk\Klaviyo\Resources\Shared\RelationshipLinks;
 use nickdnk\Klaviyo\Resources\Shared\WebhookTopic;
 use PHPUnit\Framework\TestCase;
+use LogicException;
+use nickdnk\Klaviyo\Resources\Shared\Resource;
 
 class KlaviyoResourceTest extends TestCase
 {
@@ -774,6 +776,70 @@ class KlaviyoResourceTest extends TestCase
         self::assertSame('data-privacy-deletion-job', DataPrivacyDeletionJob::type());
         self::assertSame('profile-suppression-bulk-create-job', SuppressionCreateJob::type());
         self::assertSame('profile-suppression-bulk-delete-job', SuppressionDeleteJob::type());
+
+    }
+
+    public function testResourceArrayAccessAndHelpers(): void
+    {
+
+        $list = new KlaviyoList('L1');
+        $list->name = 'VIP';
+
+        self::assertTrue(isset($list->id));
+        self::assertTrue(isset($list['id']));
+        self::assertSame('L1', $list['id']);
+        self::assertTrue(isset($list->name));
+        self::assertFalse(isset($list->nope));
+        self::assertFalse(isset((new KlaviyoList())['id']));
+        self::assertTrue($list->__isset('id'), 'magic __isset also answers for the identifier');
+        self::assertFalse((new KlaviyoList())->__isset('id'));
+        self::assertSame('VIP', $list['name'], 'attributes read through ArrayAccess');
+        self::assertTrue(isset($list['name']), 'attribute existence falls through to the attribute storage');
+        self::assertFalse(isset($list['nope']));
+        $list['name'] = 'Gold';
+        self::assertSame('Gold', $list->name, 'attributes written through ArrayAccess');
+
+        try {
+            $list['id'] = 'other';
+            self::fail('id is read-only');
+        } catch (LogicException) {
+        }
+
+        unset($list['name']);
+        self::assertNull($list->name);
+        self::assertSame('L1', KlaviyoList::from(['id' => 'ignored', 'name' => 'x'], 'L1')->id, 'an `id` attribute never overrides the identifier');
+        self::assertSame('2026-01-01T00:00:00+00:00', Resource::toISO8601(1767225600));
+        self::assertNull(Resource::toISO8601(null));
+
+        $rel = new Relationship([new KlaviyoList('L1')], new RelationshipLinks('https://a.klaviyo.com/self', 'https://a.klaviyo.com/related'));
+        self::assertSame('https://a.klaviyo.com/related', $rel->jsonSerialize()['links']->related);
+
+    }
+
+
+    public function testWebhookParserRejectsIncompleteMetaAndSkipsMalformedEvents(): void
+    {
+
+        $sign = static function (array $payload, string $secret = 's'): ServerRequest {
+            $body = json_encode($payload);
+            $ts = '2026-04-13T22:49:36+00:00';
+
+            return new ServerRequest('POST', '/hook', ['Klaviyo-Signature' => hash_hmac('sha256', $body . $ts, $secret), 'Klaviyo-Timestamp' => $ts], $body);
+        };
+        $now = strtotime('2026-04-13T22:50:00+00:00');
+
+        self::assertNull(APIClient::parseWebhookRequest($sign(['meta' => ['timestamp' => '2026-04-13T22:49:36+00:00', 'version' => '2024-06-28'], 'data' => []]), 's', now: $now), 'missing webhook id');
+        self::assertNull(APIClient::parseWebhookRequest($sign(['meta' => ['timestamp' => '2026-04-13T22:49:36+00:00', 'klaviyo_webhook_id' => 'w1'], 'data' => []]), 's', now: $now), 'missing version');
+
+        $parsed = APIClient::parseWebhookRequest($sign(['meta' => ['timestamp' => '2026-04-13T22:49:36+00:00', 'klaviyo_webhook_id' => 'w1', 'version' => '2024-06-28'], 'data' => [
+            'not-an-event',
+            ['topic' => 42, 'payload' => []],
+            ['topic' => '', 'payload' => []],
+            ['topic' => 'event:api.viewed_product', 'payload' => ['data' => ['type' => 'event', 'id' => 'e1', 'attributes' => []]]],
+        ]]), 's', now: $now);
+        self::assertNotNull($parsed);
+        self::assertCount(1, $parsed->events, 'malformed entries are skipped, valid ones kept');
+        self::assertSame('e1', $parsed->events[0]['payload']->id);
 
     }
 

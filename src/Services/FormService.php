@@ -20,10 +20,14 @@ use nickdnk\Klaviyo\Services\Traits\HasRelationships;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Signup forms. A form is the container; every rendered variation lives in a form version
- * ({@see FormVersionService}), so `versions()` is where the layout, styles and triggers are
- * read. Klaviyo has no update endpoint for forms: a form is created as a `draft` and
- * published from the UI.
+ * Signup forms. A form is only the container: every rendered variation lives in a form version
+ * ({@see FormVersionService}), which is where layout, styles and triggers are read.
+ *
+ * - There is no update endpoint. A form is created as a draft and published from the UI.
+ * - A version needs at least two steps, `submit: true` actions require `properties.list_id`, and
+ *   string ids inside a definition must be ULIDs.
+ *
+ * @link https://developers.klaviyo.com/en/reference/forms_api_overview
  */
 class FormService extends BaseService
 {

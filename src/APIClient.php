@@ -63,6 +63,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Random\RandomException;
 use Throwable;
 
 /**
@@ -140,6 +141,14 @@ class APIClient
     private Transport   $transport;
     private RetryPolicy $retry;
     private array       $services = [];
+    /**
+     * {@see self::makeRequest()} as a closure, handed to every service this client creates so they
+     * route through it without seeing the transport or the credentials. Memoised: the services are
+     * built lazily but there is only ever one closure.
+     *
+     * @var ?Closure(string, string, array|JsonSerializable|MultipartBody|null, ?array, bool): (RequestInterface|array|null)
+     */
+    private ?Closure $sender = null;
 
     private ?RateLimit        $lastRateLimit = null;
     private ?OAuthCredentials $credentials = null;
@@ -353,46 +362,46 @@ class APIClient
     {
 
         return $this->services[$name] ??= match ($name) {
-            'accounts'                 => new AccountService($this->makeRequest(...)),
-            'backInStockSubscriptions' => new BackInStockSubscriptionService($this->makeRequest(...)),
-            'campaigns'                => new CampaignService($this->makeRequest(...)),
-            'campaignMessages'         => new CampaignMessageService($this->makeRequest(...)),
-            'catalogCategories'        => new CatalogCategoryService($this->makeRequest(...)),
-            'catalogItems'             => new CatalogItemService($this->makeRequest(...)),
-            'catalogVariants'          => new CatalogVariantService($this->makeRequest(...)),
-            'conversationMessages'     => new ConversationMessageService($this->makeRequest(...)),
-            'couponCodes'              => new CouponCodeService($this->makeRequest(...)),
-            'coupons'                  => new CouponService($this->makeRequest(...)),
-            'customMetrics'            => new CustomMetricService($this->makeRequest(...)),
-            'dataSources'              => new DataSourceService($this->makeRequest(...)),
-            'events'                   => new EventService($this->makeRequest(...)),
-            'flowActions'              => new FlowActionService($this->makeRequest(...)),
-            'flowMessages'             => new FlowMessageService($this->makeRequest(...)),
-            'flows'                    => new FlowService($this->makeRequest(...)),
-            'formVersions'             => new FormVersionService($this->makeRequest(...)),
-            'forms'                    => new FormService($this->makeRequest(...)),
-            'images'                   => new ImageService($this->makeRequest(...)),
-            'lists'                    => new ListService($this->makeRequest(...)),
-            'mappedMetrics'            => new MappedMetricService($this->makeRequest(...)),
-            'metricProperties'         => new MetricPropertyService($this->makeRequest(...)),
-            'metrics'                  => new MetricService($this->makeRequest(...)),
-            'objectRecords'            => new ObjectRecordService($this->makeRequest(...)),
-            'objectSchemas'            => new ObjectSchemaService($this->makeRequest(...)),
-            'objectTypes'              => new ObjectTypeService($this->makeRequest(...)),
-            'profiles'                 => new ProfileService($this->makeRequest(...)),
-            'pushTokens'               => new PushTokenService($this->makeRequest(...)),
-            'reports'                  => new ReportingService($this->makeRequest(...)),
-            'reviews'                  => new ReviewService($this->makeRequest(...)),
-            'segments'                 => new SegmentService($this->makeRequest(...)),
-            'sourceMappings'           => new SourceMappingService($this->makeRequest(...)),
-            'tagGroups'                => new TagGroupService($this->makeRequest(...)),
-            'tags'                     => new TagService($this->makeRequest(...)),
-            'templates'                => new TemplateService($this->makeRequest(...)),
-            'trackingSettings'         => new TrackingSettingService($this->makeRequest(...)),
-            'universalContent'         => new UniversalContentService($this->makeRequest(...)),
-            'webFeeds'                 => new WebFeedService($this->makeRequest(...)),
-            'webhookTopics'            => new WebhookTopicService($this->makeRequest(...)),
-            'webhooks'                 => new WebhookService($this->makeRequest(...)),
+            'accounts'                 => new AccountService($this->sender()),
+            'backInStockSubscriptions' => new BackInStockSubscriptionService($this->sender()),
+            'campaigns'                => new CampaignService($this->sender()),
+            'campaignMessages'         => new CampaignMessageService($this->sender()),
+            'catalogCategories'        => new CatalogCategoryService($this->sender()),
+            'catalogItems'             => new CatalogItemService($this->sender()),
+            'catalogVariants'          => new CatalogVariantService($this->sender()),
+            'conversationMessages'     => new ConversationMessageService($this->sender()),
+            'couponCodes'              => new CouponCodeService($this->sender()),
+            'coupons'                  => new CouponService($this->sender()),
+            'customMetrics'            => new CustomMetricService($this->sender()),
+            'dataSources'              => new DataSourceService($this->sender()),
+            'events'                   => new EventService($this->sender()),
+            'flowActions'              => new FlowActionService($this->sender()),
+            'flowMessages'             => new FlowMessageService($this->sender()),
+            'flows'                    => new FlowService($this->sender()),
+            'formVersions'             => new FormVersionService($this->sender()),
+            'forms'                    => new FormService($this->sender()),
+            'images'                   => new ImageService($this->sender()),
+            'lists'                    => new ListService($this->sender()),
+            'mappedMetrics'            => new MappedMetricService($this->sender()),
+            'metricProperties'         => new MetricPropertyService($this->sender()),
+            'metrics'                  => new MetricService($this->sender()),
+            'objectRecords'            => new ObjectRecordService($this->sender()),
+            'objectSchemas'            => new ObjectSchemaService($this->sender()),
+            'objectTypes'              => new ObjectTypeService($this->sender()),
+            'profiles'                 => new ProfileService($this->sender()),
+            'pushTokens'               => new PushTokenService($this->sender()),
+            'reports'                  => new ReportingService($this->sender()),
+            'reviews'                  => new ReviewService($this->sender()),
+            'segments'                 => new SegmentService($this->sender()),
+            'sourceMappings'           => new SourceMappingService($this->sender()),
+            'tagGroups'                => new TagGroupService($this->sender()),
+            'tags'                     => new TagService($this->sender()),
+            'templates'                => new TemplateService($this->sender()),
+            'trackingSettings'         => new TrackingSettingService($this->sender()),
+            'universalContent'         => new UniversalContentService($this->sender()),
+            'webFeeds'                 => new WebFeedService($this->sender()),
+            'webhookTopics'            => new WebhookTopicService($this->sender()),
+            'webhooks'                 => new WebhookService($this->sender()),
             default                    => throw new InvalidArgumentException(sprintf('Unknown Klaviyo service "%s".', $name)),
         };
 
@@ -610,6 +619,16 @@ class APIClient
     // endregion
 
     // region Internal
+
+    /**
+     * @return Closure(string, string, array|JsonSerializable|MultipartBody|null, ?array, bool): (RequestInterface|array|null)
+     */
+    private function sender(): Closure
+    {
+
+        return $this->sender ??= $this->makeRequest(...);
+
+    }
 
     /**
      * Builds, sends and decodes one API request. A {@see MultipartBody} is sent as

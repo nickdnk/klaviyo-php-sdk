@@ -23,7 +23,14 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * `delete()` (DELETE /api/flows/{id}, delete_flow) comes from {@see HasDelete}.
+ * Flows are automated sequences triggered by a metric, a list or a segment, whose steps are flow
+ * actions ({@see FlowActionService}).
+ *
+ * - Date filters may not reach into the future, and `sort` must name the field being filtered.
+ * - Deleting a flow leaves behind the template copies its send actions made, and those copies
+ *   then refuse to be deleted.
+ *
+ * @link https://developers.klaviyo.com/en/reference/flows_api_overview
  */
 class FlowService extends BaseService
 {
@@ -65,8 +72,7 @@ class FlowService extends BaseService
     }
 
     /**
-     * Klaviyo answers 201 with the stored definition, every `temporary_id` in the submitted
-     * one replaced by a real id.
+     * Every `temporary_id` in the submitted definition comes back replaced by a real id.
      *
      * @link https://developers.klaviyo.com/en/reference/create_flow
      * @throws ClientException

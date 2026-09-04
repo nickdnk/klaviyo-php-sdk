@@ -88,4 +88,14 @@ class RateLimitTest extends TestCase
 
     }
 
+    public function testRateLimitParserSkipsGarbageParts(): void
+    {
+
+        $rl = RateLimit::fromResponse(new Response(200, ['RateLimit-Limit' => '10, , n/a;w=1, 150;w=60, 3;w=abc', 'RateLimit-Remaining' => '9']));
+        self::assertSame(10, $rl->limit);
+        self::assertSame([60 => 150], $rl->windows, 'empty and non-numeric parts are skipped; a window without a numeric w= is not a window');
+        self::assertSame(150, $rl->burstLimit());
+
+    }
+
 }

@@ -30,22 +30,17 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * The groupings a catalog's items are sorted into. A category's id is composite —
- * integration type, catalog type and external id joined by `:::`, e.g.
- * `$custom:::$default:::SAMPLE-DATA-CATEGORY-1` — and is treated as an opaque string
- * everywhere it is passed.
+ * The groupings a catalog's items are sorted into.
  *
- * Categories and items are linked from both ends: the item set of one category is read and
- * mutated here ({@see self::items()}, {@see self::addItems()}), while the categories one
- * item belongs to live on {@see CatalogItemService}.
+ * - A category id is composite: integration type, catalog type and external id joined by `:::`,
+ *   e.g. `$custom:::$default:::SAMPLE-DATA-CATEGORY-1`. Treat it as an opaque string.
+ * - Items and categories are linked from both ends: a category's items are managed here, the
+ *   categories of one item on {@see CatalogItemService}.
+ * - Relationship writes are not idempotent: re-adding an existing link answers 409.
+ * - Batches of up to 100 categories go through the bulk-job families instead of the synchronous
+ *   writes, with at most 500 jobs in progress per account.
  *
- * Three bulk-job families cover batch work — create, update and delete — each accepting up
- * to 100 categories per job and answering 202 with a job resource to poll.
- *
- * `delete()` (DELETE /api/catalog-categories/{id}, delete_catalog_category) comes from
- * {@see HasDelete}.
- *
- * @link https://developers.klaviyo.com/en/reference/delete_catalog_category
+ * @link https://developers.klaviyo.com/en/reference/catalogs_api_overview
  */
 class CatalogCategoryService extends BaseService
 {
@@ -63,7 +58,7 @@ class CatalogCategoryService extends BaseService
     private const string PATH_BULK_DELETE_JOBS = 'catalog-category-bulk-delete-jobs';
 
     /**
-     * Sortable by `created`; returns at most 100 categories per page.
+     * Sortable by `created` only.
      *
      * @link https://developers.klaviyo.com/en/reference/get_catalog_categories
      * @return array{data: CatalogCategory[], links: ?PaginationLinks}|RequestInterface
@@ -124,7 +119,7 @@ class CatalogCategoryService extends BaseService
     // region Relationships
 
     /**
-     * Sortable by `created`; returns at most 100 items per page.
+     * Sortable by `created` only.
      *
      * @link https://developers.klaviyo.com/en/reference/get_items_for_catalog_category
      * @return array{data: ResponseCatalogItem[], links: ?PaginationLinks}|RequestInterface
@@ -216,7 +211,7 @@ class CatalogCategoryService extends BaseService
     public function bulkCreate(BulkCreateCatalogCategoriesJob $job, bool $returnRequest = false): CatalogCategoryBulkCreateJob|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_CREATE_JOBS)->submit($job, $returnRequest);
+        return $this->bulkJobSubmit(self::PATH_BULK_CREATE_JOBS, $job, $returnRequest);
 
     }
 
@@ -231,13 +226,11 @@ class CatalogCategoryService extends BaseService
     public function getBulkCreateJobs(?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_CREATE_JOBS)->list($query, $next, $returnRequest);
+        return $this->bulkJobList(self::PATH_BULK_CREATE_JOBS, $query, $next, $returnRequest);
 
     }
 
     /**
-     * `include=categories` embeds the created categories.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_bulk_create_categories_job
      * @throws ClientException
      * @throws ConnectionException
@@ -247,7 +240,7 @@ class CatalogCategoryService extends BaseService
     public function getBulkCreateJob(string $jobId, ?Query $query = null, bool $returnRequest = false): CatalogCategoryBulkCreateJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_BULK_CREATE_JOBS)->get($jobId, $query, $returnRequest);
+        return $this->bulkJobGet(self::PATH_BULK_CREATE_JOBS, $jobId, $query, $returnRequest);
 
     }
 
@@ -265,7 +258,7 @@ class CatalogCategoryService extends BaseService
     public function bulkUpdate(BulkUpdateCatalogCategoriesJob $job, bool $returnRequest = false): CatalogCategoryBulkUpdateJob|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_UPDATE_JOBS)->submit($job, $returnRequest);
+        return $this->bulkJobSubmit(self::PATH_BULK_UPDATE_JOBS, $job, $returnRequest);
 
     }
 
@@ -280,13 +273,11 @@ class CatalogCategoryService extends BaseService
     public function getBulkUpdateJobs(?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_UPDATE_JOBS)->list($query, $next, $returnRequest);
+        return $this->bulkJobList(self::PATH_BULK_UPDATE_JOBS, $query, $next, $returnRequest);
 
     }
 
     /**
-     * `include=categories` embeds the updated categories.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_bulk_update_categories_job
      * @throws ClientException
      * @throws ConnectionException
@@ -296,7 +287,7 @@ class CatalogCategoryService extends BaseService
     public function getBulkUpdateJob(string $jobId, ?Query $query = null, bool $returnRequest = false): CatalogCategoryBulkUpdateJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_BULK_UPDATE_JOBS)->get($jobId, $query, $returnRequest);
+        return $this->bulkJobGet(self::PATH_BULK_UPDATE_JOBS, $jobId, $query, $returnRequest);
 
     }
 
@@ -314,7 +305,7 @@ class CatalogCategoryService extends BaseService
     public function bulkDelete(BulkDeleteCatalogCategoriesJob $job, bool $returnRequest = false): CatalogCategoryBulkDeleteJob|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_DELETE_JOBS)->submit($job, $returnRequest);
+        return $this->bulkJobSubmit(self::PATH_BULK_DELETE_JOBS, $job, $returnRequest);
 
     }
 
@@ -329,7 +320,7 @@ class CatalogCategoryService extends BaseService
     public function getBulkDeleteJobs(?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_DELETE_JOBS)->list($query, $next, $returnRequest);
+        return $this->bulkJobList(self::PATH_BULK_DELETE_JOBS, $query, $next, $returnRequest);
 
     }
 
@@ -343,7 +334,7 @@ class CatalogCategoryService extends BaseService
     public function getBulkDeleteJob(string $jobId, ?Query $query = null, bool $returnRequest = false): CatalogCategoryBulkDeleteJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_BULK_DELETE_JOBS)->get($jobId, $query, $returnRequest);
+        return $this->bulkJobGet(self::PATH_BULK_DELETE_JOBS, $jobId, $query, $returnRequest);
 
     }
 

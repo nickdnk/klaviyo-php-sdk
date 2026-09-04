@@ -21,10 +21,14 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * The individual channel messages of a campaign. Messages are created and removed with their
- * campaign ({@see CampaignService::create()}), so this service reads and edits existing ones:
- * their definition, the template they render and the image they carry. Campaign, template and
- * image are all to-one relations.
+ * The individual channel messages of a campaign. Messages are created and removed together with
+ * their campaign ({@see CampaignService::create()}), so this service reads and edits existing
+ * ones, including the template they render and the image they carry.
+ *
+ * - `render_options` and the image relationship apply to SMS and push messages only.
+ * - {@see self::assignTemplate()} answers a flatter message shape than the other endpoints.
+ *
+ * @link https://developers.klaviyo.com/en/reference/campaigns_api_overview
  */
 class CampaignMessageService extends BaseService
 {
@@ -176,8 +180,7 @@ class CampaignMessageService extends BaseService
     }
 
     /**
-     * Points the message at a different image. The body is a single identifier rather than the
-     * identifier list a to-many relationship takes, and Klaviyo answers 204.
+     * Takes a single image identifier, not the identifier list a to-many relationship expects.
      *
      * @link https://developers.klaviyo.com/en/reference/update_image_for_campaign_message
      * @throws ClientException

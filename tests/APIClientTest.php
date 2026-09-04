@@ -13,6 +13,14 @@ use nickdnk\Klaviyo\Http\GuzzleTransport;
 use nickdnk\Klaviyo\OAuthCredentials;
 use nickdnk\Klaviyo\Resources\Response\Profile as ResponseProfile;
 use PHPUnit\Framework\TestCase;
+use InvalidArgumentException;
+use LogicException;
+use RuntimeException;
+use nickdnk\Klaviyo\Exceptions\ConnectionException;
+use nickdnk\Klaviyo\Exceptions\ServerException;
+use nickdnk\Klaviyo\Http\RetryPolicy;
+use nickdnk\Klaviyo\OAuthScope;
+use nickdnk\Klaviyo\Resources\Response\Profile;
 
 /**
  * Tests the two pieces of APIClient that have non-obvious behavior worth regression-
@@ -358,5 +366,118 @@ class APIClientTest extends TestCase
         self::assertTrue($threw->isInvalidGrant());
 
     }
+
+    private MockHandler $mock;
+
+    private function client(Response ...$responses): APIClient
+    {
+
+        $this->mock = new MockHandler($responses);
+
+        return APIClient::withApiKey('pk', GuzzleTransport::fromHandlerStack(HandlerStack::create($this->mock)), new RetryPolicy(jitterFactor: 0, sleep: fn() => null));
+
+    }
+
+
+
+    public function testOAuthCredentialsRejectIncompleteTokenResponsesAndHandleMissingScope(): void
+    {
+
+        foreach ([[], ['access_token' => 'a'], ['access_token' => 'a', 'refresh_token' => 'r'], ['access_token' => 'a', 'refresh_token' => 'r', 'expires_in' => 'soon'], ['access_token' => '', 'refresh_token' => 'r', 'expires_in' => 60]] as $bad) {
+            try {
+                OAuthCredentials::fromTokenResponse($bad);
+                self::fail('expected InvalidArgumentException for ' . json_encode($bad));
+            } catch (InvalidArgumentException) {
+            }
+        }
+
+        $c = OAuthCredentials::fromTokenResponse(['access_token' => 'a', 'refresh_token' => 'r', 'expires_in' => '3600', 'scope' => ''], 1000);
+        self::assertSame(4600, $c->expiresAt);
+        self::assertNull($c->scope, 'an empty scope string is treated as unknown');
+        self::assertSame([], $c->scopes());
+        self::assertSame([OAuthScope::profilesRead], (new OAuthCredentials('a', 'r', 0, 'profiles:read  made:up'))->scopes(), 'unknown scopes are skipped');
+
+    }
+
+
+    public function testOAuthHelpers(): void
+    {
+
+        $verifier = APIClient::generateCodeVerifier();
+        self::assertMatchesRegularExpression('/^[A-Za-z0-9_-]{86}$/', $verifier, 'base64url of 64 random bytes without padding');
+        self::assertSame(rtrim(strtr(base64_encode(hash('sha256', $verifier, true)), '+/', '-_'), '='), APIClient::generateCodeChallenge($verifier));
+
+        $url = APIClient::getOAuthLink('cid', 'st4te', $verifier, [OAuthScope::profilesRead, OAuthScope::eventsWrite], 'https://example.com/cb');
+        self::assertStringStartsWith('https://www.klaviyo.com/oauth/authorize?', $url);
+        parse_str(parse_url($url, PHP_URL_QUERY), $q);
+        self::assertSame(['response_type' => 'code', 'client_id' => 'cid', 'redirect_uri' => 'https://example.com/cb', 'scope' => 'profiles:read events:write', 'state' => 'st4te', 'code_challenge_method' => 'S256', 'code_challenge' => APIClient::generateCodeChallenge($verifier)], $q);
+
+    }
+
+
+    public function testRevokeTokenAndTokenEndpointServerError(): void
+    {
+
+        $mock = new MockHandler([new Response(200, [], ''), new Response(500, [], 'boom')]);
+        $transport = GuzzleTransport::fromHandlerStack(HandlerStack::create($mock));
+
+        APIClient::revokeToken('cid', 'sec', 'refresh-token', $transport);
+        self::assertSame('https://a.klaviyo.com/oauth/revoke', (string)$mock->getLastRequest()->getUri());
+        $mock->getLastRequest()->getBody()->rewind();
+        self::assertSame('token=refresh-token&token_type_hint=refresh_token', (string)$mock->getLastRequest()->getBody());
+        self::assertSame('Basic ' . base64_encode('cid:sec'), $mock->getLastRequest()->getHeaderLine('Authorization'));
+
+        $this->expectException(ServerException::class);
+        APIClient::refreshAccessToken('cid', 'sec', 'rt', $transport);
+
+    }
+
+
+    public function testBearerClientHelpersAndGuards(): void
+    {
+
+        $client = $this->client(new Response(200, [], json_encode(['data' => []])));
+        $client->updateAccessToken('fresh');
+        $client->lists->list();
+        self::assertSame('Bearer fresh', $this->mock->getLastRequest()->getHeaderLine('Authorization'));
+
+        $this->expectException(LogicException::class);
+        $client->setCredentials(new OAuthCredentials('a', 'r', 0));
+
+    }
+
+
+    public function testDefaultTransportCanBeSetAndCleared(): void
+    {
+
+        $mock = new MockHandler([new Response(200, [], json_encode(['data' => []]))]);
+        APIClient::setDefaultTransport(GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
+        try {
+            (new APIClient('t'))->lists->list();
+            self::assertSame('/api/lists', $mock->getLastRequest()->getUri()->getPath());
+        } finally {
+            APIClient::setDefaultTransport(null);
+        }
+
+        // With the default cleared and Guzzle installed, a client still gets a transport of its own.
+        $client = new APIClient('t');
+        self::assertInstanceOf(APIClient::class, $client);
+        APIClient::setDefaultTransport(null);
+
+    }
+
+
+    public function testAssertNoExceptionsRethrowsTheFirstFailure(): void
+    {
+
+        APIClient::assertNoExceptions([null, [], new Profile('p')]);
+        $this->expectException(ConnectionException::class);
+        APIClient::assertNoExceptions([new Profile('p'), new ConnectionException(new RuntimeException('down')), new ServerException(new Response(500))]);
+
+    }
+
+    // endregion
+
+    // region services
 
 }

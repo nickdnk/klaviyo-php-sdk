@@ -31,12 +31,16 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Campaigns, plus the side resources that hang off one: the clone endpoint, the send job that
- * delivers it and the recipient estimation that sizes its audience. Sending and estimating are
- * asynchronous — both answer 202 with a job keyed by the campaign id, whose progress is then
- * polled through {@see self::getSendJob()} / {@see self::getRecipientEstimationJob()}.
+ * Campaigns and the jobs that hang off one: cloning, the send job that delivers it, and the
+ * recipient estimation that sizes its audience.
  *
- * Listing campaigns requires a channel filter, e.g. `equals(messages.channel,'email')`.
+ * - {@see self::list()} requires a channel filter, e.g. `equals(messages.channel,"email")`, and
+ *   only supports `contains` on `name`.
+ * - Sending and estimating are asynchronous: both answer with a job keyed by the campaign id,
+ *   polled through {@see self::getSendJob()} and {@see self::getRecipientEstimationJob()}.
+ * - `custom_tracking_params` must include `utm_source` and `utm_medium`.
+ *
+ * @link https://developers.klaviyo.com/en/reference/campaigns_api_overview
  */
 class CampaignService extends BaseService
 {
@@ -55,7 +59,7 @@ class CampaignService extends BaseService
     private const string PATH_RECIPIENT_ESTIMATIONS  = 'campaign-recipient-estimations';
 
     /**
-     * A channel filter is required, e.g. `equals(messages.channel,'email')`.
+     * A channel filter is required, e.g. `equals(messages.channel,"email")`.
      *
      * @link https://developers.klaviyo.com/en/reference/get_campaigns
      * @return array{data: Campaign[], links: ?PaginationLinks}|RequestInterface
@@ -114,7 +118,7 @@ class CampaignService extends BaseService
     }
 
     /**
-     * Copies a campaign, messages included, into a new draft.
+     * Copies the campaign and its messages into a new draft.
      *
      * @link https://developers.klaviyo.com/en/reference/create_campaign_clone
      * @throws ClientException
@@ -198,8 +202,7 @@ class CampaignService extends BaseService
     // region Send jobs
 
     /**
-     * Queues the campaign for delivery. Klaviyo answers 202 with a send job keyed by the
-     * campaign id.
+     * Queues the campaign for delivery. The send job is keyed by the campaign id.
      *
      * @link https://developers.klaviyo.com/en/reference/send_campaign
      * @throws ClientException
@@ -210,7 +213,7 @@ class CampaignService extends BaseService
     public function send(string $campaignId, bool $returnRequest = false): CampaignSendJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_SEND_JOBS)->submit(new RequestCampaignSendJob($campaignId), $returnRequest);
+        return $this->bulkJobSubmit(self::PATH_SEND_JOBS, new RequestCampaignSendJob($campaignId), $returnRequest);
 
     }
 
@@ -224,13 +227,12 @@ class CampaignService extends BaseService
     public function getSendJob(string $id, ?Query $query = null, bool $returnRequest = false): CampaignSendJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_SEND_JOBS)->get($id, $query, $returnRequest);
+        return $this->bulkJobGet(self::PATH_SEND_JOBS, $id, $query, $returnRequest);
 
     }
 
     /**
-     * Permanently cancels the send, leaving the campaign in status Cancelled. Klaviyo answers
-     * 204, so there is nothing to return.
+     * Cancels the send for good, leaving the campaign Cancelled; use revertSend() to edit and reschedule instead.
      *
      * @link https://developers.klaviyo.com/en/reference/cancel_campaign_send
      * @throws ClientException
@@ -251,8 +253,8 @@ class CampaignService extends BaseService
     }
 
     /**
-     * Stops the send and returns the campaign to Draft so it can be edited and rescheduled.
-     * Same endpoint as {@see self::cancelSend()} with `action: revert`; Klaviyo answers 204.
+     * Stops the send and returns the campaign to Draft. Same endpoint as cancelSend(), which is why
+     * both link the same reference.
      *
      * @link https://developers.klaviyo.com/en/reference/cancel_campaign_send
      * @throws ClientException
@@ -277,9 +279,8 @@ class CampaignService extends BaseService
     // region Recipient estimation
 
     /**
-     * Recounts the campaign's audience. Klaviyo answers 202 with an estimation job keyed by
-     * the campaign id; the count itself is read back through
-     * {@see self::getRecipientEstimation()} once the job completes.
+     * Recounts the campaign's audience. The estimation job is keyed by the campaign id; read the
+     * count back with getRecipientEstimation().
      *
      * @link https://developers.klaviyo.com/en/reference/refresh_campaign_recipient_estimation
      * @throws ClientException
@@ -290,8 +291,7 @@ class CampaignService extends BaseService
     public function refreshRecipientEstimation(string $campaignId, bool $returnRequest = false): CampaignRecipientEstimationJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_ESTIMATION_JOBS)
-            ->submit(new RequestCampaignRecipientEstimationJob($campaignId), $returnRequest);
+        return $this->bulkJobSubmit(self::PATH_ESTIMATION_JOBS, new RequestCampaignRecipientEstimationJob($campaignId), $returnRequest);
 
     }
 
@@ -305,12 +305,12 @@ class CampaignService extends BaseService
     public function getRecipientEstimationJob(string $id, ?Query $query = null, bool $returnRequest = false): CampaignRecipientEstimationJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_ESTIMATION_JOBS)->get($id, $query, $returnRequest);
+        return $this->bulkJobGet(self::PATH_ESTIMATION_JOBS, $id, $query, $returnRequest);
 
     }
 
     /**
-     * The last counted audience size of a campaign, keyed by the campaign id.
+     * The last counted audience size, keyed by the campaign id.
      *
      * @link https://developers.klaviyo.com/en/reference/get_campaign_recipient_estimation
      * @throws ClientException

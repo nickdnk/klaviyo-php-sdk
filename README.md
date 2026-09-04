@@ -19,16 +19,18 @@ differs from it in a few ways:
 - Any PSR-18 HTTP client can be used. Guzzle is optional.
 - Retries follow Klaviyo's published rate-limit guidance.
 - A request pool sends bulk work concurrently.
+- It does not implement the public-key based [Client API](https://developers.klaviyo.com/en/reference/client).
 
 Things to know before choosing it:
 
 - It is not an official Klaviyo project.
 - It is pinned to one API revision per major version (see below). New endpoints appear here later than in the official
-  package.
+  package subject to community effort.
 - Every endpoint was exercised against a live test account. Features that account could not enable, such as custom
   object types and push tokens, were only checked as far as their error responses.
 
-Requires PHP 8.3 or newer.
+### PHP Versions support
+Requires **PHP 8.3** and is tested against 8.3, 8.4 and 8.5.
 
 ```bash
 composer require nickdnk/klaviyo-php-sdk
@@ -241,7 +243,7 @@ How values are written:
 A `Filter` is `Stringable`. `Query::filter()` also accepts a raw string for expressions the builder does not cover.
 
 Each endpoint accepts its own set of fields and operators, listed in Klaviyo's API reference. Anything else is a 400.
-Some examples from the live run:
+Some examples:
 
 - Lists and segments allow only `equals` and `any` on `name`.
 - Campaigns allow only `contains` on `name`.
@@ -378,8 +380,14 @@ try {
 ### Concurrency
 
 Every service method accepts `returnRequest: true`. It then returns the prepared PSR-7 request instead of sending it.
-`executePool()` sends a batch of such requests concurrently and returns the results in the same order. A failed entry
-is an exception object in that position, not a thrown exception.
+`executePool()` sends a batch of such requests and returns the results in the same order. A failed entry is an
+exception object in that position, not a thrown exception.
+
+Whether the batch actually runs in parallel depends on the transport:
+
+- With Guzzle (the default when it is installed) requests go through Guzzle's pool, up to `concurrency` at a time.
+- With any other PSR-18 client (`Psr18Transport`) they run one after another, because PSR-18 has no asynchronous send.
+  The result shape and the retry behaviour are the same either way.
 
 ```php
 use nickdnk\Klaviyo\APIClient;
@@ -439,6 +447,8 @@ With Guzzle installed, nothing needs configuring. Any other PSR-18 client can be
 
 - PSR-17 factories are discovered from `nyholm/psr7` or `guzzlehttp/psr7` when you do not pass them.
 - PSR-18 has no asynchronous send, so `executePool()` runs one request at a time on that transport.
+- The test suite drives the SDK through Symfony's `Psr18Client` as well as Guzzle, and CI runs those tests again with
+  Guzzle uninstalled, so swapping the client out is verified rather than assumed.
 
 ```php
 use nickdnk\Klaviyo\APIClient;

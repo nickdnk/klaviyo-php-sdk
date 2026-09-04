@@ -22,9 +22,12 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Tag groups bucket the account's tags ({@see TagService}). Every account has one default
- * group that cannot be deleted, and deleting a group takes its tags — and their
- * associations — with it.
+ * Tag groups are the buckets an account's tags ({@see TagService}) are organised into.
+ *
+ * - Every account has one default group, which cannot be deleted, and at most 50 groups in all.
+ * - An exclusive group allows a resource only one of its tags; a non-exclusive group allows
+ *   several.
+ * - Deleting a group deletes its tags, and their associations, with it.
  */
 class TagGroupService extends BaseService
 {
@@ -80,8 +83,6 @@ class TagGroupService extends BaseService
     }
 
     /**
-     * Klaviyo answers 204 with an empty body, so a successful update returns null.
-     *
      * @link https://developers.klaviyo.com/en/reference/update_tag_group
      * @throws ClientException
      * @throws ConnectionException

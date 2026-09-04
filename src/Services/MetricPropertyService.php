@@ -15,8 +15,11 @@ use nickdnk\Klaviyo\Services\Traits\HasRelationships;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * A single event property Klaviyo has seen on a metric, with the type it inferred for it.
+ * One event property Klaviyo has seen on a metric, together with the type it inferred for it.
+ *
  * The full set for a metric comes from {@see MetricService::properties()}.
+ *
+ * @link https://developers.klaviyo.com/en/reference/metrics_api_overview
  */
 class MetricPropertyService extends BaseService
 {
@@ -43,8 +46,6 @@ class MetricPropertyService extends BaseService
     // region Relationships
 
     /**
-     * The metric this property belongs to.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_metric_for_metric_property
      * @throws ClientException
      * @throws ConnectionException

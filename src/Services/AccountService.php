@@ -14,6 +14,14 @@ use nickdnk\Klaviyo\Services\Traits\HasGet;
 use nickdnk\Klaviyo\Services\Traits\HasList;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * The account behind the credentials: its name, contact details, timezone, currency and public
+ * API key. Read-only, and a key only ever sees its own account, so {@see self::list()} answers a
+ * single-entry collection and is a cheap way to check which account a key belongs to.
+ *
+ * This is one of Klaviyo's most tightly limited endpoints (1/s burst, 15/min), so keep it out of
+ * wide concurrent pools.
+ */
 class AccountService extends BaseService
 {
 

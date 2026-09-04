@@ -104,6 +104,32 @@ class ClientExceptionTest extends TestCase
 
     }
 
+    public function testOAuthExceptionParsesBodyOrFallsBack(): void
+    {
+
+        $e = new \nickdnk\Klaviyo\Exceptions\OAuthException(new Response(400, [], json_encode(['error' => 'invalid_grant', 'error_description' => 'Refresh token revoked.'])));
+        self::assertSame('invalid_grant', $e->getErrorCode());
+        self::assertSame('Refresh token revoked.', $e->getErrorDescription());
+        self::assertTrue($e->isInvalidGrant());
+
+        $e = new \nickdnk\Klaviyo\Exceptions\OAuthException(new Response(502, [], '<html>bad gateway</html>'));
+        self::assertSame('unknown_error', $e->getErrorCode());
+        self::assertSame('Unexpected error received from Klaviyo. Please try again.', $e->getErrorDescription());
+        self::assertFalse($e->isInvalidGrant());
+
+    }
+
+    public function testServerExceptionExposesTheResponse(): void
+    {
+
+        $response = new Response(503, ['Retry-After' => '5'], 'upstream unavailable');
+        $e = new \nickdnk\Klaviyo\Exceptions\ServerException($response);
+        self::assertSame(503, $e->getHttpStatus());
+        self::assertSame($response, $e->getResponse());
+        self::assertSame('Klaviyo server error (HTTP 503)', $e->getMessage());
+
+    }
+
     public function testNonJsonApiBodyYieldsNoErrors(): void
     {
 

@@ -23,6 +23,8 @@ use nickdnk\Klaviyo\Resources\Response\FormValuesReport;
 use nickdnk\Klaviyo\Resources\Response\SegmentSeriesReport;
 use nickdnk\Klaviyo\Resources\Response\SegmentValuesReport;
 use PHPUnit\Framework\TestCase;
+use ReflectionMethod;
+use nickdnk\Klaviyo\Services\ReportingService;
 
 /**
  * Wire-format and hydration checks for the seven reporting endpoints. Each test pins the
@@ -330,5 +332,17 @@ class ReportingServiceTest extends TestCase
     }
 
     // endregion
+
+    public function testReportingServiceHasNoBasePath(): void
+    {
+
+        $m = new ReflectionMethod(ReportingService::class, 'apiPath');
+        self::assertSame('', $m->invoke(self::client(new MockHandler())->reports), 'reports have no collection path; each report is its own POST endpoint');
+
+    }
+
+    // endregion
+
+    // region APIClient
 
 }

@@ -15,8 +15,14 @@ use nickdnk\Klaviyo\Services\Traits\HasList;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Topics a webhook can subscribe to. Read-only; ids are the values of
- * the constants on {@see \nickdnk\Klaviyo\Resources\Shared\WebhookTopic}.
+ * The topics a webhook can subscribe to. Read-only.
+ *
+ * - The set is open-ended: alongside the `event:klaviyo.*` system topics named by the constants
+ *   on {@see \nickdnk\Klaviyo\Resources\Shared\WebhookTopic}, an account has an
+ *   `event:<integration>.<metric>` topic for every metric it has ever seen.
+ * - Access is gated exactly as {@see WebhookService} is.
+ *
+ * @link https://developers.klaviyo.com/en/reference/webhooks_api_overview
  */
 class WebhookTopicService extends BaseService
 {

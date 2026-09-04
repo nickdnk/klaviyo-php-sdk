@@ -20,9 +20,13 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Web feeds are external JSON or XML endpoints Klaviyo polls and makes available to
- * templates. The feed's `status` reports the health of that polling, so a feed that saved
- * cleanly can still report a refresh timeout later.
+ * Web feeds are external JSON or XML endpoints Klaviyo polls and makes available to templates.
+ *
+ * - `status` reports the health of that polling, not of the write: it is null until the first
+ *   poll, and a feed that saved cleanly can report a failure later.
+ * - `name` must match `^[0-9_A-z]+$`.
+ *
+ * @link https://developers.klaviyo.com/en/reference/web_feeds_api_overview
  */
 class WebFeedService extends BaseService
 {

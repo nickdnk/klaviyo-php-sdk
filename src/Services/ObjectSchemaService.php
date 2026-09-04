@@ -23,13 +23,16 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Object schemas — one immutable version of an object type's field definitions, plus the
- * source mapping that feeds them and the linkages to other schemas and to profiles.
+ * An object schema is one immutable version of an object type's field definitions, plus the
+ * source mapping that feeds it and its linkages to other schemas and to profiles.
  *
- * The two linkage families are the odd ones out among Klaviyo's relationship writes: each
- * entry carries a `meta` block (the linkage's own `relationship_id`, `name` and
- * `description`) rather than being a bare identifier, and PATCH takes a single entry where
- * POST and DELETE take a list. See {@see ObjectSchemaRelationship}.
+ * - The two linkage families are unlike every other relationship write in the API: an entry
+ *   carries a `meta` block (its own `relationship_id`, `name` and `description`) instead of being
+ *   a bare identifier, and PATCH takes a single entry where POST and DELETE take a list. See
+ *   {@see ObjectSchemaRelationship}.
+ * - An unknown schema id answers 500 on the linkage endpoints where its siblings answer 404.
+ *
+ * @link https://developers.klaviyo.com/en/reference/custom_objects_api_overview
  */
 class ObjectSchemaService extends BaseService
 {
@@ -38,9 +41,6 @@ class ObjectSchemaService extends BaseService
     use HasGet;
     use HasRelationships;
     use HasUpdate;
-
-    private const string RELATION_OBJECT_SCHEMAS         = 'object-schemas';
-    private const string RELATION_PROFILE_OBJECT_SCHEMAS = 'profile-object-schemas';
 
     /**
      * @link https://developers.klaviyo.com/en/reference/get_object_schema
@@ -122,8 +122,8 @@ class ObjectSchemaService extends BaseService
     // region Object schema linkages
 
     /**
-     * Object schemas linked to this one. Each entry's `relationship_id`, `name` and `description`
-     * travel in its `meta` block: read them with `$entry->getMeta()['relationship_id']`.
+     * Each entry's `relationship_id`, `name` and `description` travel in its `meta` block: read them
+     * with `$entry->getMeta()['relationship_id']`.
      *
      * @link https://developers.klaviyo.com/en/reference/get_object_schema_relationships
      * @return array{data: ObjectSchema[], links: ?PaginationLinks}|RequestInterface  each with only `id` set
@@ -135,13 +135,12 @@ class ObjectSchemaService extends BaseService
     public function objectSchemaRelationships(string $schemaId, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->relatedIdsTrait($schemaId, self::RELATION_OBJECT_SCHEMAS, returnRequest: $returnRequest);
+        return $this->relatedIdsTrait($schemaId, 'object-schemas', returnRequest: $returnRequest);
 
     }
 
     /**
-     * Each entry needs `name` in its `meta`; Klaviyo mints the `relationship_id`. Answered
-     * 204 with an empty body.
+     * Each entry needs `name` in its `meta`; Klaviyo mints the `relationship_id`.
      *
      * @link https://developers.klaviyo.com/en/reference/create_object_schema_relationship
      * @param ObjectSchemaRelationship[] $relationships
@@ -153,13 +152,12 @@ class ObjectSchemaService extends BaseService
     public function createObjectSchemaRelationship(string $schemaId, array $relationships, bool $returnRequest = false): ?RequestInterface
     {
 
-        return $this->addRelatedTrait($schemaId, self::RELATION_OBJECT_SCHEMAS, $relationships, $returnRequest);
+        return $this->addRelatedTrait($schemaId, 'object-schemas', $relationships, $returnRequest);
 
     }
 
     /**
-     * Renames or re-describes one existing linkage, addressed by the `relationship_id` in its
-     * `meta`. Takes a single entry, not a list. Answered 204 with an empty body.
+     * Addressed by the `relationship_id` in the entry's `meta`, and takes a single entry, not a list.
      *
      * @link https://developers.klaviyo.com/en/reference/update_object_schema_relationship
      * @throws ClientException
@@ -170,12 +168,12 @@ class ObjectSchemaService extends BaseService
     public function updateObjectSchemaRelationship(string $schemaId, ObjectSchemaRelationship $relationship, bool $returnRequest = false): ?RequestInterface
     {
 
-        return $this->patchRelationship($schemaId, self::RELATION_OBJECT_SCHEMAS, $relationship, $returnRequest);
+        return $this->patchRelationship($schemaId, 'object-schemas', $relationship, $returnRequest);
 
     }
 
     /**
-     * Each entry needs the `relationship_id` in its `meta`. Answered 204 with an empty body.
+     * Each entry needs its `relationship_id` in `meta`.
      *
      * @link https://developers.klaviyo.com/en/reference/delete_object_schema_relationship
      * @param ObjectSchemaRelationship[] $relationships
@@ -187,7 +185,7 @@ class ObjectSchemaService extends BaseService
     public function deleteObjectSchemaRelationship(string $schemaId, array $relationships, bool $returnRequest = false): ?RequestInterface
     {
 
-        return $this->removeRelatedTrait($schemaId, self::RELATION_OBJECT_SCHEMAS, $relationships, $returnRequest);
+        return $this->removeRelatedTrait($schemaId, 'object-schemas', $relationships, $returnRequest);
 
     }
 
@@ -196,8 +194,7 @@ class ObjectSchemaService extends BaseService
     // region Profile schema linkages
 
     /**
-     * Profile object schemas linked to this one. Identifiers only, and the linkage's
-     * `relationship_id` rides in a `meta` block that hydration drops, as above.
+     * Identifiers only, with the linkage's `relationship_id` in each entry's `meta`.
      *
      * @link https://developers.klaviyo.com/en/reference/get_profile_schema_relationships
      * @return array{data: ProfileObjectSchema[], links: ?PaginationLinks}|RequestInterface  each with only `id` set
@@ -209,7 +206,7 @@ class ObjectSchemaService extends BaseService
     public function profileSchemaRelationships(string $schemaId, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->relatedIdsTrait($schemaId, self::RELATION_PROFILE_OBJECT_SCHEMAS, returnRequest: $returnRequest);
+        return $this->relatedIdsTrait($schemaId, 'profile-object-schemas', returnRequest: $returnRequest);
 
     }
 
@@ -224,7 +221,7 @@ class ObjectSchemaService extends BaseService
     public function createProfileSchemaRelationship(string $schemaId, array $relationships, bool $returnRequest = false): ?RequestInterface
     {
 
-        return $this->addRelatedTrait($schemaId, self::RELATION_PROFILE_OBJECT_SCHEMAS, $relationships, $returnRequest);
+        return $this->addRelatedTrait($schemaId, 'profile-object-schemas', $relationships, $returnRequest);
 
     }
 
@@ -240,7 +237,7 @@ class ObjectSchemaService extends BaseService
     public function updateProfileSchemaRelationship(string $schemaId, ProfileObjectSchemaRelationship $relationship, bool $returnRequest = false): ?RequestInterface
     {
 
-        return $this->patchRelationship($schemaId, self::RELATION_PROFILE_OBJECT_SCHEMAS, $relationship, $returnRequest);
+        return $this->patchRelationship($schemaId, 'profile-object-schemas', $relationship, $returnRequest);
 
     }
 
@@ -255,7 +252,7 @@ class ObjectSchemaService extends BaseService
     public function deleteProfileSchemaRelationship(string $schemaId, array $relationships, bool $returnRequest = false): ?RequestInterface
     {
 
-        return $this->removeRelatedTrait($schemaId, self::RELATION_PROFILE_OBJECT_SCHEMAS, $relationships, $returnRequest);
+        return $this->removeRelatedTrait($schemaId, 'profile-object-schemas', $relationships, $returnRequest);
 
     }
 

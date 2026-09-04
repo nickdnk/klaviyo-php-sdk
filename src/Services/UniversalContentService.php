@@ -20,11 +20,10 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Saved template blocks that templates embed by id, one block per resource. Supported block
+ * Saved template blocks that templates embed by id, one block per resource. The supported block
  * types are button, drop_shadow, horizontal_rule, html, image, spacer and text.
  *
- * `delete()` (DELETE /api/template-universal-content/{id}, delete_universal_content) comes
- * from {@see HasDelete}.
+ * @link https://developers.klaviyo.com/en/reference/universal_content_api_overview
  */
 class UniversalContentService extends BaseService
 {

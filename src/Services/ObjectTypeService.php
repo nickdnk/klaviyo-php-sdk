@@ -23,8 +23,14 @@ use nickdnk\Klaviyo\Services\Traits\HasRelationships;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Object types — the custom entity definitions behind object records. Each type owns a
- * chain of schema versions, of which one is current and at most one is a draft.
+ * Object types are the custom entity definitions behind object records. A type owns a chain of
+ * schema versions ({@see ObjectSchemaService}), of which one is current and at most one is a
+ * draft.
+ *
+ * - Creating a type requires the custom objects entitlement; without it POST answers 403.
+ * - The only filter is `equals(namespace,…)`, and the ingestion log endpoints are cursor-only.
+ *
+ * @link https://developers.klaviyo.com/en/reference/custom_objects_api_overview
  */
 class ObjectTypeService extends BaseService
 {
@@ -112,7 +118,7 @@ class ObjectTypeService extends BaseService
     }
 
     /**
-     * The unpublished next schema version, if one is in flight.
+     * The unpublished next schema version, null when none is in flight.
      *
      * @link https://developers.klaviyo.com/en/reference/get_draft_schema_for_object_type
      * @throws ClientException
@@ -143,8 +149,6 @@ class ObjectTypeService extends BaseService
     }
 
     /**
-     * Every schema version the type has had, current and draft included.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_schema_versions_for_object_type
      * @return array{data: ObjectSchema[], links: ?PaginationLinks}|RequestInterface
      * @throws ClientException
@@ -209,8 +213,8 @@ class ObjectTypeService extends BaseService
     }
 
     /**
-     * Only ingestion failures are logged, so an absent entry is not proof a record landed.
-     * Logs are kept for 14 days and come back newest first, 50 per page.
+     * Only failed ingestions are logged, so a missing entry is no proof a record landed. Logs are
+     * kept for 14 days, newest first.
      *
      * @link https://developers.klaviyo.com/en/reference/get_ingestion_logs_for_object_type
      * @return array{data: ObjectIngestionLog[], links: ?PaginationLinks}|RequestInterface
@@ -246,8 +250,7 @@ class ObjectTypeService extends BaseService
     // region Type linkages
 
     /**
-     * Object types this type is linked to. Identifiers only — there is no full-resource
-     * counterpart for this relationship.
+     * Identifiers only; this relationship has no full-resource counterpart.
      *
      * @link https://developers.klaviyo.com/en/reference/get_object_type_relationships
      * @return array{data: ObjectType[], links: ?PaginationLinks}|RequestInterface  each with only `id` set
@@ -264,7 +267,7 @@ class ObjectTypeService extends BaseService
     }
 
     /**
-     * Profile object types this type is linked to. Identifiers only, as above.
+     * Identifiers only; this relationship has no full-resource counterpart.
      *
      * @link https://developers.klaviyo.com/en/reference/get_profile_type_relationships
      * @return array{data: ProfileObjectType[], links: ?PaginationLinks}|RequestInterface  each with only `id` set

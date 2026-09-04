@@ -20,6 +20,18 @@ use nickdnk\Klaviyo\Services\Traits\HasList;
 use nickdnk\Klaviyo\Services\Traits\HasRelationships;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * Events are the metric-keyed activity of a profile, and what flows trigger on and reports count.
+ *
+ * - Append-only: there is no update or delete, and an event also creates the profile and metric
+ *   it names when those do not exist yet.
+ * - Creation is asynchronous and answers no body, so a new event is not immediately readable.
+ * - {@see self::bulkCreate()} takes up to 1000 events, across several profiles if needed.
+ * - A malformed event id answers 400 rather than 404, so {@see self::get()} throws there instead
+ *   of returning null.
+ *
+ * @link https://developers.klaviyo.com/en/reference/events_api_overview
+ */
 class EventService extends BaseService
 {
 
@@ -27,6 +39,8 @@ class EventService extends BaseService
     use HasGet;
     use HasList;
     use HasRelationships;
+
+    private const string PATH_BULK_CREATE_JOBS = 'event-bulk-create-jobs';
 
     /**
      * @link https://developers.klaviyo.com/en/reference/get_events
@@ -78,7 +92,7 @@ class EventService extends BaseService
     public function bulkCreate(BulkCreateEventsJob $job, bool $returnRequest = false): ?RequestInterface
     {
 
-        return $this->request('POST', 'event-bulk-create-jobs', $job, returnRequest: $returnRequest);
+        return $this->request('POST', self::PATH_BULK_CREATE_JOBS, $job, returnRequest: $returnRequest);
 
     }
 

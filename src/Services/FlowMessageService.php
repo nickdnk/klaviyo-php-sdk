@@ -16,9 +16,14 @@ use nickdnk\Klaviyo\Services\Traits\HasRelationships;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * The messages a sending flow action delivers. Read-only: messages are written through their
- * action's definition ({@see FlowActionService::update()}). A flow action's messages are
- * listed by {@see FlowActionService::messages()}.
+ * The messages a sending flow action delivers.
+ *
+ * - Read-only: a message is written through its action's definition
+ *   ({@see FlowActionService::update()}) and listed by {@see FlowActionService::messages()}.
+ * - A send action copies the template it renders into the flow. That copy is not visible in
+ *   {@see TemplateService::list()} and outlives the flow.
+ *
+ * @link https://developers.klaviyo.com/en/reference/flows_api_overview
  */
 class FlowMessageService extends BaseService
 {
@@ -43,8 +48,6 @@ class FlowMessageService extends BaseService
     // region Relationships
 
     /**
-     * The action that sends this message.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_action_for_flow_message
      * @throws ClientException
      * @throws ConnectionException
@@ -74,7 +77,7 @@ class FlowMessageService extends BaseService
     }
 
     /**
-     * The template this message renders. Needs the `templates:read` scope, not `flows:read`.
+     * Needs the `templates:read` scope, not `flows:read`.
      *
      * @link https://developers.klaviyo.com/en/reference/get_template_for_flow_message
      * @throws ClientException

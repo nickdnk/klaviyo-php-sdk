@@ -31,20 +31,16 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * The products of a Klaviyo catalog. An item id is composite — integration type, catalog type
- * and external id joined by `:::`, e.g. `$custom:::$default:::SAMPLE-DATA-ITEM-1` — and is
- * passed around as an opaque string.
+ * The products of a Klaviyo catalog. An item owns its variants ({@see CatalogVariantService}) and
+ * belongs to any number of categories ({@see CatalogCategoryService}).
  *
- * Each item owns its variants ({@see CatalogVariantService}) and sits in any number of
- * catalog categories, linked through {@see self::addCategories()} /
- * {@see self::replaceCategories()} / {@see self::removeCategories()}.
+ * - An item id is composite: integration type, catalog type and external id joined by `:::`,
+ *   e.g. `$custom:::$default:::SAMPLE-DATA-ITEM-1`. Treat it as an opaque string.
+ * - Deleting an item deletes its variants with it.
+ * - Batches of up to 100 items go through the bulk-job families instead of the synchronous
+ *   writes; a job can report `processing` for minutes after its items are already readable.
  *
- * `delete()` comes from {@see HasDelete} and maps to
- * {@link https://developers.klaviyo.com/en/reference/delete_catalog_item delete_catalog_item};
- * it takes the item's variants with it.
- *
- * Batches of up to 100 items go through the three bulk-job families instead of the
- * synchronous writes, each queued with `bulk*()` and polled with `getBulk*Job()`.
+ * @link https://developers.klaviyo.com/en/reference/catalogs_api_overview
  */
 class CatalogItemService extends BaseService
 {
@@ -166,7 +162,7 @@ class CatalogItemService extends BaseService
     }
 
     /**
-     * Replaces the item's full category set.
+     * Replaces the item's whole category set.
      *
      * @link https://developers.klaviyo.com/en/reference/update_categories_for_catalog_item
      * @param SharedCatalogCategory[] $categories
@@ -241,7 +237,7 @@ class CatalogItemService extends BaseService
     public function bulkCreate(BulkCreateCatalogItemsJob $job, bool $returnRequest = false): CatalogItemBulkCreateJob|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_CREATE_JOBS)->submit($job, $returnRequest);
+        return $this->bulkJobSubmit(self::PATH_BULK_CREATE_JOBS, $job, $returnRequest);
 
     }
 
@@ -256,7 +252,7 @@ class CatalogItemService extends BaseService
     public function getBulkCreateJobs(?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_CREATE_JOBS)->list($query, $next, $returnRequest);
+        return $this->bulkJobList(self::PATH_BULK_CREATE_JOBS, $query, $next, $returnRequest);
 
     }
 
@@ -270,7 +266,7 @@ class CatalogItemService extends BaseService
     public function getBulkCreateJob(string $jobId, ?Query $query = null, bool $returnRequest = false): CatalogItemBulkCreateJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_BULK_CREATE_JOBS)->get($jobId, $query, $returnRequest);
+        return $this->bulkJobGet(self::PATH_BULK_CREATE_JOBS, $jobId, $query, $returnRequest);
 
     }
 
@@ -288,7 +284,7 @@ class CatalogItemService extends BaseService
     public function bulkUpdate(BulkUpdateCatalogItemsJob $job, bool $returnRequest = false): CatalogItemBulkUpdateJob|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_UPDATE_JOBS)->submit($job, $returnRequest);
+        return $this->bulkJobSubmit(self::PATH_BULK_UPDATE_JOBS, $job, $returnRequest);
 
     }
 
@@ -303,7 +299,7 @@ class CatalogItemService extends BaseService
     public function getBulkUpdateJobs(?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_UPDATE_JOBS)->list($query, $next, $returnRequest);
+        return $this->bulkJobList(self::PATH_BULK_UPDATE_JOBS, $query, $next, $returnRequest);
 
     }
 
@@ -317,7 +313,7 @@ class CatalogItemService extends BaseService
     public function getBulkUpdateJob(string $jobId, ?Query $query = null, bool $returnRequest = false): CatalogItemBulkUpdateJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_BULK_UPDATE_JOBS)->get($jobId, $query, $returnRequest);
+        return $this->bulkJobGet(self::PATH_BULK_UPDATE_JOBS, $jobId, $query, $returnRequest);
 
     }
 
@@ -335,7 +331,7 @@ class CatalogItemService extends BaseService
     public function bulkDelete(BulkDeleteCatalogItemsJob $job, bool $returnRequest = false): CatalogItemBulkDeleteJob|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_DELETE_JOBS)->submit($job, $returnRequest);
+        return $this->bulkJobSubmit(self::PATH_BULK_DELETE_JOBS, $job, $returnRequest);
 
     }
 
@@ -350,7 +346,7 @@ class CatalogItemService extends BaseService
     public function getBulkDeleteJobs(?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_DELETE_JOBS)->list($query, $next, $returnRequest);
+        return $this->bulkJobList(self::PATH_BULK_DELETE_JOBS, $query, $next, $returnRequest);
 
     }
 
@@ -364,7 +360,7 @@ class CatalogItemService extends BaseService
     public function getBulkDeleteJob(string $jobId, ?Query $query = null, bool $returnRequest = false): CatalogItemBulkDeleteJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_BULK_DELETE_JOBS)->get($jobId, $query, $returnRequest);
+        return $this->bulkJobGet(self::PATH_BULK_DELETE_JOBS, $jobId, $query, $returnRequest);
 
     }
 

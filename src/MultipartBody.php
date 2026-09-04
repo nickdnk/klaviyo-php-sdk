@@ -3,6 +3,8 @@
 
 namespace nickdnk\Klaviyo;
 
+use Random\RandomException;
+
 /**
  * Body for the few Klaviyo endpoints that take `multipart/form-data` instead of JSON:API
  * (`POST /api/image-upload`). Parts carry `name`, `contents`, optional `filename` and

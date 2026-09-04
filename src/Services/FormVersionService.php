@@ -15,9 +15,11 @@ use nickdnk\Klaviyo\Services\Traits\HasRelationships;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * One rendered variation of a signup form. Versions are read-only and are listed from their
- * parent form via {@see FormService::versions()}; the relationship back to that form is
- * to-one.
+ * One rendered variation of a signup form: its steps, styling and trigger.
+ *
+ * Read-only, and normally reached from the parent form through {@see FormService::versions()}.
+ *
+ * @link https://developers.klaviyo.com/en/reference/forms_api_overview
  */
 class FormVersionService extends BaseService
 {

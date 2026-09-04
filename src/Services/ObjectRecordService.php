@@ -14,10 +14,13 @@ use nickdnk\Klaviyo\Services\Traits\HasGet;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Individual custom object records. Records are written through
- * {@see DataSourceService::createRecord()} and listed per type through
- * {@see ObjectTypeService::records()}; this service reads one by its compound id and
- * deletes them in batches.
+ * Individual custom object records.
+ *
+ * Records are written through {@see DataSourceService::createRecord()} and listed per type
+ * through {@see ObjectTypeService::records()}. Here they are read one at a time by their compound
+ * id, or deleted up to 500 ids per batch.
+ *
+ * @link https://developers.klaviyo.com/en/reference/custom_objects_api_overview
  */
 class ObjectRecordService extends BaseService
 {
@@ -43,7 +46,7 @@ class ObjectRecordService extends BaseService
     }
 
     /**
-     * Deletes up to 500 records in one job. Klaviyo answers 202 with an empty body.
+     * Up to 500 records per job.
      *
      * @link https://developers.klaviyo.com/en/reference/bulk_delete_object_records
      * @throws ClientException

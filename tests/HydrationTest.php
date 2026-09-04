@@ -13,6 +13,8 @@ use nickdnk\Klaviyo\Resources\Response\Tag;
 use nickdnk\Klaviyo\Resources\Response\TagGroup;
 use nickdnk\Klaviyo\Resources\Shared\Relationship;
 use PHPUnit\Framework\TestCase;
+use nickdnk\Klaviyo\Resources\Response\WhatsappConsent;
+use nickdnk\Klaviyo\Resources\Response\WhatsappSubscription;
 
 /**
  * Response hydration rules that the live smoke run showed to matter: compound documents
@@ -186,6 +188,34 @@ class HydrationTest extends TestCase
 
         self::assertSame(['type' => 'not-a-type', 'id' => 'z'], $result['data']->getRelationship('thing')->data, 'unknown type stays a raw identifier');
         self::assertSame([], $result['included']);
+
+    }
+
+    public function testWhatsappSubscriptionHydratesNestedConsents(): void
+    {
+
+        $result = APIClient::hydrateResponse(['data' => ['type' => 'profile', 'id' => 'p1', 'attributes' => ['subscriptions' => ['whatsapp' => [
+            'marketing'      => ['consent' => 'SUBSCRIBED', 'phone_number' => '+4512345678'],
+            'transactional'  => ['consent' => 'SUBSCRIBED'],
+            'conversational' => null,
+        ]]]]]);
+
+        /** @var Profile $p */
+        $p = $result['data'];
+        self::assertInstanceOf(WhatsappSubscription::class, $p->subscriptions->whatsapp);
+        self::assertInstanceOf(WhatsappConsent::class, $p->subscriptions->whatsapp->marketing);
+        self::assertSame('+4512345678', $p->subscriptions->whatsapp->marketing->phone_number);
+        self::assertNull($p->subscriptions->whatsapp->conversational);
+
+    }
+
+
+    public function testHydrationIgnoresMalformedRelationshipEntries(): void
+    {
+
+        $result = APIClient::hydrateResponse(['data' => ['type' => 'list', 'id' => 'L1', 'attributes' => [], 'relationships' => ['tags' => 'not-an-object', 'profiles' => ['data' => []]]]]);
+        self::assertNull($result['data']->getRelationship('tags'));
+        self::assertNotNull($result['data']->getRelationship('profiles'));
 
     }
 

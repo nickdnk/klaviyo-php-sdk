@@ -20,18 +20,30 @@ use Throwable;
  * {@see \nickdnk\Klaviyo\APIClient} picks by default in that case, because
  * Guzzle's pool gives the bulk sync real concurrency where plain PSR-18 cannot.
  *
- * Every send passes `http_errors => false`: status handling belongs to the client, so 4xx
- * and 5xx come back as responses instead of Guzzle exceptions.
+ * Sends go through Guzzle's own {@see GuzzleClientInterface::send()} rather than its PSR-18
+ * {@see \Psr\Http\Client\ClientInterface::sendRequest()}: the pool needs `sendAsync()`, which
+ * PSR-18 has no equivalent for, so this transport depends on Guzzle's interface either way, and
+ * `sendRequest()` is not declared there. Taking options also keeps both paths on one set of them
+ * instead of letting single sends inherit Guzzle's hardcoded set. For PSR-18 semantics against
+ * Guzzle, hand a Guzzle client to {@see Psr18Transport::create()} instead.
+ *
+ * Those options are `http_errors => false`, so status handling stays in the client and 4xx and
+ * 5xx come back as responses instead of exceptions, and `allow_redirects => false`, matching what
+ * `sendRequest()` does: the Klaviyo API declares no 3xx, and not following redirects keeps this
+ * transport's behaviour identical to {@see Psr18Transport}.
  */
-final class GuzzleTransport implements Transport
+final readonly class GuzzleTransport implements Transport
 {
 
-    private const array SEND_OPTIONS = [RequestOptions::HTTP_ERRORS => false];
+    private const array SEND_OPTIONS = [
+        RequestOptions::HTTP_ERRORS     => false,
+        RequestOptions::ALLOW_REDIRECTS => false,
+    ];
 
     public function __construct(
-        private readonly GuzzleClientInterface   $client,
-        private readonly RequestFactoryInterface $requestFactory = new HttpFactory(),
-        private readonly StreamFactoryInterface  $streamFactory = new HttpFactory(),
+        private GuzzleClientInterface   $client,
+        private RequestFactoryInterface $requestFactory = new HttpFactory(),
+        private StreamFactoryInterface  $streamFactory = new HttpFactory(),
     ) {}
 
     /**

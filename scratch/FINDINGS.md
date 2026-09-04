@@ -90,6 +90,16 @@ Packaging and tests
 16. **Recorded-response corpus** `tests/fixtures/responses` (421 real responses, 327 operations, scrubbed) replayed by
     `RecordedResponsesTest` (hydration, registry coverage, relationship survival, re-serialisation, `@property` completeness,
     error mapping). New tests: `HydrationTest`, `ExplicitTest`, `RequestHelpersTest`, `ClientExceptionTest`, `RateLimitTest`.
+16a. Writing `$resource['id'] = …` used to store an `attributes.id` member silently (sent to the API on the next request) while
+    the real id stayed; it now throws `LogicException`, and hydration ignores an attribute named `id` on identifiable resources.
+    Empty success bodies are left to fail hard: the SDK does not check for them. Reads and job submissions declare non-null
+    return types, so a 2xx without the documented resource is a `TypeError` at the call boundary; the 28 POST and 8 PATCH
+    endpoints that document no body return null by design. (Two rejected attempts are worth remembering: widening 11 bulk
+    signatures to `|null` to satisfy a synthetic test, and raising a dedicated exception from the traits, which broke the
+    bodiless write endpoints and added defensive code for a case the spec and 421 recordings never produce.)
+16b. `Exceptions\JobTimeoutException` removed: the SDK never threw it (it was the original consumer's job-polling exception).
+    A consumer that polled bulk jobs with a deadline defines its own. New tests for events, webhooks, profiles, delete
+    semantics, `accounts->get()`, OAuth/Server exception accessors: coverage 92.6 % → 95.2 % of statements.
 17. **Service tests assert hydration against the corpus** (`tests/Fixtures.php`): 242 hand-written response bodies in 17 test
     files replaced by recorded ones wherever a test reads hydrated content; request-side assertions and infrastructure tests
     (retry, refresh, pooling, transport) keep synthetic responses. What the invented mocks had wrong: bulk jobs answer

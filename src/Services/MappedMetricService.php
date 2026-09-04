@@ -21,9 +21,13 @@ use Psr\Http\Message\RequestInterface;
 
 /**
  * Klaviyo's fixed mapping slots — `added_to_cart`, `cancelled_sales`, `ordered_product`,
- * `refunded_sales`, `revenue`, `started_checkout`, `viewed_product` — each pointing at the
- * metric or custom metric the account uses for that concept. The slot name is the resource
- * id, so the set is fixed and only the target changes.
+ * `refunded_sales`, `revenue`, `started_checkout` and `viewed_product` — each pointing at the
+ * metric or custom metric the account uses for that concept.
+ *
+ * - The slot name is the resource id, so the set is fixed and only the target ever changes.
+ * - A slot accepts two updates per day; further ones answer 403.
+ *
+ * @link https://developers.klaviyo.com/en/reference/metrics_api_overview
  */
 class MappedMetricService extends BaseService
 {
@@ -79,7 +83,7 @@ class MappedMetricService extends BaseService
     // region Relationships
 
     /**
-     * The metric this slot points at, when it is mapped to a plain metric.
+     * Null when the slot points at a custom metric instead.
      *
      * @link https://developers.klaviyo.com/en/reference/get_metric_for_mapped_metric
      * @throws ClientException
@@ -110,7 +114,7 @@ class MappedMetricService extends BaseService
     }
 
     /**
-     * The custom metric this slot points at, when it is mapped to one.
+     * Null when the slot points at a plain metric instead.
      *
      * @link https://developers.klaviyo.com/en/reference/get_custom_metric_for_mapped_metric
      * @throws ClientException

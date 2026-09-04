@@ -19,6 +19,17 @@ use nickdnk\Klaviyo\Services\Traits\HasList;
 use nickdnk\Klaviyo\Services\Traits\HasRelationships;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * Metrics are the event types an account has seen. They are created by integrations and by
+ * {@see EventService::create()}, never here.
+ *
+ * - Read-only and permanent: a metric cannot be renamed or removed.
+ * - {@see self::aggregates()} is a POST that rolls a metric's events into buckets. It rejects
+ *   `sort`, wants a `page_size` of at least 500, lags {@see EventService::list()} by a few
+ *   seconds and does not accept custom metrics.
+ *
+ * @link https://developers.klaviyo.com/en/reference/metrics_api_overview
+ */
 class MetricService extends BaseService
 {
 
@@ -26,9 +37,10 @@ class MetricService extends BaseService
     use HasList;
     use HasRelationships;
 
+    private const string PATH_AGGREGATES = 'metric-aggregates';
+
     /**
-     * Filterable by integration `name` and integration `category`. Klaviyo caps a page at
-     * 200 results.
+     * Filterable by integration `name` and `category`; the page size is fixed by Klaviyo.
      *
      * @link https://developers.klaviyo.com/en/reference/get_metrics
      * @return array{data: Metric[], links: ?PaginationLinks}|RequestInterface
@@ -73,7 +85,7 @@ class MetricService extends BaseService
 
         $result = $this->request(
                            'POST',
-                           'metric-aggregates',
+                           self::PATH_AGGREGATES,
                            $aggregateQuery,
             query:         $query?->toArray() ?: null,
             returnRequest: $returnRequest,
@@ -86,8 +98,6 @@ class MetricService extends BaseService
     // region Relationships
 
     /**
-     * Flows this metric triggers.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_flows_triggered_by_metric
      * @return array{data: Flow[], links: ?PaginationLinks}|RequestInterface
      * @throws ClientException
@@ -118,8 +128,7 @@ class MetricService extends BaseService
     }
 
     /**
-     * The event properties Klaviyo has seen on this metric. `sample_values` comes back only
-     * when asked for via {@see Query::additionalFields()}.
+     * `sample_values` comes back only when asked for with `additionalFields('metric-property', 'sample_values')`.
      *
      * @link https://developers.klaviyo.com/en/reference/get_properties_for_metric
      * @return array{data: MetricProperty[], links: ?PaginationLinks}|RequestInterface

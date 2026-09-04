@@ -37,6 +37,23 @@ use nickdnk\Klaviyo\Services\Traits\HasRelationships;
 use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * Profiles are the people in an account: their identifiers, consent, and the lists, segments and
+ * push tokens attached to them. This service also hosts the bulk families — import,
+ * subscribe/unsubscribe, suppress/unsuppress — and the data privacy deletion request.
+ *
+ * - Creating a profile whose email already exists answers 409 with the existing id in
+ *   `errors[0].meta.duplicate_profile_id`; {@see self::import()} upserts instead.
+ * - {@see self::merge()} and every bulk job are asynchronous, so a merged source id keeps
+ *   resolving for a while afterwards. Only the import family has a job to poll.
+ * - {@see self::unsubscribe()} unsubscribes globally for any profile that is not in the list you
+ *   name, so check membership first.
+ * - {@see self::bulkImport()} takes up to 10 000 profiles, {@see self::suppress()} up to 100
+ *   email addresses, and suppression jobs accept profiles, a list id or a segment id, never a
+ *   combination.
+ *
+ * @link https://developers.klaviyo.com/en/reference/profiles_api_overview
+ */
 class ProfileService extends BaseService
 {
 
@@ -47,9 +64,14 @@ class ProfileService extends BaseService
     use HasRelationships;
     use HasUpdate;
 
-    private const string PATH_BULK_IMPORT_JOBS  = 'profile-bulk-import-jobs';
-    private const string PATH_SUPPRESS_JOBS     = 'profile-suppression-bulk-create-jobs';
-    private const string PATH_UNSUPPRESS_JOBS   = 'profile-suppression-bulk-delete-jobs';
+    private const string PATH_IMPORT             = 'profile-import';
+    private const string PATH_MERGE              = 'profile-merge';
+    private const string PATH_BULK_IMPORT_JOBS   = 'profile-bulk-import-jobs';
+    private const string PATH_SUBSCRIBE_JOBS     = 'profile-subscription-bulk-create-jobs';
+    private const string PATH_UNSUBSCRIBE_JOBS   = 'profile-subscription-bulk-delete-jobs';
+    private const string PATH_SUPPRESS_JOBS      = 'profile-suppression-bulk-create-jobs';
+    private const string PATH_UNSUPPRESS_JOBS    = 'profile-suppression-bulk-delete-jobs';
+    private const string PATH_DELETION_JOBS      = 'data-privacy-deletion-jobs';
 
     /**
      * @link https://developers.klaviyo.com/en/reference/get_profile
@@ -64,6 +86,9 @@ class ProfileService extends BaseService
     }
 
     /**
+     * Klaviyo has no lookup by external id; this filters the collection and takes the first match.
+     *
+     * @link https://developers.klaviyo.com/en/reference/get_profiles
      * @throws ClientException
      * @throws ConnectionException
      * @throws OAuthException
@@ -128,15 +153,14 @@ class ProfileService extends BaseService
     public function import(ImportProfile $profile, bool $returnRequest = false): RequestInterface|Profile
     {
 
-        $result = $this->request('POST', 'profile-import', $profile, returnRequest: $returnRequest);
+        $result = $this->request('POST', self::PATH_IMPORT, $profile, returnRequest: $returnRequest);
 
         return $result instanceof RequestInterface ? $result : $result['data'];
 
     }
 
     /**
-     * Merges the source profiles into the destination and deletes them. Returns the
-     * surviving profile.
+     * Merges the source profiles into the destination and deletes them.
      *
      * @link https://developers.klaviyo.com/en/reference/merge_profiles
      * @throws ClientException
@@ -147,7 +171,7 @@ class ProfileService extends BaseService
     public function merge(ProfileMerge $merge, bool $returnRequest = false): Profile|RequestInterface
     {
 
-        $result = $this->request('POST', 'profile-merge', $merge, returnRequest: $returnRequest);
+        $result = $this->request('POST', self::PATH_MERGE, $merge, returnRequest: $returnRequest);
 
         return $result instanceof RequestInterface ? $result : $result['data'];
 
@@ -246,8 +270,6 @@ class ProfileService extends BaseService
     }
 
     /**
-     * The profile's SMS conversation, if any.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_conversation_for_profile
      * @throws ClientException
      * @throws ConnectionException
@@ -277,8 +299,6 @@ class ProfileService extends BaseService
     }
 
     /**
-     * All of the profile's conversations across channels.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_conversations_for_profile
      * @return array{data: Conversation[], links: ?PaginationLinks}|RequestInterface
      * @throws ClientException
@@ -323,7 +343,7 @@ class ProfileService extends BaseService
     ): ResponseBulkImportJob|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_IMPORT_JOBS)->submit($job, $returnRequest);
+        return $this->bulkJobSubmit(self::PATH_BULK_IMPORT_JOBS, $job, $returnRequest);
 
     }
 
@@ -338,7 +358,7 @@ class ProfileService extends BaseService
     public function getBulkImportJobs(?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_IMPORT_JOBS)->list($query, $next, $returnRequest);
+        return $this->bulkJobList(self::PATH_BULK_IMPORT_JOBS, $query, $next, $returnRequest);
 
     }
 
@@ -352,13 +372,11 @@ class ProfileService extends BaseService
     public function getBulkImportJob(string $jobId, ?Query $query = null, bool $returnRequest = false): ResponseBulkImportJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_BULK_IMPORT_JOBS)->get($jobId, $query, $returnRequest);
+        return $this->bulkJobGet(self::PATH_BULK_IMPORT_JOBS, $jobId, $query, $returnRequest);
 
     }
 
     /**
-     * Rows Klaviyo rejected from a bulk import job, paginated.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_errors_for_bulk_import_profiles_job
      * @return array{data: ImportError[], links: ?PaginationLinks}|RequestInterface
      * @throws ClientException
@@ -369,7 +387,7 @@ class ProfileService extends BaseService
     public function getBulkImportJobErrors(string $jobId, ?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_IMPORT_JOBS)->related($jobId, 'import-errors', $query, $next, $returnRequest);
+        return $this->bulkJobRelated(self::PATH_BULK_IMPORT_JOBS, $jobId, 'import-errors', $query, $next, $returnRequest);
 
     }
 
@@ -384,7 +402,7 @@ class ProfileService extends BaseService
     public function getBulkImportJobLists(string $jobId, ?Query $query = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_IMPORT_JOBS)->related($jobId, 'lists', $query, returnRequest: $returnRequest);
+        return $this->bulkJobRelated(self::PATH_BULK_IMPORT_JOBS, $jobId, 'lists', $query, returnRequest: $returnRequest);
 
     }
 
@@ -399,7 +417,7 @@ class ProfileService extends BaseService
     public function getBulkImportJobListIds(string $jobId, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_IMPORT_JOBS)->relatedIds($jobId, 'lists', returnRequest: $returnRequest);
+        return $this->bulkJobRelatedIds(self::PATH_BULK_IMPORT_JOBS, $jobId, 'lists', returnRequest: $returnRequest);
 
     }
 
@@ -414,7 +432,7 @@ class ProfileService extends BaseService
     public function getBulkImportJobProfiles(string $jobId, ?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_IMPORT_JOBS)->related($jobId, 'profiles', $query, $next, $returnRequest);
+        return $this->bulkJobRelated(self::PATH_BULK_IMPORT_JOBS, $jobId, 'profiles', $query, $next, $returnRequest);
 
     }
 
@@ -429,7 +447,7 @@ class ProfileService extends BaseService
     public function getBulkImportJobProfileIds(string $jobId, ?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_BULK_IMPORT_JOBS)->relatedIds($jobId, 'profiles', $query, $next, $returnRequest);
+        return $this->bulkJobRelatedIds(self::PATH_BULK_IMPORT_JOBS, $jobId, 'profiles', $query, $next, $returnRequest);
 
     }
 
@@ -438,14 +456,13 @@ class ProfileService extends BaseService
     // region Subscriptions
 
     /**
-     * Records consent for up to 1000 profiles (and adds them to the job's list, if any).
-     * Answered 202 with an empty body; the job runs asynchronously and has no status endpoint.
+     * Records consent for up to 1000 profiles, and adds them to the job's list when one is attached.
+     * The job runs asynchronously and has no status endpoint.
      *
-     * Klaviyo rejects the whole batch (400, one `KlaviyoError` per offending profile with a
-     * pointer like `/data/attributes/profiles/data/3/attributes/phone_number`) when a phone number
-     * is valid but not in a region the account can send to. Whether to drop those profiles' SMS
-     * consent and resubmit is an application decision; `KlaviyoError::indexIn('/data/attributes/profiles/data')`
-     * gives the offending indexes if you choose to.
+     * Klaviyo rejects the whole batch with a 400 when a phone number is valid but outside the regions
+     * the account can send to, one error per profile pointing at
+     * `/data/attributes/profiles/data/{i}/attributes/phone_number`. Dropping those profiles' SMS
+     * consent and resubmitting is an application decision; `KlaviyoError::indexIn()` gives the indexes.
      *
      * @link https://developers.klaviyo.com/en/reference/bulk_subscribe_profiles
      * @throws ClientException
@@ -456,16 +473,15 @@ class ProfileService extends BaseService
     public function subscribe(SubscriptionCreateJob $job, bool $returnRequest = false): ?RequestInterface
     {
 
-        $result = $this->request('POST', 'profile-subscription-bulk-create-jobs', $job, returnRequest: $returnRequest);
+        $result = $this->request('POST', self::PATH_SUBSCRIBE_JOBS, $job, returnRequest: $returnRequest);
 
         return $result instanceof RequestInterface ? $result : null;
 
     }
 
     /**
-     * Removes consent for up to 1000 profiles: scoped to the job's list when one is attached,
-     * otherwise account-wide. Answered 202 with an empty body. Same phone-region rejection
-     * behaviour as {@see self::subscribe()}.
+     * Removes consent for up to 100 profiles: from the job's list when one is attached, otherwise
+     * account-wide. Same phone-region rejection as subscribe().
      *
      * @link https://developers.klaviyo.com/en/reference/bulk_unsubscribe_profiles
      * @throws ClientException
@@ -476,7 +492,7 @@ class ProfileService extends BaseService
     public function unsubscribe(SubscriptionDeleteJob $job, bool $returnRequest = false): ?RequestInterface
     {
 
-        $result = $this->request('POST', 'profile-subscription-bulk-delete-jobs', $job, returnRequest: $returnRequest);
+        $result = $this->request('POST', self::PATH_UNSUBSCRIBE_JOBS, $job, returnRequest: $returnRequest);
 
         return $result instanceof RequestInterface ? $result : null;
 
@@ -487,7 +503,7 @@ class ProfileService extends BaseService
     // region Suppressions
 
     /**
-     * Manually suppresses profiles from email marketing. Klaviyo answers 202 with the job.
+     * Suppresses up to 100 profiles from email marketing, by email address, list or segment.
      *
      * @link https://developers.klaviyo.com/en/reference/bulk_suppress_profiles
      * @throws ClientException
@@ -495,15 +511,15 @@ class ProfileService extends BaseService
      * @throws OAuthException
      * @throws ServerException
      */
-    public function suppress(RequestSuppressionCreateJob $job, bool $returnRequest = false): SuppressionCreateJob|RequestInterface|null
+    public function suppress(RequestSuppressionCreateJob $job, bool $returnRequest = false): SuppressionCreateJob|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_SUPPRESS_JOBS)->submit($job, $returnRequest);
+        return $this->bulkJobSubmit(self::PATH_SUPPRESS_JOBS, $job, $returnRequest);
 
     }
 
     /**
-     * Lifts manual suppressions. Klaviyo answers 202 with the job.
+     * Lifts up to 100 manual suppressions, by email address, list or segment.
      *
      * @link https://developers.klaviyo.com/en/reference/bulk_unsuppress_profiles
      * @throws ClientException
@@ -511,10 +527,10 @@ class ProfileService extends BaseService
      * @throws OAuthException
      * @throws ServerException
      */
-    public function unsuppress(RequestSuppressionDeleteJob $job, bool $returnRequest = false): SuppressionDeleteJob|RequestInterface|null
+    public function unsuppress(RequestSuppressionDeleteJob $job, bool $returnRequest = false): SuppressionDeleteJob|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_UNSUPPRESS_JOBS)->submit($job, $returnRequest);
+        return $this->bulkJobSubmit(self::PATH_UNSUPPRESS_JOBS, $job, $returnRequest);
 
     }
 
@@ -529,7 +545,7 @@ class ProfileService extends BaseService
     public function getSuppressJobs(?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_SUPPRESS_JOBS)->list($query, $next, $returnRequest);
+        return $this->bulkJobList(self::PATH_SUPPRESS_JOBS, $query, $next, $returnRequest);
 
     }
 
@@ -543,7 +559,7 @@ class ProfileService extends BaseService
     public function getSuppressJob(string $jobId, ?Query $query = null, bool $returnRequest = false): SuppressionCreateJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_SUPPRESS_JOBS)->get($jobId, $query, $returnRequest);
+        return $this->bulkJobGet(self::PATH_SUPPRESS_JOBS, $jobId, $query, $returnRequest);
 
     }
 
@@ -558,7 +574,7 @@ class ProfileService extends BaseService
     public function getUnsuppressJobs(?Query $query = null, ?string $next = null, bool $returnRequest = false): array|RequestInterface
     {
 
-        return $this->bulkJobs(self::PATH_UNSUPPRESS_JOBS)->list($query, $next, $returnRequest);
+        return $this->bulkJobList(self::PATH_UNSUPPRESS_JOBS, $query, $next, $returnRequest);
 
     }
 
@@ -572,14 +588,14 @@ class ProfileService extends BaseService
     public function getUnsuppressJob(string $jobId, ?Query $query = null, bool $returnRequest = false): SuppressionDeleteJob|RequestInterface|null
     {
 
-        return $this->bulkJobs(self::PATH_UNSUPPRESS_JOBS)->get($jobId, $query, $returnRequest);
+        return $this->bulkJobGet(self::PATH_UNSUPPRESS_JOBS, $jobId, $query, $returnRequest);
 
     }
 
     // endregion
 
     /**
-     * User `phone_number` and `email` are mutually exclusive; provide only one, or set the Klaviyo User ID.
+     * Identify the profile by id, email or phone number; the two identifiers are mutually exclusive.
      *
      * @link https://developers.klaviyo.com/en/reference/request_profile_deletion
      * @throws ClientException
@@ -590,7 +606,7 @@ class ProfileService extends BaseService
     public function deleteProfile(DataPrivacyDeletionJob $job, bool $returnRequest = false): ?RequestInterface
     {
 
-        return $this->request('POST', 'data-privacy-deletion-jobs', $job, returnRequest: $returnRequest);
+        return $this->request('POST', self::PATH_DELETION_JOBS, $job, returnRequest: $returnRequest);
 
     }
 

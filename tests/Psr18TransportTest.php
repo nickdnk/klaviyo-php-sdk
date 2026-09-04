@@ -18,6 +18,7 @@ use nickdnk\Klaviyo\Query;
 use nickdnk\Klaviyo\Resources\Request\CreateList;
 use nickdnk\Klaviyo\Resources\Response\KlaviyoList;
 use nickdnk\Klaviyo\Resources\Response\Profile;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Client\NetworkExceptionInterface;
@@ -32,6 +33,7 @@ use RuntimeException;
  * and multipart bodies, status mapping, retries and the pool all live in the client rather
  * than in the transport.
  */
+#[Group('psr18')]
 class Psr18TransportTest extends TestCase
 {
 
@@ -419,5 +421,26 @@ class Psr18TransportTest extends TestCase
         self::assertInstanceOf(Psr17Factory::class, Psr18Transport::discoverFactory());
 
     }
+
+    public function testPsr18PoolReportsThrowingClientAsError(): void
+    {
+
+        $failing = new class implements ClientInterface {
+            public function sendRequest(RequestInterface $request): ResponseInterface
+            {
+
+                throw new RuntimeException('socket closed');
+
+            }
+        };
+        $client = new APIClient('t', Psr18Transport::create($failing), new RetryPolicy(maxAttempts: 1, jitterFactor: 0, sleep: fn() => null));
+
+        $results = $client->executePool([$client->lists->get('L1', returnRequest: true)]);
+        self::assertInstanceOf(ConnectionException::class, $results[0]);
+        self::assertSame('socket closed', $results[0]->getPrevious()->getMessage());
+
+    }
+
+    // endregion
 
 }

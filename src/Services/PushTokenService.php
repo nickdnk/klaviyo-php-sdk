@@ -19,6 +19,17 @@ use nickdnk\Klaviyo\Services\Traits\HasList;
 use nickdnk\Klaviyo\Services\Traits\HasRelationships;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * Push tokens are the device registrations a profile can be reached at, also listed by
+ * {@see ProfileService::pushTokens()}.
+ *
+ * - Tokens are meant to be registered by Klaviyo's iOS and Android SDKs; {@see self::create()}
+ *   exists to migrate tokens from another platform and needs the push entitlement, answering 403
+ *   without it.
+ * - There is no update endpoint: create the token again to change its state.
+ *
+ * @link https://developers.klaviyo.com/en/reference/profiles_api_overview
+ */
 class PushTokenService extends BaseService
 {
 

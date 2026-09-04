@@ -29,13 +29,13 @@ use nickdnk\Klaviyo\Resources\Shared\IdentifiableResource;
 use nickdnk\Klaviyo\Resources\Shared\Profile;
 use nickdnk\Klaviyo\Resources\TypeRegistry;
 use nickdnk\Klaviyo\Services\BaseService;
-use nickdnk\Klaviyo\Services\BulkJobs;
 use nickdnk\Klaviyo\Services\Traits\HasBulkJobs;
 use nickdnk\Klaviyo\Services\Traits\HasRelationships;
 use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use ReflectionMethod;
+use nickdnk\Klaviyo\Exceptions\ClientException;
 
 /**
  * Covers the service-layer plumbing every Klaviyo service is built from: the Query
@@ -538,14 +538,33 @@ class ServiceInfrastructureTest extends TestCase
 
     }
 
-    public function testBulkJobsAccessorIsMemoisedPerPath(): void
+    /**
+     * The bulk-job helpers take the family path as an argument, so one service can host several
+     * families. Each helper builds its own path shape from it, and the paginated ones follow a
+     * `next` link verbatim instead of rebuilding the path.
+     */
+    public function testBulkJobHelpersBuildPathsPerFamily(): void
     {
 
-        $service = self::stubService(fn() => null);
+        $service = self::stubService(fn() => ['data' => null, 'links' => null]);
+        $query = (new Query())->include('lists');
 
-        self::assertSame($service->jobs('a-jobs'), $service->jobs('a-jobs'));
-        self::assertNotSame($service->jobs('a-jobs'), $service->jobs('b-jobs'));
-        self::assertInstanceOf(BulkJobs::class, $service->jobs('a-jobs'));
+        $service->jobList('a-jobs', $query);
+        $service->jobList('b-jobs', $query, 'https://a.klaviyo.com/api/b-jobs?page%5Bcursor%5D=c2');
+        $service->jobGet('a-jobs', 'J1', $query);
+        $service->jobRelated('b-jobs', 'J2', 'profiles');
+        $service->jobRelatedIds('b-jobs', 'J2', 'profiles', next: 'https://a.klaviyo.com/api/next');
+
+        self::assertSame(
+            [
+                ['GET', 'a-jobs', ['include' => 'lists']],
+                ['GET', 'https://a.klaviyo.com/api/b-jobs?page%5Bcursor%5D=c2', null],
+                ['GET', 'a-jobs/J1', ['include' => 'lists']],
+                ['GET', 'b-jobs/J2/profiles', null],
+                ['GET', 'https://a.klaviyo.com/api/next', null],
+            ],
+            array_map(static fn(array $call) => [$call[0], $call[1], $call[3]], $service->calls)
+        );
 
     }
 
@@ -686,10 +705,31 @@ class ServiceInfrastructureTest extends TestCase
 
             }
 
-            public function jobs(string $path): BulkJobs
+            public function jobList(string $path, ?Query $query = null, ?string $next = null): array|RequestInterface
             {
 
-                return $this->bulkJobs($path);
+                return $this->bulkJobList($path, $query, $next);
+
+            }
+
+            public function jobGet(string $path, string $jobId, ?Query $query = null): IdentifiableResource|RequestInterface|null
+            {
+
+                return $this->bulkJobGet($path, $jobId, $query);
+
+            }
+
+            public function jobRelated(string $path, string $jobId, string $relation, ?Query $query = null, ?string $next = null): array|RequestInterface
+            {
+
+                return $this->bulkJobRelated($path, $jobId, $relation, $query, $next);
+
+            }
+
+            public function jobRelatedIds(string $path, string $jobId, string $relation, ?Query $query = null, ?string $next = null): array|RequestInterface
+            {
+
+                return $this->bulkJobRelatedIds($path, $jobId, $relation, $query, $next);
 
             }
 
@@ -701,6 +741,108 @@ class ServiceInfrastructureTest extends TestCase
             }
 
         };
+
+    }
+
+
+    /**
+     * HasDelete: a 404 is swallowed (deleting something already gone is not an error), other 4xx
+     * propagate, and returnRequest hands back the DELETE without sending it.
+     */
+    public function testDeleteSwallows404ButNotOtherErrors(): void
+    {
+
+        $mock = new MockHandler([
+            Fixtures::response('delete_list.204'),
+            new Response(404, [], json_encode(['errors' => [['detail' => 'not found']]])),
+            new Response(403, [], json_encode(['errors' => [['detail' => 'forbidden']]])),
+        ]);
+        $client = APIClient::withApiKey('pk', GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
+
+        self::assertNull($client->lists->delete('L1'));
+        self::assertSame('DELETE', $mock->getLastRequest()->getMethod());
+        self::assertNull($client->lists->delete('gone'), '404 on delete is treated as done');
+
+        try {
+            $client->lists->delete('forbidden');
+            self::fail('403 must propagate');
+        } catch (\nickdnk\Klaviyo\Exceptions\ClientException $e) {
+            self::assertSame(403, $e->getHttpStatus());
+        }
+
+        $request = $client->lists->delete('L2', returnRequest: true);
+        self::assertSame('DELETE', $request->getMethod());
+        self::assertSame('/api/lists/L2', $request->getUri()->getPath());
+        self::assertSame(0, $mock->count());
+
+    }
+
+    public function testAccountGet(): void
+    {
+
+        $mock = new MockHandler([Fixtures::response('get_account.200'), Fixtures::response('get_account.404')]);
+        $client = APIClient::withApiKey('pk', GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
+
+        $account = $client->accounts->get('WBhXHN', (new Query())->fields('account', 'timezone'));
+        self::assertSame('/api/accounts/WBhXHN', $mock->getLastRequest()->getUri()->getPath());
+        self::assertSame('fields%5Baccount%5D=timezone', $mock->getLastRequest()->getUri()->getQuery());
+        self::assertInstanceOf(\nickdnk\Klaviyo\Resources\Response\Account::class, $account);
+        self::assertSame('WBhXHN', $account->id);
+        self::assertNotNull($account->timezone);
+
+        self::assertNull($client->accounts->get('NOPE01'));
+
+    }
+
+    public function testFilterAllNeedsAtLeastOneFilter(): void
+    {
+
+        $this->expectException(InvalidArgumentException::class);
+        Filter::all();
+
+    }
+
+
+    public function testNon404ErrorsPropagateFromOneLookups(): void
+    {
+
+        $client = self::client(new MockHandler(array_fill(0, 3, new Response(403, [], json_encode(['errors' => [['detail' => 'nope']]])))));
+
+        foreach ([
+            fn() => $client->campaigns->getRecipientEstimation('c1'),
+            fn() => $client->profiles->getBulkImportJob('j1'),
+            fn() => $client->events->profile('e1'),
+        ] as $call) {
+            try {
+                $call();
+                self::fail('403 must propagate');
+            } catch (ClientException $e) {
+                self::assertSame(403, $e->getHttpStatus());
+            }
+        }
+
+    }
+
+
+    public function testToOneRelationLookupsHonourReturnRequest(): void
+    {
+
+        $mock = new MockHandler();
+        $request = self::client($mock)->events->profile('e1', returnRequest: true);
+        self::assertSame('/api/events/e1/profile', $request->getUri()->getPath());
+        self::assertNull($mock->getLastRequest(), 'returnRequest sends nothing');
+
+    }
+
+
+    public function testBulkJobSubmitReturnsThePreparedRequest(): void
+    {
+
+        $mock = new MockHandler();
+        $request = self::client($mock)->profiles->bulkImport(new RequestBulkImportJob([]), returnRequest: true);
+        self::assertSame('POST', $request->getMethod());
+        self::assertSame('/api/profile-bulk-import-jobs', $request->getUri()->getPath());
+        self::assertNull($mock->getLastRequest(), 'returnRequest sends nothing');
 
     }
 

@@ -17,10 +17,14 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Product reviews collected by Klaviyo Reviews. Reviews are written by customers, so the API
- * is read plus moderation: {@see self::update()} moves a review's `status` between pending,
- * published, unpublished, featured and rejected. Both read endpoints accept
- * `include=event` to embed the event the review came in on.
+ * Product reviews collected by Klaviyo Reviews.
+ *
+ * - Reviews are written by customers, so the API is read plus moderation:
+ *   {@see self::update()} moves a review's `status` between pending, published, unpublished,
+ *   featured and rejected.
+ * - Both read endpoints accept `include=event` to embed the event the review arrived on.
+ *
+ * @link https://developers.klaviyo.com/en/reference/reviews_api_overview
  */
 class ReviewService extends BaseService
 {

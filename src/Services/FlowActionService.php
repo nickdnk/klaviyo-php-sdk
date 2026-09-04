@@ -20,10 +20,14 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * The individual steps of a flow. Actions are reachable on their own ids only; the list of a
- * flow's actions lives on {@see FlowService::flowActions()}.
+ * The individual steps of a flow: sends, delays, conditional splits and profile updates.
  *
- * `delete()` (DELETE /api/flow-actions/{id}, delete_flow_action) comes from {@see HasDelete}.
+ * - An action is addressed by its own id; the actions of a flow are listed by
+ *   {@see FlowService::flowActions()}.
+ * - The `action_type` filter uses upper snake case (`SEND_EMAIL`, `TIME_DELAY`) while the action
+ *   definitions themselves use kebab case (`send-email`).
+ *
+ * @link https://developers.klaviyo.com/en/reference/flows_api_overview
  */
 class FlowActionService extends BaseService
 {
@@ -48,8 +52,7 @@ class FlowActionService extends BaseService
     }
 
     /**
-     * Replaces the action's definition, which is also where its status lives
-     * (`definition.data.status`).
+     * Replaces the action's definition, which is also where its status lives (`definition.data.status`).
      *
      * @link https://developers.klaviyo.com/en/reference/update_flow_action
      * @throws ClientException
@@ -67,8 +70,6 @@ class FlowActionService extends BaseService
     // region Relationships
 
     /**
-     * The flow this action belongs to.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_flow_for_flow_action
      * @throws ClientException
      * @throws ConnectionException

@@ -3,7 +3,9 @@
 
 namespace nickdnk\Klaviyo\Http;
 
+use GuzzleHttp\Psr7\HttpFactory;
 use LogicException;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -15,13 +17,13 @@ use Throwable;
  * Any PSR-18 client plus PSR-17 factories. Concurrency is sequential, since PSR-18 has no
  * asynchronous send; bulk syncs still work, they just run one request at a time.
  */
-final class Psr18Transport implements Transport
+final readonly class Psr18Transport implements Transport
 {
 
     public function __construct(
-        private readonly ClientInterface         $client,
-        private readonly RequestFactoryInterface $requestFactory,
-        private readonly StreamFactoryInterface  $streamFactory,
+        private ClientInterface         $client,
+        private RequestFactoryInterface $requestFactory,
+        private StreamFactoryInterface  $streamFactory,
     ) {}
 
     /**
@@ -44,16 +46,27 @@ final class Psr18Transport implements Transport
     }
 
     /**
+     * A PSR-17 factory found among the installed packages. Only the two implementations that
+     * expose requests and streams from one class are looked for, because that is what this
+     * returns; nyholm/psr7 comes first because a project that has Guzzle installed gets
+     * {@see GuzzleTransport} as its default and never reaches this.
+     *
+     * Any other implementation (laminas/laminas-diactoros, httpsoft/http-message, slim/psr7, …)
+     * splits the two factories across classes, so pass them to {@see self::create()} instead of
+     * relying on this. Symfony's `Psr18Client` is both factories itself and can be passed for
+     * both.
+     *
      * @return RequestFactoryInterface&StreamFactoryInterface
+     * @throws LogicException when neither package is installed
      */
     public static function discoverFactory(): RequestFactoryInterface&StreamFactoryInterface
     {
 
-        if (class_exists(\Nyholm\Psr7\Factory\Psr17Factory::class)) {
-            return new \Nyholm\Psr7\Factory\Psr17Factory();
+        if (class_exists(Psr17Factory::class)) {
+            return new Psr17Factory();
         }
-        if (class_exists(\GuzzleHttp\Psr7\HttpFactory::class)) {
-            return new \GuzzleHttp\Psr7\HttpFactory();
+        if (class_exists(HttpFactory::class)) {
+            return new HttpFactory();
         }
 
         throw new LogicException(
@@ -73,6 +86,10 @@ final class Psr18Transport implements Transport
      * PSR-18 only defines the blocking {@see ClientInterface::sendRequest()}, so `$concurrency`
      * cannot be honoured: requests go out one at a time, in order. The retry rounds and result
      * ordering in the client are unaffected.
+     *
+     * A conforming client throws nothing but {@see \Psr\Http\Client\ClientExceptionInterface},
+     * yet this catches {@see Throwable}: one request must not be able to discard the results of
+     * every other request in the batch.
      */
     public function sendConcurrently(iterable $requests, int $concurrency, callable $onResponse, callable $onError): void
     {

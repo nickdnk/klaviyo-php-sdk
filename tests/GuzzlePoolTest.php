@@ -56,7 +56,8 @@ class GuzzlePoolTest extends TestCase
             Utils::queue()->add(function () use ($promise, $path) {
                 $this->inFlight--;
                 $answers = &$this->script[$path];
-                $promise->resolve($answers ? array_shift($answers) : self::ok(basename($path)));
+                $next = $answers ? array_shift($answers) : self::ok(basename($path));
+                $next instanceof \Throwable ? $promise->reject($next) : $promise->resolve($next);
             });
 
             return $promise;
@@ -129,6 +130,28 @@ class GuzzlePoolTest extends TestCase
         self::assertSame(['send p1', 'send p2', 'send p3', 'send p1', 'send p2', 'send p3'], $this->events);
         self::assertSame(3, $this->maxInFlight, 'first round: 3 in flight');
         self::assertSame(1, $this->maxInFlightInRetryRound, 'retry round: one at a time');
+
+    }
+
+
+    public function testNetworkFailuresAreRetriedThenReportedAsConnectionExceptions(): void
+    {
+
+        $client = $this->client();
+        $this->script['/api/profiles/p1'] = [
+            new \GuzzleHttp\Exception\ConnectException('reset', new \GuzzleHttp\Psr7\Request('GET', '/api/profiles/p1')),
+            self::ok('p1'),
+        ];
+        $this->script['/api/profiles/p2'] = array_fill(0, 10, new \GuzzleHttp\Exception\ConnectException('down', new \GuzzleHttp\Psr7\Request('GET', '/api/profiles/p2')));
+
+        $results = $client->executePool([
+            $client->profiles->get('p1', returnRequest: true),
+            $client->profiles->get('p2', returnRequest: true),
+        ], concurrency: 2);
+
+        self::assertInstanceOf(Profile::class, $results[0], 'one transient failure, retried, succeeded');
+        self::assertInstanceOf(\nickdnk\Klaviyo\Exceptions\ConnectionException::class, $results[1], 'persistent failure surfaces after the retry budget');
+        self::assertSame('down', $results[1]->getPrevious()->getMessage());
 
     }
 

@@ -15,10 +15,13 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Source mappings — how one data source's raw payload projects onto an object schema's
- * properties and linkages. A mapping is created with its schema
- * ({@see ObjectSchemaService::create()}) and reached from it through
- * {@see ObjectSchemaService::sourceMapping()}.
+ * A source mapping is how one data source's raw payload projects onto an object schema's
+ * properties and linkages.
+ *
+ * A mapping is created together with its schema ({@see ObjectSchemaService::create()}) and
+ * reached from it through {@see ObjectSchemaService::sourceMapping()}.
+ *
+ * @link https://developers.klaviyo.com/en/reference/custom_objects_api_overview
  */
 class SourceMappingService extends BaseService
 {

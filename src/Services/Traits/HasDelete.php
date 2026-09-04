@@ -15,6 +15,9 @@ trait HasDelete
     abstract protected function apiPath(): string;
 
     /**
+     * A 404 is swallowed: deleting a resource that is already gone leaves you where you wanted to
+     * be, so this answers null either way. Every other error status throws.
+     *
      * @throws ClientException
      * @throws ConnectionException
      * @throws OAuthException

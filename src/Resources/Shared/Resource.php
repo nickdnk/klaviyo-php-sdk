@@ -98,10 +98,11 @@ abstract class Resource implements JsonSerializable, ArrayAccess
                     ? array_map(fn($entry) => is_array($entry) ? $class::from($entry) : $entry, $value)
                     : $class::from($value);
             }
-            // Written through ArrayAccess, not `$instance->$key`: inside this class's own scope a
-            // property write to an attribute literally named `data` would land on the private
-            // storage array itself instead of in it.
-            $instance[$key] = $value;
+            // Written into the storage array directly rather than through `$instance->$key` or
+            // ArrayAccess: a property write for an attribute literally named `data` would replace
+            // the storage array itself, and hydration should not be subject to the write rules that
+            // apply to callers (an identifier, for instance, is read-only once constructed).
+            $instance->data[$key] = $value;
         }
 
         return $instance;

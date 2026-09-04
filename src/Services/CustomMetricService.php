@@ -22,10 +22,12 @@ use nickdnk\Klaviyo\Services\Traits\HasUpdate;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Custom metrics: account-defined aggregations over one or more source metrics.
- * `delete_custom_metric` is {@see HasDelete::delete()}.
+ * Custom metrics are account-defined aggregations over one or more source metrics, used by
+ * reports and by the mapped metric slots on {@see MappedMetricService}.
  *
- * @link https://developers.klaviyo.com/en/reference/delete_custom_metric
+ * They are not supported by {@see MetricService::aggregates()}, which only queries real metrics.
+ *
+ * @link https://developers.klaviyo.com/en/reference/custom_metrics_api_overview
  */
 class CustomMetricService extends BaseService
 {
@@ -97,8 +99,6 @@ class CustomMetricService extends BaseService
     // region Relationships
 
     /**
-     * The source metrics this custom metric aggregates.
-     *
      * @link https://developers.klaviyo.com/en/reference/get_metrics_for_custom_metric
      * @return array{data: Metric[], links: ?PaginationLinks}|RequestInterface
      * @throws ClientException
