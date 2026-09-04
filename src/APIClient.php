@@ -898,8 +898,16 @@ class APIClient
      *
      * Retries follow the same {@see RetryPolicy} as single sends, run as further rounds:
      * after a round completes, every request that got a retryable status or network error is
-     * resent together after the longest requested delay. Only the failed requests are kept
-     * between rounds, so the memory contract below holds.
+     * resent after the longest requested delay. Retry rounds run one request at a time: the
+     * usual cause is a 429 from exceeding the endpoint's burst limit, and resending the failed
+     * requests concurrently would trip it again (observed live against `/api/accounts`, whose
+     * burst limit is 1/s: five concurrent sends failed one request outright after ten 429 rounds;
+     * with sequential retry rounds all ten succeed). Only the failed requests are kept between rounds, so the memory
+     * contract below holds.
+     *
+     * Choose `$concurrency` at or below the endpoint's burst limit (see
+     * {@see RateLimit::burstLimit()} on a previous response); anything above it only produces
+     * 429s and retry sleeps.
      *
      * Accepts an iterable so callers can pass a generator. With a generator, request objects
      * (which can be huge for bulk subscribe / bulk import JSON bodies) are constructed lazily
@@ -922,7 +930,7 @@ class APIClient
 
             $this->transport->sendConcurrently(
                 $pending,
-                $concurrency,
+                $attempt === 1 ? $concurrency : 1,
                 function ($key, RequestInterface $request, ResponseInterface $response) use (&$results, &$retryQueue, &$longestDelay, $attempt) {
                     $delay = $this->retry->delayForResponse($response, $attempt);
                     if ($delay !== null) {

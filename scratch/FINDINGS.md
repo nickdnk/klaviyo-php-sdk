@@ -179,6 +179,17 @@ Catalogs, coupons, forms, custom objects
 - Web-feed `name` must match `^[0-9_A-z]+$`; `status` is null until the first poll.
 - Object types: filter only `equals(namespace,…)`; ingestion-log endpoints are cursor-only.
 
+## 5b. Pool behaviour (verified live, after the run)
+
+- Concurrency is real on the Guzzle transport: 10 × `profiles.list` took 2.6 s at concurrency 1, 0.5 s at 5, 0.3 s at 10.
+  `executePoolLazy` builds each request right before the pool sends it and never exceeds `concurrency` in flight
+  (`GuzzlePoolTest`).
+- Concurrency above an endpoint's burst limit is counter-productive: `/api/accounts` is XS tier (1/s, 15/min); 10 requests at
+  concurrency 5 took 22–57 s and one request exhausted its 10 attempts because every retry round re-burst the failed requests
+  together. Fix: retry rounds now run one request at a time → 9.4 s, 10/10 ok.
+- `RateLimit-Limit` is a structured header (`10, 10;w=1, 150;w=60`, sometimes with a daily `w=86400` window); the first parser
+  treated it as non-numeric and reported `limit = null`. Now parsed into `limit`, `windows` and `burstLimit()`.
+
 ## 6. Upstream issues worth reporting to Klaviyo
 
 1. `Klaviyo-Timestamp` webhook header carries local time labelled GMT (5 h off).

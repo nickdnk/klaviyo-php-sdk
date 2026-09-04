@@ -400,6 +400,14 @@ APIClient::assertNoExceptions($results);
 `executePoolLazy($items, $toRequest)` does the same but builds each request just before it is sent. Use it for large
 batches to keep memory flat.
 
+Two things to know when choosing `concurrency`:
+
+- Keep it at or below the endpoint's burst limit. Klaviyo's tiers range from 1 to 350 requests per second; going above
+  only produces 429s and retry sleeps. `$client->getLastRateLimit()?->burstLimit()` reports the burst limit of the last
+  endpoint called.
+- Requests that come back 429/503 or fail on the network are retried in a later round, one at a time, so the retry
+  cannot trip the burst limit again. Non-retryable errors stay in their slot as exception objects.
+
 ### Retries and rate limits
 
 The client retries these on its own:
@@ -417,9 +425,12 @@ use nickdnk\Klaviyo\Http\RetryPolicy;
 
 $client = APIClient::withApiKey('pk_...', retry: new RetryPolicy(maxAttempts: 5, baseDelaySeconds: 1.0, maxDelaySeconds: 20.0));
 
-if ($client->getLastRateLimit()?->isNearlyExhausted(5)) {   // RateLimit-Limit / -Remaining / -Reset headers
-    sleep($client->getLastRateLimit()->resetSeconds ?? 1);
+$limits = $client->getLastRateLimit();          // RateLimit-Limit / -Remaining / -Reset headers of the last response
+if ($limits?->isNearlyExhausted(5)) {
+    sleep($limits->resetSeconds ?? 1);
 }
+$limits?->burstLimit();                          // e.g. 75 for /api/profiles, 1 for /api/accounts
+$limits?->windows;                               // e.g. [1 => 75, 60 => 750]
 ```
 
 ## Transports
