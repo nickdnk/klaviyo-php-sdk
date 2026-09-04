@@ -46,15 +46,14 @@ final readonly class Psr18Transport implements Transport
     }
 
     /**
-     * A PSR-17 factory found among the installed packages. Only the two implementations that
-     * expose requests and streams from one class are looked for, because that is what this
-     * returns; nyholm/psr7 comes first because a project that has Guzzle installed gets
-     * {@see GuzzleTransport} as its default and never reaches this.
+     * A PSR-17 factory found among the installed packages. Only nyholm/psr7 and guzzlehttp/psr7
+     * are looked for, because they are the implementations that expose requests and streams from
+     * one class, which is what this returns; nyholm comes first because a project with Guzzle
+     * installed defaults to {@see GuzzleTransport} and never reaches this.
      *
-     * Any other implementation (laminas/laminas-diactoros, httpsoft/http-message, slim/psr7, …)
-     * splits the two factories across classes, so pass them to {@see self::create()} instead of
-     * relying on this. Symfony's `Psr18Client` is both factories itself and can be passed for
-     * both.
+     * Every other implementation (laminas-diactoros, httpsoft/http-message, slim/psr7, …) splits
+     * the two factories across classes, so pass those to {@see self::create()} instead. Symfony's
+     * `Psr18Client` is both factories itself and can be passed for both.
      *
      * @return RequestFactoryInterface&StreamFactoryInterface
      * @throws LogicException when neither package is installed
@@ -84,8 +83,7 @@ final readonly class Psr18Transport implements Transport
 
     /**
      * PSR-18 only defines the blocking {@see ClientInterface::sendRequest()}, so `$concurrency`
-     * cannot be honoured: requests go out one at a time, in order. The retry rounds and result
-     * ordering in the client are unaffected.
+     * cannot be honoured: requests go out one at a time, in order.
      *
      * A conforming client throws nothing but {@see \Psr\Http\Client\ClientExceptionInterface},
      * yet this catches {@see Throwable}: one request must not be able to discard the results of

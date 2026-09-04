@@ -3,22 +3,40 @@
  * Diffs two Klaviyo OpenAPI documents: operations, their query parameters, and the attributes of
  * every resource schema. Use it when bumping APIClient::API_REVISION.
  *
- *   php scratch/spec-diff.php old-stable.json new-stable.json
- *
- * Klaviyo publishes the document at
- * https://raw.githubusercontent.com/klaviyo/openapi/<git-ref>/openapi/stable.json — keep a copy of the
- * revision the SDK is pinned to (scratch/openapi/ is git-ignored) or fetch it from the tag/commit that
- * carried it.
+ *   php scratch/spec-diff.php                    pinned document for API_REVISION vs. klaviyo/openapi main
+ *   php scratch/spec-diff.php --save             same, and pin main's commit as api_versions/<its revision>.url
+ *   php scratch/spec-diff.php old.json new.json  any two local documents
  */
 declare(strict_types=1);
 
-[$oldFile, $newFile] = [$argv[1] ?? null, $argv[2] ?? null];
-if (!$oldFile || !$newFile || !is_file($oldFile) || !is_file($newFile)) {
-    fwrite(STDERR, "usage: php scratch/spec-diff.php <old stable.json> <new stable.json>\n");
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/lib/spec.php';
+
+use nickdnk\Klaviyo\APIClient;
+
+$files = array_values(array_filter(array_slice($argv, 1), fn($a) => $a !== '--save'));
+$save = in_array('--save', $argv, true);
+
+if (count($files) === 2 && is_file($files[0]) && is_file($files[1])) {
+    $old = json_decode(file_get_contents($files[0]), true);
+    $new = json_decode(file_get_contents($files[1]), true);
+} elseif ($files === []) {
+    $old = Smoke\loadSpec(APIClient::API_REVISION);
+    ['url' => $url, 'spec' => $new] = Smoke\fetchLatestSpec();
+    $newRevision = $new['info']['version'] ?? throw new RuntimeException('fetched document has no info.version');
+    if ($newRevision === APIClient::API_REVISION) {
+        echo "Klaviyo main is still revision {$newRevision}; nothing to diff.\n";
+        exit(0);
+    }
+    if ($save) {
+        $pin = __DIR__ . "/api_versions/{$newRevision}.url";
+        file_put_contents($pin, $url . "\n");
+        fwrite(STDERR, "pinned {$pin} → {$url}\n");
+    }
+} else {
+    fwrite(STDERR, "usage: php scratch/spec-diff.php [--save] | <old.json> <new.json>\n");
     exit(1);
 }
-$old = json_decode(file_get_contents($oldFile), true);
-$new = json_decode(file_get_contents($newFile), true);
 printf("%s → %s\n\n", $old['info']['version'] ?? '?', $new['info']['version'] ?? '?');
 
 $ops = static function (array $spec): array {

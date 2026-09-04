@@ -11,6 +11,7 @@ use nickdnk\Klaviyo\Exceptions\ClientException;
 use nickdnk\Klaviyo\Exceptions\OAuthException;
 use nickdnk\Klaviyo\Http\GuzzleTransport;
 use nickdnk\Klaviyo\OAuthCredentials;
+use nickdnk\Klaviyo\TokenExchange;
 use nickdnk\Klaviyo\Resources\Response\Profile as ResponseProfile;
 use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
@@ -22,19 +23,6 @@ use nickdnk\Klaviyo\Http\RetryPolicy;
 use nickdnk\Klaviyo\OAuthScope;
 use nickdnk\Klaviyo\Resources\Response\Profile;
 
-/**
- * Tests the two pieces of APIClient that have non-obvious behavior worth regression-
- * proofing:
- *   1. On 401 an OAuth client refreshes its tokens exactly once, hands the new credentials to
- *      the refresh callback and retries the request — without looping if the refreshed token
- *      is also rejected.
- *   2. A 4xx from the OAuth endpoint is turned into an OAuthException whose
- *      `isInvalidGrant()` flag lets callers detect a revoked or expired refresh token.
- *
- * Everything else APIClient does (wire format, hydration, exception mapping) is either
- * already covered by KlaviyoResourceTest or is shallow enough that a mocked-Guzzle test
- * would mostly just re-state the implementation.
- */
 class APIClientTest extends TestCase
 {
 
@@ -51,16 +39,6 @@ class APIClientTest extends TestCase
 
     }
 
-    /**
-     * When the API returns 401, an OAuth client refreshes its tokens and retries the request.
-     * If the retry is ALSO 401 (e.g. the refresh itself produced a bad token), it must surface
-     * as a ClientException rather than loop back into another refresh.
-     *
-     * We queue 401, token response, 401 so the retry hits the guard. Asserting
-     * `$refreshCalls === 1` proves the guard held — without it, the second 401 would trigger a
-     * second refresh and we'd see 2+ calls (or MockHandler would exhaust and throw a different
-     * error).
-     */
     public function testApiRequest_on401_refreshesOnce_doesNotLoop(): void
     {
 
@@ -75,15 +53,15 @@ class APIClientTest extends TestCase
         $threw = null;
 
         try {
-            APIClient::withTransport(GuzzleTransport::fromHandlerStack($stack), function () use (&$refreshCalls) {
-                $client = APIClient::withOAuth(
-                    new OAuthCredentials('stale_token', 'rt1', time() + 3600), 'cid', 'sec',
-                    function (OAuthCredentials $c) use (&$refreshCalls) {
-                        $refreshCalls++;
-                    }
-                );
-                $client->profiles->get('prof_1');
-            });
+            $client = APIClient::withOAuth(
+                new OAuthCredentials('stale_token', 'rt1', time() + 3600), 'cid', 'sec',
+                function (OAuthCredentials $c, TokenExchange $exchange) use (&$refreshCalls) {
+                    $refreshCalls++;
+                    return $exchange($c);
+                },
+                GuzzleTransport::fromHandlerStack($stack)
+            );
+            $client->profiles->get('prof_1');
         } catch (ClientException $e) {
             $threw = $e;
         }
@@ -94,13 +72,6 @@ class APIClientTest extends TestCase
 
     }
 
-    /**
-     * Happy-path companion to the guard test above: on a 401 followed by a 200, the client
-     * must refresh through the token endpoint, hand the rotated credentials to the callback
-     * (so the application can persist them) and retry with the new access token. If the retry
-     * succeeds but the callback never fires, storage never learns about the rotated tokens and
-     * the next request restarts the refresh dance.
-     */
     public function testApiRequest_on401_firesRefreshCallbackBeforeRetrying(): void
     {
 
@@ -119,18 +90,20 @@ class APIClientTest extends TestCase
         $stack->push(\GuzzleHttp\Middleware::history($sent));
 
         $received = null;
-        $client = null;
+        $current = null;
+        $initial = new OAuthCredentials('stale_token', 'rt1', time() + 3600);
 
-        $result = APIClient::withTransport(GuzzleTransport::fromHandlerStack($stack), function () use (&$received, &$client) {
-            $client = APIClient::withOAuth(
-                new OAuthCredentials('stale_token', 'rt1', time() + 3600), 'cid', 'sec',
-                function (OAuthCredentials $c) use (&$received) {
-                    $received = $c;
-                }
-            );
-            return $client->profiles->get('prof_1');
-        });
+        $client = APIClient::withOAuth(
+            $initial, 'cid', 'sec',
+            function (OAuthCredentials $c, TokenExchange $exchange) use (&$received, &$current) {
+                $current = $c;
+                return $received = $exchange($c);
+            },
+            GuzzleTransport::fromHandlerStack($stack)
+        );
+        $result = $client->profiles->get('prof_1');
 
+        self::assertSame($initial, $current, 'Callback receives the credentials the client currently holds.');
         self::assertInstanceOf(OAuthCredentials::class, $received, 'Refresh callback must fire before the retry.');
         self::assertSame('fresh', $received->accessToken);
         self::assertSame('rt2', $received->refreshToken);
@@ -147,10 +120,6 @@ class APIClientTest extends TestCase
 
     }
 
-    /**
-     * A bearer-token client built with the constructor has no refresh token, so a 401 is final
-     * and surfaces straight away as a ClientException.
-     */
     public function testApiRequest_on401_withoutOAuth_isFinal(): void
     {
 
@@ -160,17 +129,10 @@ class APIClientTest extends TestCase
 
         $this->expectException(ClientException::class);
 
-        APIClient::withTransport(GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)), function () {
-            (new APIClient('stale_token'))->profiles->get('prof_1');
-        });
+        APIClient::withAccessToken('stale_token', GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)))->profiles->get('prof_1');
 
     }
 
-    /**
-     * A refresh that fails with `invalid_grant` (revoked or expired refresh token) propagates
-     * out of the API call as an OAuthException, so the application can mark the connection as
-     * needing re-authorization. The callback must not fire for a failed refresh.
-     */
     public function testApiRequest_on401_refreshFailure_propagatesOAuthException(): void
     {
 
@@ -179,41 +141,59 @@ class APIClientTest extends TestCase
             new Response(400, [], json_encode(['error' => 'invalid_grant', 'error_description' => 'revoked'])),
         ]);
 
-        $callbackFired = false;
+        $initial = new OAuthCredentials('stale_token', 'rt1', time() + 3600);
         $threw = null;
 
+        $client = APIClient::withOAuth(
+            $initial, 'cid', 'sec',
+            fn(OAuthCredentials $c, TokenExchange $exchange) => $exchange($c),
+            GuzzleTransport::fromHandlerStack(HandlerStack::create($mock))
+        );
+
         try {
-            APIClient::withTransport(GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)), function () use (&$callbackFired) {
-                APIClient::withOAuth(
-                    new OAuthCredentials('stale_token', 'rt1', time() + 3600), 'cid', 'sec',
-                    function () use (&$callbackFired) {
-                        $callbackFired = true;
-                    }
-                )->profiles->get('prof_1');
-            });
+            $client->profiles->get('prof_1');
         } catch (OAuthException $e) {
             $threw = $e;
         }
 
         self::assertInstanceOf(OAuthException::class, $threw);
         self::assertTrue($threw->isInvalidGrant());
-        self::assertFalse($callbackFired, 'Callback must only receive successfully refreshed credentials.');
+        self::assertSame($initial, $client->getCredentials(), 'A failed exchange leaves the client on its old credentials.');
         self::assertSame(0, $mock->count());
 
     }
 
-    /**
-     * refreshCredentials() is the proactive counterpart to the 401 path: same token request,
-     * same callback, and the client uses the new token from then on. setCredentials() swaps
-     * in tokens obtained elsewhere without touching the callback.
-     */
-    public function testRefreshCredentials_andSetCredentials(): void
+    public function testApiRequest_on401_callbackMayReturnStoredCredentialsWithoutExchanging(): void
+    {
+
+        $sent = [];
+        $stack = HandlerStack::create(new MockHandler([
+            new Response(401, [], json_encode(['errors' => [['detail' => 'token expired']]])),
+            new Response(200, [], json_encode(['data' => ['type' => 'profile', 'id' => 'prof_1', 'attributes' => []]])),
+        ]));
+        $stack->push(\GuzzleHttp\Middleware::history($sent));
+
+        $stored = new OAuthCredentials('from_other_process', 'rt9', time() + 3600);
+
+        $client = APIClient::withOAuth(
+            new OAuthCredentials('stale_token', 'rt1', time() + 3600), 'cid', 'sec',
+            fn(OAuthCredentials $c, TokenExchange $exchange) => $stored,
+            GuzzleTransport::fromHandlerStack($stack)
+        );
+        $client->profiles->get('prof_1');
+
+        self::assertCount(2, $sent, 'No token request when the callback returns stored credentials.');
+        self::assertSame('Bearer from_other_process', $sent[1]['request']->getHeaderLine('Authorization'));
+        self::assertSame($stored, $client->getCredentials());
+
+    }
+
+    public function testRefreshCredentials(): void
     {
 
         $sent = [];
         $stack = HandlerStack::create(new MockHandler([
             self::tokenResponse('fresh', 'rt2'),
-            new Response(200, [], json_encode(['data' => ['type' => 'profile', 'id' => 'prof_1', 'attributes' => []]])),
             new Response(200, [], json_encode(['data' => ['type' => 'profile', 'id' => 'prof_1', 'attributes' => []]])),
         ]));
         $stack->push(\GuzzleHttp\Middleware::history($sent));
@@ -222,48 +202,32 @@ class APIClientTest extends TestCase
         $initial = new OAuthCredentials('stale_token', 'rt1', time() - 10);
         self::assertTrue($initial->isExpired());
 
-        APIClient::withTransport(GuzzleTransport::fromHandlerStack($stack), function () use (&$received, $initial) {
-            $client = APIClient::withOAuth($initial, 'cid', 'sec', function (OAuthCredentials $c) use (&$received) {
-                $received[] = $c;
-            });
+        $client = APIClient::withOAuth($initial, 'cid', 'sec', function (OAuthCredentials $c, TokenExchange $exchange) use (&$received) {
+            return $received[] = $exchange($c);
+        }, GuzzleTransport::fromHandlerStack($stack));
 
-            $fresh = $client->refreshCredentials();
-            self::assertSame('fresh', $fresh->accessToken);
-            self::assertFalse($fresh->isExpired());
-            self::assertSame([$fresh], $received);
-            $client->profiles->get('prof_1');
-
-            $client->setCredentials(new OAuthCredentials('elsewhere', 'rt3', time() + 3600));
-            $client->profiles->get('prof_1');
-            self::assertCount(1, $received, 'setCredentials() must not invoke the callback.');
-        });
+        $fresh = $client->refreshCredentials();
+        self::assertSame('fresh', $fresh->accessToken);
+        self::assertFalse($fresh->isExpired());
+        self::assertSame([$fresh], $received);
+        $client->profiles->get('prof_1');
 
         self::assertSame('https://a.klaviyo.com/oauth/token', (string)$sent[0]['request']->getUri());
         self::assertSame('Bearer fresh', $sent[1]['request']->getHeaderLine('Authorization'));
-        self::assertSame('Bearer elsewhere', $sent[2]['request']->getHeaderLine('Authorization'));
 
     }
 
     public function testRefreshCredentials_requiresOAuthClient(): void
     {
 
-        $client = new APIClient('tkn', GuzzleTransport::fromHandlerStack(HandlerStack::create(new MockHandler([]))));
+        $client = APIClient::withAccessToken('tkn', GuzzleTransport::fromHandlerStack(HandlerStack::create(new MockHandler([]))));
 
         self::assertNull($client->getCredentials());
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $client->refreshCredentials();
 
     }
 
-    /**
-     * Klaviyo enforces a 10 r/s burst / 150 r/min steady limit and replies 429 with a
-     * Retry-After header when exceeded. A bulk sync can issue dozens of requests, so we
-     * installed guzzle_retry_middleware in the APIClient handler stack to honour that
-     * header transparently. This test pins the behaviour: a 429 followed by a 200 must
-     * surface as a single successful response, with both canned replies consumed.
-     *
-     * Retry-After is set to 0 so the middleware sleeps for zero seconds in tests.
-     */
     public function testApiRequest_on429_respectsRetryAfterAndRetries(): void
     {
 
@@ -278,27 +242,14 @@ class APIClientTest extends TestCase
             ])),
         ]));
 
-        $result = APIClient::withTransport(GuzzleTransport::fromHandlerStack($stack), function () {
-            $client = new APIClient('tkn');
-            return $client->profiles->get('prof_1');
-        });
+        $result = APIClient::withAccessToken('tkn', GuzzleTransport::fromHandlerStack($stack))->profiles->get('prof_1');
 
         self::assertInstanceOf(ResponseProfile::class, $result, '429 should have been retried and yielded the 200 response.');
         self::assertSame('prof_1', $result->id);
 
     }
 
-    /**
-     * Companion to the Retry-After=0 test: when Klaviyo sets a non-zero Retry-After,
-     * the middleware must actually sleep for that duration between retries (rather than
-     * e.g. falling back to the default multiplier or ignoring the header). We queue two
-     * consecutive 429s with Retry-After: 1, then a 200, and verify wall-clock elapsed
-     * time clears the expected minimum sleep.
-     *
-     * Upper bound is generous to tolerate CI jitter; the important property is that
-     * we're NOT sleeping many seconds longer than asked (which would indicate the
-     * default_retry_multiplier is being compounded with the header).
-     */
+    /** Retry-After must be honoured verbatim, not compounded with the backoff multiplier. */
     public function testApiRequest_on429_sleepsForRetryAfterDuration(): void
     {
 
@@ -315,10 +266,7 @@ class APIClientTest extends TestCase
         ]));
 
         $start = microtime(true);
-        $result = APIClient::withTransport(GuzzleTransport::fromHandlerStack($stack), function () {
-            $client = new APIClient('tkn');
-            return $client->profiles->get('prof_1');
-        });
+        $result = APIClient::withAccessToken('tkn', GuzzleTransport::fromHandlerStack($stack))->profiles->get('prof_1');
         $elapsed = microtime(true) - $start;
 
         self::assertInstanceOf(ResponseProfile::class, $result);
@@ -336,12 +284,6 @@ class APIClientTest extends TestCase
 
     }
 
-    /**
-     * OAuthException parses Klaviyo's `error` field and exposes `isInvalidGrant()`. Callers
-     * check that flag to decide whether to mark an integration as deauthorized. If parsing
-     * regresses, deauthorization stops happening on expired refresh tokens and integrations
-     * silently break.
-     */
     public function testOAuthExceptionExposesInvalidGrantFromErrorBody(): void
     {
 
@@ -354,9 +296,9 @@ class APIClientTest extends TestCase
 
         $threw = null;
         try {
-            APIClient::withTransport(GuzzleTransport::fromHandlerStack($stack), fn() => APIClient::exchangeCodeForToken(
-                'cid', 'csecret', 'code', 'verifier', 'https://example.com/cb'
-            ));
+            APIClient::exchangeCodeForToken(
+                'cid', 'csecret', 'code', 'verifier', 'https://example.com/cb', GuzzleTransport::fromHandlerStack($stack)
+            );
         } catch (OAuthException $e) {
             $threw = $e;
         }
@@ -433,16 +375,31 @@ class APIClientTest extends TestCase
     }
 
 
-    public function testBearerClientHelpersAndGuards(): void
+    public function testUpdateAccessToken(): void
     {
 
-        $client = $this->client(new Response(200, [], json_encode(['data' => []])));
+        $mock = new MockHandler([new Response(200, [], json_encode(['data' => []]))]);
+        $client = APIClient::withAccessToken('stale', GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
         $client->updateAccessToken('fresh');
         $client->lists->list();
-        self::assertSame('Bearer fresh', $this->mock->getLastRequest()->getHeaderLine('Authorization'));
+        self::assertSame('Bearer fresh', $mock->getLastRequest()->getHeaderLine('Authorization'));
+
+    }
+
+    public function testUpdateAccessToken_rejectsOAuthAndApiKeyClients(): void
+    {
+
+        $transport = GuzzleTransport::fromHandlerStack(HandlerStack::create(new MockHandler([])));
+
+        $oauth = APIClient::withOAuth(new OAuthCredentials('a', 'r', 0), 'cid', 'sec', fn($c, $x) => $x($c), $transport);
+        try {
+            $oauth->updateAccessToken('x');
+            self::fail('OAuth client must reject updateAccessToken().');
+        } catch (LogicException) {
+        }
 
         $this->expectException(LogicException::class);
-        $client->setCredentials(new OAuthCredentials('a', 'r', 0));
+        APIClient::withApiKey('pk_x', $transport)->updateAccessToken('x');
 
     }
 
@@ -453,14 +410,14 @@ class APIClientTest extends TestCase
         $mock = new MockHandler([new Response(200, [], json_encode(['data' => []]))]);
         APIClient::setDefaultTransport(GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
         try {
-            (new APIClient('t'))->lists->list();
+            APIClient::withAccessToken('t')->lists->list();
             self::assertSame('/api/lists', $mock->getLastRequest()->getUri()->getPath());
         } finally {
             APIClient::setDefaultTransport(null);
         }
 
         // With the default cleared and Guzzle installed, a client still gets a transport of its own.
-        $client = new APIClient('t');
+        $client = APIClient::withAccessToken('t');
         self::assertInstanceOf(APIClient::class, $client);
         APIClient::setDefaultTransport(null);
 

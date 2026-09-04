@@ -22,17 +22,13 @@ use nickdnk\Klaviyo\Resources\Response\UniversalContentDefinition;
 use nickdnk\Klaviyo\Resources\Shared\AttributeBag;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Wire-format and hydration checks for the templates and template-universal-content services:
- * every operation's verb, path, query and body, and the class each response hydrates to.
- */
 class TemplateServicesTest extends TestCase
 {
 
     private static function client(MockHandler $mock): APIClient
     {
 
-        return APIClient::withTransport(GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)), fn() => new APIClient('tkn'));
+        return APIClient::withAccessToken('tkn', GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
 
     }
 
@@ -209,10 +205,7 @@ class TemplateServicesTest extends TestCase
 
     }
 
-    /**
-     * A clone without a name sends no attributes at all rather than an explicit null, so
-     * Klaviyo derives the copy's name from the source template.
-     */
+    /** No name sends no attributes at all, so Klaviyo derives the copy's name from the source. */
     public function testTemplateCloneOmitsAttributesWithoutAName(): void
     {
 

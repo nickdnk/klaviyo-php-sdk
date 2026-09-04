@@ -15,9 +15,11 @@ test account's own domain/organisation/integration key (`FIXTURE_SCRUB`, `term` 
 
 ## Refreshing
 
-1. Run the live smoke suites with recording on (`SMOKE_RECORD=1` in `scratch/.env`); they write
-   `scratch/recordings/*.jsonl`.
-2. `FIXTURE_SCRUB="<domain>,<organisation>,event:<integration key>.=event:acme." php tests/fixtures/build.php scratch/recordings --clean`
+Recordings come from the live smoke suites; the full record → build → verify procedure is in `scratch/README.md`
+("Refreshing the recorded fixtures"). Short form:
+
+1. `SMOKE_RECORD=1` in `scratch/.env`, run the suites → `scratch/recordings/*.jsonl`.
+2. `FIXTURE_SCRUB="<same value as SCRUB_TERMS>" php tests/fixtures/build.php scratch/recordings --clean`
 3. `vendor/bin/phpunit --filter RecordedResponsesTest` and fix what it reports.
 
 Each fixture records the suite and SDK call it came from under `source`.

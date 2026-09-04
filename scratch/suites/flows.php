@@ -13,7 +13,6 @@
 declare(strict_types=1);
 
 use nickdnk\Klaviyo\APIClient;
-use nickdnk\Klaviyo\Exceptions\ClientException;
 use nickdnk\Klaviyo\Filter;
 use nickdnk\Klaviyo\Query;
 use nickdnk\Klaviyo\Resources\Request\CreateFlow;

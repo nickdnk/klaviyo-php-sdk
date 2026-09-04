@@ -52,8 +52,8 @@ Klaviyo versions its API with dated revisions and keeps old revisions available 
 ```php
 use nickdnk\Klaviyo\APIClient;
 
-$client = APIClient::withApiKey('pk_...');   // private API key
-$client = new APIClient('eyJhbGci...');      // bearer token managed elsewhere, never refreshed
+$client = APIClient::withApiKey('pk_...');          // private API key
+$client = APIClient::withAccessToken('eyJhbGci...'); // bearer token managed elsewhere, never refreshed
 ```
 
 ### OAuth
@@ -62,13 +62,17 @@ $client = new APIClient('eyJhbGci...');      // bearer token managed elsewhere, 
 
 - the credentials you stored for the account,
 - your app's client id and secret,
-- a callback that stores new credentials whenever the client refreshes them.
+- a callback that produces new credentials when the current ones stop working.
 
-The callback is the only point where the SDK calls back into your code.
+The callback is the only point where the SDK calls back into your code. It receives the credentials the client holds
+and a `TokenExchange` that performs the token request against Klaviyo (it already knows your client id, secret and
+transport). It returns the credentials to continue
+with. The SDK never calls the token endpoint by itself, so the callback decides whether a refresh happens at all.
 
 ```php
 use nickdnk\Klaviyo\APIClient;
 use nickdnk\Klaviyo\OAuthCredentials;
+use nickdnk\Klaviyo\TokenExchange;
 
 // Loaded from your own storage (database, secret store, ...).
 $saved = [
@@ -81,34 +85,37 @@ $client = APIClient::withOAuth(
     new OAuthCredentials($saved['access_token'], $saved['refresh_token'], $saved['expires_at']),
     clientId: $_ENV['KLAVIYO_CLIENT_ID'],
     clientSecret: $_ENV['KLAVIYO_CLIENT_SECRET'],
-    onRefresh: function (OAuthCredentials $credentials): void {
-        // Called after every successful refresh, before the request that triggered it is retried.
+    refresh: function (OAuthCredentials $current, TokenExchange $exchange): OAuthCredentials {
+        // Called on a 401, before the request that triggered it is retried.
+        $fresh = $exchange($current);   // POST /oauth/token with the refresh token
         // Write the new values back to the same place $saved came from. The previous access token keeps working
         // until it expires, so another process still holding it is not cut off; only the stored pair changes.
         $updated = [
-            'access_token'  => $credentials->accessToken,
-            'refresh_token' => $credentials->refreshToken,   // store it even when unchanged
-            'expires_at'    => $credentials->expiresAt,      // unix timestamp
+            'access_token'  => $fresh->accessToken,
+            'refresh_token' => $fresh->refreshToken,   // store it even when unchanged
+            'expires_at'    => $fresh->expiresAt,      // unix timestamp
         ];
         // ... persist $updated
+        return $fresh;
     },
 );
 ```
 
 What happens on a 401:
 
-1. The client calls Klaviyo's token endpoint with the refresh token.
-2. Your `onRefresh` callback receives the new `OAuthCredentials`.
-3. The original request is retried once with the new access token.
+1. The client calls your `refresh` callback with the credentials it currently holds.
+2. The callback returns new `OAuthCredentials`, usually by calling `$exchange()` and persisting the result.
+3. The original request is retried once with the returned access token.
 4. If that retry is also a 401, you get a `ClientException`.
 
-If the refresh itself fails you get an `OAuthException`. Its `isInvalidGrant()` returns true when the refresh token was
-revoked or expired, meaning the user has to connect the account again.
+If `$exchange()` fails you get an `OAuthException`. Its `isInvalidGrant()` returns true when the refresh token was
+revoked or expired, meaning the user has to connect the account again. Anything the callback throws propagates out of
+the API call that triggered it.
 
 Always store the whole `OAuthCredentials` object. The access token changes on every refresh, and the refresh token may
 rotate in the future.
 
-You can also refresh ahead of time, for example before a long job:
+You can also refresh ahead of time, for example before a long job. This runs the same callback:
 
 ```php
 if ($client->getCredentials()->isExpired(graceSeconds: 120)) {
@@ -116,11 +123,28 @@ if ($client->getCredentials()->isExpired(graceSeconds: 120)) {
 }
 ```
 
-If several processes share one Klaviyo connection:
+#### Several processes sharing one connection
 
-- Put your own lock around `refreshCredentials()`.
-- After waiting on the lock, reload the credentials from storage instead of refreshing again.
-- Hand them to the client with `setCredentials()`.
+Klaviyo rotates the refresh token, so two processes refreshing the same connection at once leaves one of them with a
+dead pair. Because the callback owns the exchange, it can serialise refreshes and reuse what another process already
+stored. `$lock` and `$store` below are pseudocode for whatever your application uses (a Redis lock, a database row, ...):
+
+```php
+refresh: function (OAuthCredentials $current, TokenExchange $exchange) use ($store, $lock, $accountId): OAuthCredentials {
+    return $lock->synchronized("klaviyo-refresh:$accountId", function () use ($current, $exchange, $store, $accountId) {
+        $stored = $store->load($accountId);
+        if ($stored->accessToken !== $current->accessToken) {
+            return $stored;                 // someone else refreshed while we waited for the lock
+        }
+        $fresh = $exchange($stored);
+        $store->save($accountId, $fresh);
+        return $fresh;
+    });
+},
+```
+
+Compare access tokens rather than calling `isExpired()`: a 401 can also mean the token was revoked before its expiry,
+and a stored pair that differs from the one the client holds is fresh either way.
 
 #### Connecting an account
 
@@ -405,8 +429,63 @@ $results = $client->executePool($requests, concurrency: 5);   // Profile[] in in
 APIClient::assertNoExceptions($results);
 ```
 
-`executePoolLazy($items, $toRequest)` does the same but builds each request just before it is sent. Use it for large
-batches to keep memory flat.
+#### Building requests lazily
+
+Every prepared request carries its own encoded body, and the pool only ever holds `concurrency` of them at a time.
+Yield the requests from a generator so they are built as the pool consumes them, instead of building all of them first.
+
+```php
+use nickdnk\Klaviyo\Resources\Request\ImportProfile;
+use nickdnk\Klaviyo\Resources\Request\BulkImportJob;
+
+/** @var iterable<array{email: string, first_name: string}> $rows  a database cursor, a CSV reader, anything */
+$rows = readRowsFromSomewhere();
+$listId = 'YafG4m';
+
+$batches = (function () use ($client, $rows, $listId): Generator {
+
+    $chunk = [];
+
+    foreach ($rows as $row) {
+
+        $profile = new ImportProfile();
+        $profile->email = $row['email'];
+        $profile->first_name = $row['first_name'];
+        $chunk[] = $profile;
+
+        if (count($chunk) === 10000) {
+            // Yielded, not collected: this request exists only while the pool holds it.
+            yield $client->profiles->bulkImport(new BulkImportJob($chunk, [$listId]), returnRequest: true);
+            $chunk = [];
+        }
+
+    }
+
+    if ($chunk) {
+        yield $client->profiles->bulkImport(new BulkImportJob($chunk, [$listId]), returnRequest: true);
+    }
+
+})();
+
+$results = $client->executePool($batches, concurrency: 3);
+APIClient::assertNoExceptions($results);
+```
+
+The body has to be built inside the generator for this to help; a generator over ready-made requests saves nothing.
+`executePoolLazy($items, $toRequest)` is the same thing for shorter cases, calling `$toRequest` on each item just
+before that request is sent.
+
+```php
+$results = $client->executePoolLazy(
+    $profileIds,
+    function (string $id) use ($client) {
+        $patch = new PatchProfile($id);
+        $patch->properties = ['synced_at' => date(DATE_ATOM)];
+        return $client->profiles->update($patch, returnRequest: true);
+    },
+    concurrency: 5
+);
+```
 
 Two things to know when choosing `concurrency`:
 
@@ -459,11 +538,8 @@ $http = new Psr18Client();   // also a PSR-17 factory; pass factories explicitly
 $client = APIClient::withApiKey('pk_...', Psr18Transport::create($http, requestFactory: $http, streamFactory: $http));
 ```
 
-Two helpers exist for tests and frameworks:
-
-- `APIClient::setDefaultTransport()` sets a process-wide default transport.
-- `APIClient::withTransport($transport, $fn)` uses a transport only inside the callback. This suits tests built on
-  Guzzle's `MockHandler`.
+Every constructor and static OAuth call also accepts a transport explicitly; `APIClient::setDefaultTransport()` sets
+a process-wide fallback for the ones that don't get one.
 
 ## Webhooks
 
@@ -515,9 +591,10 @@ composer install
 composer test
 ```
 
-- `tests/fixtures/responses` holds real API responses recorded against a test account. The tests replay them.
-  `tests/fixtures/README.md` explains how to refresh them.
-- `scratch/` contains the live smoke-test tooling. It is not part of the Composer dist.
+- `tests/fixtures/responses` holds real API responses recorded against a test account; `RecordedResponsesTest` replays them
+  (`tests/fixtures/README.md`).
+- `scratch/` is the live smoke-test tooling that produces those recordings (`scratch/README.md`), plus Klaviyo behaviour
+  that is not in any docblock (`scratch/KLAVIYO_NOTES.md`). Not part of the Composer dist.
 
 ## Contributing
 

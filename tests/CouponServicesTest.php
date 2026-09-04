@@ -20,15 +20,8 @@ use nickdnk\Klaviyo\Resources\Response\CouponCodeBulkCreateJob;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Wire format for the coupon pair: `coupons` (the reusable definition) and `coupon-codes`
- * (the per-profile codes), including the coupon ↔ code relationships in both directions
- * and the `coupon-code-bulk-create-jobs` family with its hyphenated `coupon-codes`
- * attribute key.
- *
- * Responses come from the recorded fixtures in tests/fixtures/responses wherever one exists for
- * the operation, so the hydration assertions read back real Klaviyo payloads; the `FIXTURE_*`
- * ids below are the ids that corpus was recorded with. A coupon code's id is
- * `<coupon external id>-<unique code>`.
+ * The `FIXTURE_*` ids are the ids the recorded corpus was captured with. A coupon code's id
+ * is `<coupon external id>-<unique code>`.
  */
 class CouponServicesTest extends TestCase
 {
@@ -41,7 +34,7 @@ class CouponServicesTest extends TestCase
     private static function client(MockHandler $mock): APIClient
     {
 
-        return APIClient::withTransport(GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)), fn() => new APIClient('tkn'));
+        return APIClient::withAccessToken('tkn', GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
 
     }
 

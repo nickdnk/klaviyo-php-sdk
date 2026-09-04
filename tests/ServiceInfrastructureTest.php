@@ -38,10 +38,8 @@ use ReflectionMethod;
 use nickdnk\Klaviyo\Exceptions\ClientException;
 
 /**
- * Covers the service-layer plumbing every Klaviyo service is built from: the Query
- * serialiser, the list / get / update / relationship / bulk-job traits, the type registry
- * and multipart bodies. Each new service is expected to be a path string plus resource
- * classes on top of these, so the wire format is pinned here once rather than per service.
+ * The plumbing every service is built from, pinned once here rather than per service: Query,
+ * the list / get / update / relationship / bulk-job traits, the type registry, multipart.
  */
 class ServiceInfrastructureTest extends TestCase
 {
@@ -49,7 +47,7 @@ class ServiceInfrastructureTest extends TestCase
     private static function client(MockHandler $mock): APIClient
     {
 
-        return APIClient::withTransport(GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)), fn() => new APIClient('tkn'));
+        return APIClient::withAccessToken('tkn', GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
 
     }
 
@@ -306,10 +304,7 @@ class ServiceInfrastructureTest extends TestCase
 
     }
 
-    /**
-     * `links.next` already carries the full query string of the first page, so a Query
-     * passed alongside it must not be appended a second time.
-     */
+    /** `links.next` already carries the first page's query string; a Query must not be appended twice. */
     public function testListWithNextUrlFollowsItVerbatim(): void
     {
 
@@ -373,10 +368,7 @@ class ServiceInfrastructureTest extends TestCase
 
     }
 
-    /**
-     * BaseException carries HTTP status in ClientException::getHttpStatus(), never in
-     * getCode(). The 404-to-null contract must key off the former.
-     */
+    /** The status lives in getHttpStatus(), never in getCode(); the 404-to-null contract keys off it. */
     public function testGetReturnsNullOn404(): void
     {
 
@@ -538,11 +530,6 @@ class ServiceInfrastructureTest extends TestCase
 
     }
 
-    /**
-     * The bulk-job helpers take the family path as an argument, so one service can host several
-     * families. Each helper builds its own path shape from it, and the paginated ones follow a
-     * `next` link verbatim instead of rebuilding the path.
-     */
     public function testBulkJobHelpersBuildPathsPerFamily(): void
     {
 
@@ -614,10 +601,6 @@ class ServiceInfrastructureTest extends TestCase
 
     }
 
-    /**
-     * Multipart bodies must replace the client-wide JSON:API Content-Type with the boundary
-     * header while keeping every other default header (auth, revision, accept).
-     */
     public function testMultipartBodyIsSentAsFormDataWithDefaultHeadersIntact(): void
     {
 
@@ -663,8 +646,7 @@ class ServiceInfrastructureTest extends TestCase
     // endregion
 
     /**
-     * A BaseService over a recording closure, so trait behaviour that depends on the
-     * response shape (204 → null, PATCH verb for replace) can be asserted without HTTP.
+     * A BaseService over a recording closure, so trait behaviour can be asserted without HTTP.
      *
      * @param Closure(string, string, mixed, ?array, bool): mixed $respond
      */
@@ -745,10 +727,7 @@ class ServiceInfrastructureTest extends TestCase
     }
 
 
-    /**
-     * HasDelete: a 404 is swallowed (deleting something already gone is not an error), other 4xx
-     * propagate, and returnRequest hands back the DELETE without sending it.
-     */
+    /** A 404 is swallowed: deleting something already gone is not an error. */
     public function testDeleteSwallows404ButNotOtherErrors(): void
     {
 

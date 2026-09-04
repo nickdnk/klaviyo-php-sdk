@@ -18,9 +18,7 @@ final class Fixtures
     /** @var array<string, array> */
     private static array $cache = [];
 
-    /**
-     * The whole fixture: request (method, path, query) and response (status, headers, body).
-     */
+    /** The whole fixture: request (method, path, query) and response (status, headers, body). */
     public static function load(string $name): array
     {
 
@@ -43,9 +41,7 @@ final class Fixtures
 
     }
 
-    /**
-     * Decoded response body (JSON:API document) of a fixture.
-     */
+    /** Decoded response body (JSON:API document) of a fixture. */
     public static function body(string $name): array
     {
 
@@ -55,9 +51,7 @@ final class Fixtures
 
     }
 
-    /**
-     * The `data` member of a fixture (a resource object or a list of them).
-     */
+    /** The `data` member of a fixture (a resource object or a list of them). */
     public static function data(string $name): array
     {
 

@@ -13,7 +13,9 @@ use nickdnk\Klaviyo\Exceptions\OAuthException;
 use nickdnk\Klaviyo\Exceptions\ServerException;
 use nickdnk\Klaviyo\Http\GuzzleTransport;
 use nickdnk\Klaviyo\Http\RetryPolicy;
+use nickdnk\Klaviyo\OAuthCredentials;
 use nickdnk\Klaviyo\Resources\Shared\IdentifiableResource;
+use nickdnk\Klaviyo\TokenExchange;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
@@ -30,6 +32,8 @@ final class Harness
     public readonly string $runId;
     public readonly array $env;
     public readonly APIClient $client;
+    private readonly GuzzleTransport $transport;
+    private readonly RetryPolicy $retry;
 
     /** @var list<array{request: RequestInterface, response: ?ResponseInterface, error: ?Throwable, options: array}> */
     private array $history = [];
@@ -57,12 +61,12 @@ final class Harness
 
         $stack = HandlerStack::create();
         $stack->push(Middleware::history($this->history));
-        $transport = GuzzleTransport::create(['handler' => $stack]);
-        $retry = new RetryPolicy(maxAttempts: 8, baseDelaySeconds: 2.0);
+        $this->transport = GuzzleTransport::create(['handler' => $stack]);
+        $this->retry = new RetryPolicy(maxAttempts: 8, baseDelaySeconds: 2.0);
         if ($oauth) {
-            $this->client = APIClient::withOAuth($this->loadOAuth(), $this->env['KLAVIYO_CLIENT_ID'], $this->env['KLAVIYO_CLIENT_SECRET'], $this->saveOAuth(...), $transport, $retry);
+            $this->client = $this->oauthClient($this->loadOAuth());
         } else {
-            $this->client = APIClient::withApiKey($this->env['KLAVIYO_API_KEY'], $transport, $retry);
+            $this->client = APIClient::withApiKey($this->env['KLAVIYO_API_KEY'], $this->transport, $this->retry);
         }
 
         $this->log("suite {$suite} run {$this->runId}");
@@ -76,15 +80,29 @@ final class Harness
 
     // region OAuth persistence (the "store credentials wherever" callback)
 
-    public function loadOAuth(): \nickdnk\Klaviyo\OAuthCredentials
+    /** OAuth client on the suite's transport/retry, starting from `$credentials`; shares the persistence callback. */
+    public function oauthClient(OAuthCredentials $credentials): APIClient
+    {
+        return APIClient::withOAuth($credentials, $this->env['KLAVIYO_CLIENT_ID'], $this->env['KLAVIYO_CLIENT_SECRET'], $this->refreshOAuth(...), $this->transport, $this->retry);
+    }
+
+    /** SDK refresh callback: no locking needed here (single process), so exchange, persist, return. */
+    public function refreshOAuth(OAuthCredentials $current, TokenExchange $exchange): OAuthCredentials
+    {
+        $fresh = $exchange($current);
+        $this->saveOAuth($fresh);
+        return $fresh;
+    }
+
+    public function loadOAuth(): OAuthCredentials
     {
         $j = json_decode((string)@file_get_contents(__DIR__ . '/../.oauth.json'), true)
             ?: throw new \RuntimeException('scratch/.oauth.json missing; run `php scratch/oauth.php link` + `exchange` first');
 
-        return new \nickdnk\Klaviyo\OAuthCredentials($j['access_token'], $j['refresh_token'], (int)$j['expires_at'], $j['scope'] ?? null);
+        return new OAuthCredentials($j['access_token'], $j['refresh_token'], (int)$j['expires_at'], $j['scope'] ?? null);
     }
 
-    public function saveOAuth(\nickdnk\Klaviyo\OAuthCredentials $c): void
+    public function saveOAuth(OAuthCredentials $c): void
     {
         file_put_contents(__DIR__ . '/../.oauth.json', json_encode([
             'access_token' => $c->accessToken, 'refresh_token' => $c->refreshToken, 'expires_at' => $c->expiresAt,
@@ -414,7 +432,7 @@ final class Harness
         }
         if (is_array($r) && array_key_exists('data', $r)) {
             $d = $r['data'];
-            return ['count' => is_array($d) ? count($d) : ($d === null ? 0 : 1), 'next' => isset($r['links']) && $r['links']?->next ? true : false];
+            return ['count' => is_array($d) ? count($d) : ($d === null ? 0 : 1), 'next' => isset($r['links']) && $r['links']->next];
         }
         if (is_array($r)) {
             return ['count' => count($r)];

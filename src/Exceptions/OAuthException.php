@@ -44,10 +44,8 @@ class OAuthException extends BaseException
     }
 
     /**
-     * The error returned if there is no technical problem with the integration, but if the refresh token has expired
-     * or been revoked.
-     *
-     * @return bool
+     * True when the integration itself is fine but the refresh token has expired or been revoked,
+     * i.e. the connection needs re-authorization.
      */
     public function isInvalidGrant(): bool
     {

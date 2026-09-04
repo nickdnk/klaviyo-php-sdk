@@ -35,18 +35,8 @@ use nickdnk\Klaviyo\Resources\Shared\CatalogCategory as CategoryIdentifier;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Wire format for the catalog trio owned by `catalog-items`, `catalog-variants` and
- * `back-in-stock-subscriptions`: the synchronous CRUD pairs, the item ↔ category and
- * item ↔ variant relationships, all six bulk-job families, and the 202-empty back in stock
- * signup.
- *
  * Catalog ids are composite (`$custom:::$default:::SAMPLE-DATA-ITEM-1`) and both `$` and `:`
- * are legal path characters, so Guzzle emits them verbatim; the id assertions pin that so a
- * future encoding change cannot silently mangle a path.
- *
- * Responses come from the recorded fixtures in tests/fixtures/responses wherever one exists for
- * the operation, so the hydration assertions read back real Klaviyo payloads; the `FIXTURE_*`
- * ids below are the composite ids that corpus was recorded with.
+ * are legal path characters, so Guzzle emits them verbatim; the path assertions pin that.
  */
 class CatalogItemServicesTest extends TestCase
 {
@@ -66,7 +56,7 @@ class CatalogItemServicesTest extends TestCase
     private static function client(MockHandler $mock): APIClient
     {
 
-        return APIClient::withTransport(GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)), fn() => new APIClient('tkn'));
+        return APIClient::withAccessToken('tkn', GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
 
     }
 

@@ -15,6 +15,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use nickdnk\Klaviyo\APIClient;
 use nickdnk\Klaviyo\OAuthCredentials;
 use nickdnk\Klaviyo\OAuthScope;
+use nickdnk\Klaviyo\TokenExchange;
 
 $env = parse_ini_file(__DIR__ . '/.env');
 $pendingFile = __DIR__ . '/.oauth-pending.json';
@@ -30,11 +31,16 @@ $save = function (OAuthCredentials $c) use ($credFile): void {
     ], JSON_PRETTY_PRINT));
     fwrite(STDERR, "credentials saved (expires " . date('c', $c->expiresAt) . ")\n");
 };
+$refresh = function (OAuthCredentials $current, TokenExchange $exchange) use ($save): OAuthCredentials {
+    $fresh = $exchange($current);
+    $save($fresh);
+    return $fresh;
+};
 $load = function () use ($credFile): OAuthCredentials {
     $j = json_decode((string)@file_get_contents($credFile), true) ?: throw new RuntimeException("no {$credFile}; run link + exchange first");
     return new OAuthCredentials($j['access_token'], $j['refresh_token'], (int)$j['expires_at'], $j['scope'] ?? null);
 };
-$client = fn() => APIClient::withOAuth($load(), $env['KLAVIYO_CLIENT_ID'], $env['KLAVIYO_CLIENT_SECRET'], $save);
+$client = fn() => APIClient::withOAuth($load(), $env['KLAVIYO_CLIENT_ID'], $env['KLAVIYO_CLIENT_SECRET'], $refresh);
 
 switch ($argv[1] ?? '') {
     case 'link':

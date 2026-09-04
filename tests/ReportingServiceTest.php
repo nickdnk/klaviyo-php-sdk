@@ -26,19 +26,13 @@ use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 use nickdnk\Klaviyo\Services\ReportingService;
 
-/**
- * Wire-format and hydration checks for the seven reporting endpoints. Each test pins the
- * POST path, the full request body, the query parameters (sparse fieldsets plus the flat
- * `page_cursor` the campaign and flow reports paginate with) and the class the response
- * hydrates to.
- */
 class ReportingServiceTest extends TestCase
 {
 
     private static function client(MockHandler $mock): APIClient
     {
 
-        return APIClient::withTransport(GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)), fn() => new APIClient('tkn'));
+        return APIClient::withAccessToken('tkn', GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
 
     }
 

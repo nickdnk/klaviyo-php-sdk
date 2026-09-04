@@ -34,14 +34,9 @@ use nickdnk\Klaviyo\Resources\Shared\SourceMapping as SharedSourceMapping;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Wire format for the Custom Objects family: data sources and their two record-ingestion job
- * paths, object types with their schema / record / ingestion-log relationships, object
- * schemas with their source mapping and the two `meta`-carrying linkage quartets, single
- * object records, and source mappings.
- *
- * Only the data-source endpoints were recorded successfully against the live account; every
+ * Only the data-source endpoints recorded successfully against the live account; every
  * object-type / object-schema / object-record / source-mapping fixture is a 403/404/500 or an
- * empty collection, so those responses stay hand-written.
+ * empty collection, so those responses are hand-written.
  */
 class CustomObjectServicesTest extends TestCase
 {
@@ -49,7 +44,7 @@ class CustomObjectServicesTest extends TestCase
     private static function client(MockHandler $mock): APIClient
     {
 
-        return APIClient::withTransport(GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)), fn() => new APIClient('tkn'));
+        return APIClient::withAccessToken('tkn', GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
 
     }
 

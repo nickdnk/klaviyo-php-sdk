@@ -45,7 +45,7 @@ class SymfonyPsr18Test extends TestCase
         $psr18 = new Psr18Client(new MockHttpClient($responses));
         $retry = new RetryPolicy(maxAttempts: $maxAttempts, jitterFactor: 0, sleep: function (float $s) { $this->slept[] = $s; });
 
-        return new APIClient('tkn', new Psr18Transport($psr18, $psr18, $psr18), $retry);
+        return APIClient::withAccessToken('tkn', new Psr18Transport($psr18, $psr18, $psr18), $retry);
 
     }
 

@@ -22,10 +22,6 @@ use nickdnk\Klaviyo\Resources\Response\Event;
 use nickdnk\Klaviyo\Resources\Shared\AttributeBag;
 use PHPUnit\Framework\TestCase;
 
-/**
- * EventService: the request bodies for single and bulk event creation, and hydration of the
- * recorded event responses.
- */
 class EventServiceTest extends TestCase
 {
 
@@ -43,9 +39,11 @@ class EventServiceTest extends TestCase
     private function lastBody(): array
     {
 
-        $this->mock->getLastRequest()->getBody()->rewind();
+        $request = $this->mock->getLastRequest();
+        self::assertNotNull($request, 'No request was sent.');
 
-        return json_decode((string)$this->mock->getLastRequest()->getBody(), true);
+        // Stream::__toString() seeks to 0 itself, so no explicit rewind() is needed.
+        return json_decode((string)$request->getBody(), true);
 
     }
 

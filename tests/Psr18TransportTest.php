@@ -12,6 +12,7 @@ use nickdnk\Klaviyo\Exceptions\OAuthException;
 use nickdnk\Klaviyo\Exceptions\ServerException;
 use nickdnk\Klaviyo\Http\Psr18Transport;
 use nickdnk\Klaviyo\OAuthCredentials;
+use nickdnk\Klaviyo\TokenExchange;
 use nickdnk\Klaviyo\Http\RetryPolicy;
 use nickdnk\Klaviyo\MultipartBody;
 use nickdnk\Klaviyo\Query;
@@ -28,10 +29,8 @@ use ReflectionMethod;
 use RuntimeException;
 
 /**
- * The client against a bare PSR-18 implementation: a hand-rolled fake client plus nyholm's
- * PSR-17 factories, no Guzzle anywhere in the path. Pins that authentication headers, JSON
- * and multipart bodies, status mapping, retries and the pool all live in the client rather
- * than in the transport.
+ * The client against a bare PSR-18 implementation, no Guzzle anywhere in the path: headers,
+ * bodies, status mapping, retries and the pool must all live in the client, not the transport.
  */
 #[Group('psr18')]
 class Psr18TransportTest extends TestCase
@@ -88,7 +87,7 @@ class Psr18TransportTest extends TestCase
 
         $retry = new RetryPolicy(maxAttempts: $maxAttempts, jitterFactor: 0, sleep: function (float $s) { $this->slept[] = $s; });
 
-        return new APIClient('tkn', Psr18Transport::create($this->fake, new Psr17Factory(), new Psr17Factory()), $retry);
+        return APIClient::withAccessToken('tkn', Psr18Transport::create($this->fake, new Psr17Factory(), new Psr17Factory()), $retry);
 
     }
 
@@ -268,8 +267,8 @@ class Psr18TransportTest extends TestCase
         $fake = self::fakeClient($fakeScript);
         $client = APIClient::withOAuth(
             new OAuthCredentials('stale', 'rt1', time() + 3600), 'cid', 'sec',
-            function (OAuthCredentials $c) use (&$received) {
-                $received[] = $c;
+            function (OAuthCredentials $c, TokenExchange $exchange) use (&$received) {
+                return $received[] = $exchange($c);
             },
             Psr18Transport::create($fake)
         );
@@ -392,11 +391,7 @@ class Psr18TransportTest extends TestCase
     }
 
 
-    /**
-     * Psr18Transport::create() without factories must find a PSR-17 implementation on its own
-     * (nyholm/psr7 first, guzzlehttp/psr7 second) so a bare PSR-18 client is enough to build a
-     * working transport; a single explicitly given factory only replaces that half.
-     */
+    /** Discovery order is nyholm/psr7, then guzzlehttp/psr7; one given factory replaces only that half. */
     public function testCreateDiscoversPsr17FactoriesWhenNoneAreGiven(): void
     {
 
@@ -408,7 +403,7 @@ class Psr18TransportTest extends TestCase
         self::assertInstanceOf(Psr17Factory::class, $transport->requestFactory(), 'nyholm/psr7 is discovered');
         self::assertInstanceOf(Psr17Factory::class, $transport->streamFactory());
 
-        $result = (new APIClient('tkn', $transport))->lists->list();
+        $result = APIClient::withAccessToken('tkn', $transport)->lists->list();
         self::assertInstanceOf(KlaviyoList::class, $result['data'][0], 'requests built with the discovered factory round-trip');
         self::assertSame('Bearer tkn', $fake->sent[0]->getHeaderLine('Authorization'));
 
@@ -433,7 +428,7 @@ class Psr18TransportTest extends TestCase
 
             }
         };
-        $client = new APIClient('t', Psr18Transport::create($failing), new RetryPolicy(maxAttempts: 1, jitterFactor: 0, sleep: fn() => null));
+        $client = APIClient::withAccessToken('t', Psr18Transport::create($failing), new RetryPolicy(maxAttempts: 1, jitterFactor: 0, sleep: fn() => null));
 
         $results = $client->executePool([$client->lists->get('L1', returnRequest: true)]);
         self::assertInstanceOf(ConnectionException::class, $results[0]);

@@ -15,14 +15,9 @@ use nickdnk\Klaviyo\Resources\Shared\Resource;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * What every service shares: the call into the client's request pipeline, and the base path the
- * service addresses. Two conventions hold across the services:
- *
- * - A service's own resource path is {@see self::apiPath()}. Every other endpoint path it
- *   touches (a bulk job family, a clone, render or upload endpoint, a report) is a `PATH_*`
- *   constant on that service, never an inline string.
- * - Relationship names are inline strings at the call site, because they name the relationship
- *   being asked for rather than a path of their own.
+ * A service's own resource path is {@see self::apiPath()}. Every other endpoint path it
+ * touches (a bulk job family, a clone, render or upload endpoint, a report) is a `PATH_*`
+ * constant on that service, never an inline string.
  */
 abstract class BaseService
 {

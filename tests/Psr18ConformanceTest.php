@@ -23,23 +23,16 @@ use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 
 /**
- * PSR-18 conformance from both sides. The fake client here is deliberately strict: it asserts
- * what PSR-18 lets a client assume about the request it is handed (an absolute URI, a body it
- * may read from the start), and it answers the way a conforming client must — 4xx and 5xx as
- * responses rather than exceptions, failures as {@see NetworkExceptionInterface} or
- * {@see RequestExceptionInterface}.
- *
- * It also answers with forward-only response bodies, which is what a real streaming client
- * hands back, so a second read of the same body would come up empty. That pins the client to
- * reading each response body once.
+ * The fake client here is deliberately strict: it asserts what PSR-18 lets a client assume
+ * about the request it is handed, and answers the way a conforming client must. Its response
+ * bodies are forward-only, as a real streaming client's are, which pins the SDK to reading
+ * each response body exactly once.
  */
 #[Group('psr18')]
 class Psr18ConformanceTest extends TestCase
 {
 
-    /**
-     * A stream that can be read once and never seeked, like a live socket.
-     */
+    /** A stream that can be read once and never seeked, like a live socket. */
     private static function forwardOnly(string $contents): StreamInterface
     {
 
@@ -176,7 +169,7 @@ class Psr18ConformanceTest extends TestCase
         $fake = self::strictClient($script);
         $retry = new RetryPolicy(maxAttempts: 3, jitterFactor: 0, sleep: static fn(float $s) => null);
 
-        return new APIClient('tkn', Psr18Transport::create($fake, new Psr17Factory(), new Psr17Factory()), $retry);
+        return APIClient::withAccessToken('tkn', Psr18Transport::create($fake, new Psr17Factory(), new Psr17Factory()), $retry);
 
     }
 
@@ -208,10 +201,6 @@ class Psr18ConformanceTest extends TestCase
 
     }
 
-    /**
-     * A conforming client returns 4xx and 5xx instead of throwing, so nothing in the retry path
-     * may depend on an exception to notice a failed status.
-     */
     public function testRetryableStatusesComeBackAsResponsesAndAreResent(): void
     {
 
@@ -229,10 +218,6 @@ class Psr18ConformanceTest extends TestCase
 
     }
 
-    /**
-     * The request body is rewound between attempts, so the second send carries the whole body
-     * rather than the empty tail of an already-read stream.
-     */
     public function testRequestBodyIsResentInFullAfterANetworkFailure(): void
     {
 
@@ -255,10 +240,7 @@ class Psr18ConformanceTest extends TestCase
 
     }
 
-    /**
-     * PSR-18 splits failures in two: a network failure may succeed on a resend, an invalid
-     * request never will. Only the first is retried, and both surface as a ConnectionException.
-     */
+    /** A network failure may succeed on a resend, an invalid request never will. */
     public function testInvalidRequestFailureIsNotRetried(): void
     {
 
@@ -286,11 +268,7 @@ class Psr18ConformanceTest extends TestCase
 
     }
 
-    /**
-     * Signature verification reads the body by casting the stream, which PSR-7 requires to seek
-     * to the start first. A framework that parsed the body before handing the request over
-     * therefore cannot leave the verification hashing an empty string.
-     */
+    /** A framework that already parsed the body must not leave verification hashing an empty string. */
     public function testWebhookBodyVerifiesAfterTheFrameworkAlreadyReadIt(): void
     {
 
@@ -320,11 +298,7 @@ class Psr18ConformanceTest extends TestCase
 
     }
 
-    /**
-     * Without Guzzle installed there is nothing to fall back to, so a client built without a
-     * transport says so instead of failing later at send time. Skipped while Guzzle is present,
-     * where that same call legitimately picks {@see \nickdnk\Klaviyo\Http\GuzzleTransport}.
-     */
+    /** Without Guzzle there is nothing to fall back to, so this must fail at construction, not at send. */
     public function testClientWithoutATransportFailsFastWhenGuzzleIsAbsent(): void
     {
 
@@ -335,7 +309,7 @@ class Psr18ConformanceTest extends TestCase
         APIClient::setDefaultTransport(null);
 
         try {
-            new APIClient('tkn');
+            APIClient::withAccessToken('tkn');
             self::fail('a client without a transport must fail');
         } catch (\LogicException $e) {
             self::assertStringContainsString('No HTTP transport available', $e->getMessage());

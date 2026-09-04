@@ -5,6 +5,11 @@
  */
 declare(strict_types=1);
 
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/lib/spec.php';
+
+use nickdnk\Klaviyo\APIClient;
+
 $results = [];
 foreach (glob(__DIR__ . '/results/*.json') as $f) {
     $results[basename($f, '.json')] = json_decode(file_get_contents($f), true);
@@ -12,12 +17,7 @@ foreach (glob(__DIR__ . '/results/*.json') as $f) {
 ksort($results);
 
 // ── spec operations
-$specFile = __DIR__ . '/openapi/stable.json';
-if (!is_file($specFile)) {
-    @mkdir(dirname($specFile));
-    file_put_contents($specFile, file_get_contents('https://raw.githubusercontent.com/klaviyo/openapi/refs/heads/main/openapi/stable.json'));
-}
-$spec = json_decode(file_get_contents($specFile), true);
+$spec = Smoke\loadSpec(APIClient::API_REVISION);
 $ops = [];
 foreach ($spec['paths'] as $path => $methods) {
     foreach ($methods as $m => $op) {
@@ -56,7 +56,6 @@ foreach ($results as $suite => $r) {
 }
 
 // ── SDK method inventory (all public service methods) vs exercised
-require __DIR__ . '/../vendor/autoload.php';
 $inventory = [];
 foreach (glob(__DIR__ . '/../src/Services/*Service.php') as $f) {
     $cls = 'nickdnk\\Klaviyo\\Services\\' . basename($f, '.php');

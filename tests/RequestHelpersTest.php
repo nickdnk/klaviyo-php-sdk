@@ -21,10 +21,6 @@ use nickdnk\Klaviyo\Resources\Request\SuppressionDeleteJob;
 use nickdnk\Klaviyo\Resources\Request\UpdateReview;
 use nickdnk\Klaviyo\Resources\Shared\CampaignSendStrategy;
 
-/**
- * Constructor conveniences added after the live smoke run: list relationships on the profile
- * bulk jobs, topics on webhooks, `exclusive` on tag groups.
- */
 class RequestHelpersTest extends TestCase
 {
 
@@ -128,11 +124,7 @@ class RequestHelpersTest extends TestCase
 
     }
 
-    /**
-     * subscribe()/unsubscribe() are plain POSTs: a 400 for an unsupported phone region propagates
-     * untouched (the SDK no longer strips profiles and retries — that is application policy), and
-     * KlaviyoError::indexIn() hands the caller the offending profile indexes.
-     */
+    /** KlaviyoError::indexIn() hands the caller the offending profile indexes from a 400. */
     public function testSubscribeIsAPlainPostAndRegionErrorsPropagate(): void
     {
 

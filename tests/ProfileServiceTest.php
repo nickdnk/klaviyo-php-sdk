@@ -51,9 +51,11 @@ class ProfileServiceTest extends TestCase
     private function lastBody(): array
     {
 
-        $this->mock->getLastRequest()->getBody()->rewind();
+        $request = $this->mock->getLastRequest();
+        self::assertNotNull($request, 'No request was sent.');
 
-        return json_decode((string)$this->mock->getLastRequest()->getBody(), true);
+        // Stream::__toString() seeks to 0 itself, so no explicit rewind() is needed.
+        return json_decode((string)$request->getBody(), true);
 
     }
 

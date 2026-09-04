@@ -8,10 +8,7 @@ use nickdnk\Klaviyo\Resources\Request\UpdateWebhook;
 use nickdnk\Klaviyo\Resources\Shared\Explicit;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Request serialisation drops nulls and empty arrays; Explicit markers are the escape hatch for
- * PATCH endpoints that need an explicit null / [] / {} to clear a value.
- */
+/** Serialisation drops nulls and empty arrays; Explicit is the escape hatch for clearing a value. */
 class ExplicitTest extends TestCase
 {
 

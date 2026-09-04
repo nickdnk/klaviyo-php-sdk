@@ -24,18 +24,8 @@ use nickdnk\Klaviyo\Resources\Shared\CatalogItem;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Wire format for `catalog-categories`: the five resource operations, the `items`
- * relationship trio, and all three bulk-job families (`catalog-category-bulk-create-jobs`,
- * `-update-jobs`, `-delete-jobs`) with their `categories: {data: […]}` attribute.
- *
- * Category and item ids are composite — integration type, catalog type and external id
- * joined by `:::`, e.g. `$custom:::$default:::SAMPLE-DATA-CATEGORY-1`. Both `$` and `:`
- * are legal path characters, so the ids reach the URI path unescaped; the path assertions
- * pin that.
- *
- * Responses come from the recorded fixtures in tests/fixtures/responses wherever one exists for
- * the operation, so the hydration assertions read back real Klaviyo payloads; the `FIXTURE_*`
- * ids below are the composite ids that corpus was recorded with.
+ * Category and item ids are composite (`$custom:::$default:::SAMPLE-DATA-CATEGORY-1`); both
+ * `$` and `:` are legal path characters, so they reach the URI path unescaped.
  */
 class CatalogCategoryServiceTest extends TestCase
 {
@@ -53,7 +43,7 @@ class CatalogCategoryServiceTest extends TestCase
     private static function client(MockHandler $mock): APIClient
     {
 
-        return APIClient::withTransport(GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)), fn() => new APIClient('tkn'));
+        return APIClient::withAccessToken('tkn', GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
 
     }
 
@@ -176,10 +166,6 @@ class CatalogCategoryServiceTest extends TestCase
 
     }
 
-    /**
-     * A category created without an `items` relationship sends attributes only, and an
-     * explicit integration / catalog type overrides the `$custom` / `$default` defaults.
-     */
     public function testCategoryCreateWithoutItems(): void
     {
 

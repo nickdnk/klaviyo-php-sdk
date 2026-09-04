@@ -21,18 +21,13 @@ use nickdnk\Klaviyo\Resources\Response\WebFeed;
 use nickdnk\Klaviyo\Resources\Shared\AttributeBag;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Wire format for the account-scoped settings and content services: review moderation, the
- * single UTM tracking setting keyed by account id, web feeds, and the send-only
- * conversation-message endpoint that answers 202 with an empty body.
- */
 class SettingsAndContentServicesTest extends TestCase
 {
 
     private static function client(MockHandler $mock): APIClient
     {
 
-        return APIClient::withTransport(GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)), fn() => new APIClient('tkn'));
+        return APIClient::withAccessToken('tkn', GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
 
     }
 

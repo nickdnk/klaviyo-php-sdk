@@ -32,18 +32,13 @@ use nickdnk\Klaviyo\Resources\Shared\CampaignSendStrategyOptions;
 use nickdnk\Klaviyo\Resources\Shared\CampaignTrackingOptions;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Wire-format and hydration checks for the campaign and campaign-message services. Each test
- * pins the path, verb, query and body Klaviyo expects and the class the response hydrates to,
- * including the nested attribute objects (`audiences`, `send_strategy`, `definition`, …).
- */
 class CampaignServicesTest extends TestCase
 {
 
     private static function client(MockHandler $mock): APIClient
     {
 
-        return APIClient::withTransport(GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)), fn() => new APIClient('tkn'));
+        return APIClient::withAccessToken('tkn', GuzzleTransport::fromHandlerStack(HandlerStack::create($mock)));
 
     }
 

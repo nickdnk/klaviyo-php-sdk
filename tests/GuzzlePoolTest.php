@@ -18,11 +18,8 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * The Guzzle transport must give executePool() real concurrency and executePoolLazy() its memory
- * contract: requests are built only as the pool takes them, at most `concurrency` are in flight,
- * results keep input order, and retry rounds resend only what failed. MockHandler answers
- * synchronously and cannot show any of that, so this uses an asynchronous fake handler whose
- * promises settle on a later tick, the way curl_multi's do.
+ * MockHandler answers synchronously and so cannot show concurrency at all; these tests use an
+ * asynchronous fake handler whose promises settle on a later tick, the way curl_multi's do.
  */
 class GuzzlePoolTest extends TestCase
 {

@@ -13,10 +13,12 @@
  * (OpenAPI operationId, HTTP status); richer bodies (with `included` / `relationships`) win, then the
  * smallest. Everything is scrubbed: tokens, secrets and any e-mail address outside the test domains.
  *
- * The operationId lookup needs Klaviyo's OpenAPI document; it is fetched from GitHub unless
- * KLAVIYO_OPENAPI_JSON points at a local copy.
+ * The operationId lookup uses the OpenAPI document pinned for the SDK's revision
+ * (scratch/api_versions/<APIClient::API_REVISION>.url); KLAVIYO_OPENAPI_JSON points at a local file instead.
  */
 declare(strict_types=1);
+
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 $args = array_slice($argv, 1);
 $clean = in_array('--clean', $args, true);
@@ -32,9 +34,11 @@ if ($clean) {
     array_map('unlink', glob("{$out}/*.json") ?: []);
 }
 
+require_once __DIR__ . '/../../scratch/lib/spec.php';
 $specFile = getenv('KLAVIYO_OPENAPI_JSON') ?: null;
-$specJson = $specFile ? file_get_contents($specFile) : file_get_contents('https://raw.githubusercontent.com/klaviyo/openapi/refs/heads/main/openapi/stable.json');
-$spec = json_decode($specJson, true) ?: throw new RuntimeException('could not load the OpenAPI document');
+$spec = $specFile
+    ? (json_decode(file_get_contents($specFile) ?: '', true) ?: throw new RuntimeException("could not load {$specFile}"))
+    : Smoke\loadSpec(\nickdnk\Klaviyo\APIClient::API_REVISION);
 
 $ops = [];
 foreach ($spec['paths'] as $path => $methods) {
@@ -51,8 +55,8 @@ $scrub = static function (?string $s): ?string {
     if ($s === null || $s === '') return $s;
     $s = preg_replace('/"(access_token|refresh_token|secret_key|client_secret|public_api_key)"\s*:\s*"[^"]*"/', '"$1":"REDACTED"', $s);
     $s = preg_replace('/(Klaviyo-API-Key|Bearer|Basic)\s+[A-Za-z0-9._~+\/=-]+/', '$1 REDACTED', $s);
-    // account identity strings to neutralise, from FIXTURE_SCRUB="domain.tld,Org Name" (domain → example.com, else "Example Org")
-    // entries are `term` or `term=replacement`; a bare domain becomes example.com, anything else "Example Org"
+    // FIXTURE_SCRUB entries are `term` or `term=replacement`; a bare domain defaults to
+    // example.com, anything else to "Example Org".
     foreach (array_filter(array_map('trim', explode(',', (string)getenv('FIXTURE_SCRUB')))) as $entry) {
         [$term, $replacement] = array_pad(explode('=', $entry, 2), 2, null);
         $replacement ??= str_contains($term, '.') && !str_contains($term, ' ') ? 'example.com' : 'Example Org';

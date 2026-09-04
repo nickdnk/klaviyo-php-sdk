@@ -16,11 +16,7 @@ use PHPUnit\Framework\TestCase;
 use nickdnk\Klaviyo\Resources\Response\WhatsappConsent;
 use nickdnk\Klaviyo\Resources\Response\WhatsappSubscription;
 
-/**
- * Response hydration rules that the live smoke run showed to matter: compound documents
- * (`include=`) must reach the caller through the relationships, an empty to-many relationship
- * is data ("no tags"), not absence, and identifier-only entries keep their `meta`.
- */
+/** An empty to-many relationship is data ("no tags"), not absence, and identifiers keep their `meta`. */
 class HydrationTest extends TestCase
 {
 

@@ -16,21 +16,18 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Throwable;
 
 /**
- * Guzzle-backed transport. Only loaded when Guzzle is installed; it is what
- * {@see \nickdnk\Klaviyo\APIClient} picks by default in that case, because
- * Guzzle's pool gives the bulk sync real concurrency where plain PSR-18 cannot.
+ * Guzzle-backed transport, and what {@see \nickdnk\Klaviyo\APIClient} picks by default when
+ * Guzzle is installed, because Guzzle's pool gives bulk work real concurrency where plain
+ * PSR-18 cannot.
  *
- * Sends go through Guzzle's own {@see GuzzleClientInterface::send()} rather than its PSR-18
- * {@see \Psr\Http\Client\ClientInterface::sendRequest()}: the pool needs `sendAsync()`, which
- * PSR-18 has no equivalent for, so this transport depends on Guzzle's interface either way, and
- * `sendRequest()` is not declared there. Taking options also keeps both paths on one set of them
- * instead of letting single sends inherit Guzzle's hardcoded set. For PSR-18 semantics against
- * Guzzle, hand a Guzzle client to {@see Psr18Transport::create()} instead.
+ * Sends go through Guzzle's own {@see GuzzleClientInterface::send()} rather than
+ * {@see \Psr\Http\Client\ClientInterface::sendRequest()}, because the pool needs `sendAsync()`,
+ * which PSR-18 has no equivalent for, and both paths then share one set of options. For PSR-18
+ * semantics against Guzzle, hand a Guzzle client to {@see Psr18Transport::create()} instead.
  *
- * Those options are `http_errors => false`, so status handling stays in the client and 4xx and
- * 5xx come back as responses instead of exceptions, and `allow_redirects => false`, matching what
- * `sendRequest()` does: the Klaviyo API declares no 3xx, and not following redirects keeps this
- * transport's behaviour identical to {@see Psr18Transport}.
+ * Those options are `http_errors => false`, keeping status handling in the client, and
+ * `allow_redirects => false`, which is what `sendRequest()` does and what keeps this transport
+ * behaviourally identical to {@see Psr18Transport} (the Klaviyo API declares no 3xx).
  */
 final readonly class GuzzleTransport implements Transport
 {

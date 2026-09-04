@@ -63,7 +63,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Random\RandomException;
 use Throwable;
 
 /**
@@ -72,12 +71,9 @@ use Throwable;
  * retries follow {@see RetryPolicy}.
  *
  * Three ways to authenticate:
- *  - {@see self::withOAuth()}: OAuth credentials plus your app's client id/secret. A 401 makes the
- *    client refresh the tokens itself (once per request) and hand the new
- *    {@see OAuthCredentials} to the callback you supply, so you can persist them. Refresh
- *    tokens rotate on every refresh; losing the callback's payload means losing the connection.
- *  - `new APIClient($accessToken)`: a bare `Bearer` token, never refreshed. A 401 is final.
- *  - {@see self::withApiKey()}: a private API key (`Klaviyo-API-Key` header), never refreshed.
+ *  - {@see self::withOAuth()}: OAuth credentials plus your app's client ID/secret.
+ *  - {@see self::withAccessToken()}: A bare `Bearer` token - never refreshed.
+ *  - {@see self::withApiKey()}: A private API key (`Klaviyo-API-Key` header).
  *
  * @property-read AccountService                 $accounts
  * @property-read BackInStockSubscriptionService $backInStockSubscriptions
@@ -128,9 +124,8 @@ class APIClient
     private const string TOKEN_URL     = 'https://a.klaviyo.com/oauth/token';
     private const string REVOKE_URL    = 'https://a.klaviyo.com/oauth/revoke';
     /**
-     * The Klaviyo API revision every request is sent with (`revision` header). The SDK's request
-     * and response classes describe this revision; bump it deliberately after diffing the OpenAPI
-     * document (see README "API revision").
+     * The `revision` header every request is sent with; the request and response classes describe
+     * this revision. Bump it deliberately, after diffing the OpenAPI document (see README).
      */
     public const string API_REVISION   = '2026-07-15';
     private const string CONTENT_TYPE  = 'application/vnd.api+json';
@@ -142,9 +137,8 @@ class APIClient
     private RetryPolicy $retry;
     private array       $services = [];
     /**
-     * {@see self::makeRequest()} as a closure, handed to every service this client creates so they
-     * route through it without seeing the transport or the credentials. Memoised: the services are
-     * built lazily but there is only ever one closure.
+     * {@see self::makeRequest()} as a closure, handed to every service so they route through it
+     * without seeing the transport or the credentials.
      *
      * @var ?Closure(string, string, array|JsonSerializable|MultipartBody|null, ?array, bool): (RequestInterface|array|null)
      */
@@ -155,53 +149,68 @@ class APIClient
     private ?string           $clientId = null;
     private ?string           $clientSecret = null;
 
-    /** @var (Closure(OAuthCredentials): void)|null */
-    private ?Closure $onRefresh = null;
+    /**
+     * @var (Closure(OAuthCredentials $current, TokenExchange $exchange): OAuthCredentials)|null
+     */
+    private ?Closure $refresh = null;
 
     /**
      * Process-wide transport used when a client or a static OAuth call gets none. Set through
-     * {@see self::setDefaultTransport()} or scoped through {@see self::withTransport()}.
+     * {@see self::setDefaultTransport()}; otherwise Guzzle when installed.
      */
     private static ?Transport $defaultTransport = null;
 
-    /**
-     * Client sending `$accessToken` as a `Bearer` token. Nothing is refreshed on 401; use
-     * {@see self::withOAuth()} for that.
-     */
-    public function __construct(string $accessToken, ?Transport $transport = null, ?RetryPolicy $retry = null)
+    private function __construct(string $authorization, ?Transport $transport, ?RetryPolicy $retry)
     {
 
-        $this->authorization = 'Bearer ' . $accessToken;
+        $this->authorization = $authorization;
         $this->transport = self::resolveTransport($transport);
         $this->retry = $retry ?? new RetryPolicy();
 
     }
 
     /**
-     * Client authenticated with OAuth credentials that it keeps fresh on its own. On a 401 it
-     * calls {@see self::refreshCredentials()} and retries the request once with the new access
-     * token. Every refresh, automatic or explicit, invokes `$onRefresh` with the new
-     * {@see OAuthCredentials} before the retry goes out; persist them there.
+     * Client sending `$accessToken` as a `Bearer` token. Nothing is refreshed on 401; use
+     * {@see self::withOAuth()} for that. Swap the token later with {@see self::updateAccessToken()}.
+     */
+    public static function withAccessToken(string $accessToken, ?Transport $transport = null, ?RetryPolicy $retry = null): self
+    {
+
+        return new self('Bearer ' . $accessToken, $transport, $retry);
+
+    }
+
+    /**
+     * Client authenticated with OAuth credentials. On a 401 it calls
+     * {@see self::refreshCredentials()}, which delegates to `$refresh`, then retries the request
+     * once with the credentials `$refresh` returned.
      *
-     * The callback is the only place the SDK reaches back into your application. It should
-     * store the credentials and return, nothing more. If it throws, the exception propagates out
-     * of the API call that triggered the refresh.
+     * `$refresh` receives the credentials the client currently holds and a {@see TokenExchange}
+     * that performs the token request against Klaviyo when invoked with an {@see OAuthCredentials}.
+     * It must return updated credentials, and may return credentials another process already
+     * stored instead of exchanging: the SDK never calls the token endpoint on its own. See the
+     * README for a locked, multi-process implementation.
      *
-     * Refresh failures surface as {@see OAuthException} (check `isInvalidGrant()` for a revoked
-     * or expired refresh token), {@see ServerException} or {@see ConnectionException}.
+     * The callback is the only place the SDK reaches back into your application. If it throws,
+     * the exception propagates out of the API call that triggered the refresh. `$exchange`
+     * throws {@see OAuthException} (check `isInvalidGrant()` for a revoked or expired refresh
+     * token), {@see ServerException} or {@see ConnectionException}.
      *
-     * @param callable(OAuthCredentials): void $onRefresh
+     * @param OAuthCredentials                                                          $credentials  As last persisted for this account.
+     * @param string                                                                    $clientId     Your Klaviyo app's client id.
+     * @param string                                                                    $clientSecret Your Klaviyo app's client secret.
+     * @param callable(OAuthCredentials $current, TokenExchange $exchange): OAuthCredentials $refresh Returns the credentials to continue with.
      */
     public static function withOAuth(OAuthCredentials $credentials, string $clientId, string $clientSecret,
-        callable $onRefresh, ?Transport $transport = null, ?RetryPolicy $retry = null
+        callable $refresh, ?Transport $transport = null, ?RetryPolicy $retry = null
     ): self
     {
 
-        $client = new self($credentials->accessToken, $transport, $retry);
+        $client = new self('Bearer ' . $credentials->accessToken, $transport, $retry);
         $client->credentials = $credentials;
         $client->clientId = $clientId;
         $client->clientSecret = $clientSecret;
-        $client->onRefresh = $onRefresh(...);
+        $client->refresh = $refresh(...);
 
         return $client;
 
@@ -216,32 +225,16 @@ class APIClient
     public static function withApiKey(string $privateApiKey, ?Transport $transport = null, ?RetryPolicy $retry = null): self
     {
 
-        $client = new self('', $transport, $retry);
-        $client->authorization = 'Klaviyo-API-Key ' . $privateApiKey;
-
-        return $client;
+        return new self('Klaviyo-API-Key ' . $privateApiKey, $transport, $retry);
 
     }
 
     // region Transport selection
 
     /**
-     * Runs $fn with $transport as the default for every client and OAuth call created inside
-     * it, then restores the previous default even if $fn throws. Intended for tests.
+     * Process-wide fallback for every client and static OAuth call not given a transport
+     * explicitly. `null` clears it, so Guzzle auto-detection applies again.
      */
-    public static function withTransport(Transport $transport, callable $fn): mixed
-    {
-
-        $prev = self::$defaultTransport;
-        self::$defaultTransport = $transport;
-        try {
-            return $fn();
-        } finally {
-            self::$defaultTransport = $prev;
-        }
-
-    }
-
     public static function setDefaultTransport(?Transport $transport): void
     {
 
@@ -264,7 +257,7 @@ class APIClient
 
         throw new LogicException(
             'No HTTP transport available for the Klaviyo client. Pass a Transport (e.g. Psr18Transport::create($psr18Client)) '
-            . 'to the constructor or APIClient::setDefaultTransport(); guzzlehttp/guzzle is picked up automatically when installed.'
+            . 'to the APIClient::with*() constructor or APIClient::setDefaultTransport(); guzzlehttp/guzzle is picked up automatically when installed.'
         );
 
     }
@@ -272,20 +265,25 @@ class APIClient
     // endregion
 
     /**
-     * Replaces the bearer token on a client built with the constructor. For an OAuth client use
-     * {@see self::setCredentials()} so the refresh token stays in sync too.
+     * Replaces the bearer token on a client built with {@see self::withAccessToken()}. An OAuth
+     * client swaps tokens through its refresh callback instead, and an API-key client has none.
+     *
+     * @throws LogicException when the client was not built with {@see self::withAccessToken()}
      */
     public function updateAccessToken(string $accessToken): void
     {
+
+        if ($this->credentials !== null || !str_starts_with($this->authorization, 'Bearer ')) {
+            throw new LogicException('updateAccessToken() requires a client built with APIClient::withAccessToken().');
+        }
 
         $this->authorization = 'Bearer ' . $accessToken;
 
     }
 
     /**
-     * Rate-limit headers of the most recent non-pooled response (`RateLimit-Limit`,
-     * `RateLimit-Remaining`, `RateLimit-Reset`, `Retry-After`), or null before the first call.
-     * Retries are transparent: this reflects the final response of the last request.
+     * Rate-limit headers of the most recent non-pooled response, or null before the first call.
+     * Retries are transparent, so this reflects the final response of the last request.
      */
     public function getLastRateLimit(): ?RateLimit
     {
@@ -296,9 +294,7 @@ class APIClient
 
     // region OAuth credentials
 
-    /**
-     * Current credentials of a client built with {@see self::withOAuth()}; null otherwise.
-     */
+    /** Current credentials of a client built with {@see self::withOAuth()}; null otherwise. */
     public function getCredentials(): ?OAuthCredentials
     {
 
@@ -306,18 +302,8 @@ class APIClient
 
     }
 
-    /**
-     * Swaps in credentials obtained elsewhere, e.g. refreshed by another process and reloaded
-     * from storage. Does not call the refresh callback. Only valid on an OAuth client.
-     *
-     * @throws LogicException when the client was not built with {@see self::withOAuth()}
-     */
-    public function setCredentials(OAuthCredentials $credentials): void
+    private function setCredentials(OAuthCredentials $credentials): void
     {
-
-        if ($this->credentials === null) {
-            throw new LogicException('setCredentials() requires a client built with APIClient::withOAuth().');
-        }
 
         $this->credentials = $credentials;
         $this->authorization = 'Bearer ' . $credentials->accessToken;
@@ -325,11 +311,9 @@ class APIClient
     }
 
     /**
-     * Refreshes the tokens now, regardless of expiry, using the stored refresh token. The
-     * client switches to the new access token and the refresh callback receives the new
-     * credentials before this returns. Call it proactively when
-     * {@see OAuthCredentials::isExpired()} says the token is about to lapse; any locking
-     * needed to keep concurrent workers from refreshing at once belongs in the caller.
+     * Runs the refresh callback given to {@see self::withOAuth()} and switches the client to
+     * whatever credentials it returns. This is what a 401 triggers; call it yourself to refresh
+     * ahead of a long job. Whether Klaviyo is actually contacted is up to the callback.
      *
      * @throws LogicException when the client was not built with {@see self::withOAuth()}
      * @throws ConnectionException
@@ -339,18 +323,16 @@ class APIClient
     public function refreshCredentials(): OAuthCredentials
     {
 
-        if ($this->credentials === null || $this->clientId === null || $this->clientSecret === null || $this->onRefresh === null) {
+        if ($this->credentials === null || $this->clientId === null || $this->clientSecret === null || $this->refresh === null) {
             throw new LogicException('refreshCredentials() requires a client built with APIClient::withOAuth().');
         }
 
-        $credentials = self::refreshAccessToken(
-            $this->clientId, $this->clientSecret, $this->credentials->refreshToken, $this->transport
+        $credentials = ($this->refresh)(
+            $this->credentials,
+            new TokenExchange($this->clientId, $this->clientSecret, $this->transport)
         );
 
-        $this->credentials = $credentials;
-        $this->authorization = 'Bearer ' . $credentials->accessToken;
-
-        ($this->onRefresh)($credentials);
+        $this->setCredentials($credentials);
 
         return $credentials;
 
@@ -409,9 +391,9 @@ class APIClient
 
     /**
      * Parses and verifies an incoming Klaviyo webhook request. The HMAC check runs before any
-     * JSON parsing so unsigned/forged bodies cost nothing beyond a hash and never reach the
-     * JSON parser. Returns null on missing headers, signature mismatch, malformed body, stale
-     * timestamp, or any other shape problem — caller treats failure uniformly.
+     * JSON parsing, so unsigned or forged bodies never reach the parser. Returns null on any
+     * failure — missing headers, signature mismatch, malformed body, stale timestamp — so the
+     * caller can treat them uniformly.
      *
      * Each event's `topic` is a {@see Resources\Shared\WebhookTopic} (compare with
      * `$topic->is(WebhookTopic::OPENED_EMAIL)` or by id); topics are open-ended, every metric on
@@ -419,13 +401,13 @@ class APIClient
      * hydrated resource (an {@see Event} for `event:` topics) or the raw array when its `type` is
      * unknown.
      *
-     * Verified live: signature = hex HMAC-SHA256 of `body . Klaviyo-Timestamp` with the webhook's
-     * secret. The `Klaviyo-Timestamp` header is only ever used as HMAC input, never for the
-     * freshness check. Known Klaviyo defect, observed 2026-09-04: the header is an HTTP-date with
-     * a wrong clock (`Fri, 04 Sep 2026 18:16:52 GMT` sent at 13:16:52 GMT, i.e. local time
-     * mislabelled as GMT). Replay protection compares `$now` against the body's `meta.timestamp`
-     * (ISO 8601, correct) with `$tolerance` seconds of slack; a body without `meta.timestamp`
-     * falls back to the header and will therefore normally be rejected as stale.
+     * The signature is a hex HMAC-SHA256 of `body . Klaviyo-Timestamp` with the webhook's secret.
+     * That header is only ever HMAC input, never the freshness check, because of a known Klaviyo
+     * defect (observed 2026-09-04): it is an HTTP-date on a wrong clock — `Fri, 04 Sep 2026
+     * 18:16:52 GMT` sent at 13:16:52 GMT, i.e. local time mislabelled as GMT. Replay protection
+     * therefore compares `$now` against the body's `meta.timestamp` (ISO 8601, correct) with
+     * `$tolerance` seconds of slack; a body without it falls back to the header and will normally
+     * be rejected as stale.
      */
     public static function parseWebhookRequest(
         ServerRequestInterface $request,
@@ -541,8 +523,9 @@ class APIClient
     }
 
     /**
-     * Exchanges a refresh token for a new token pair. Clients built with {@see self::withOAuth()}
-     * call this for you; use it directly only when managing tokens without a client instance.
+     * Exchanges a refresh token for a new token pair. The {@see TokenExchange} handed to the
+     * {@see self::withOAuth()} callback wraps this with the client's id, secret and transport;
+     * use it directly only when managing tokens without a client instance.
      *
      * @throws ConnectionException
      * @throws OAuthException
@@ -578,9 +561,8 @@ class APIClient
     }
 
     /**
-     * Form-encoded POST to the OAuth endpoints with HTTP basic client credentials. 4xx is an
-     * OAuth error (invalid grant, bad client, …), 5xx a server error; anything else decodes
-     * as JSON (empty for revoke).
+     * Form-encoded POST to the OAuth endpoints with HTTP basic client credentials. The body
+     * decodes as JSON, and is empty for revoke.
      *
      * @throws ConnectionException
      * @throws OAuthException
@@ -632,7 +614,7 @@ class APIClient
 
     /**
      * Builds, sends and decodes one API request. A {@see MultipartBody} is sent as
-     * `multipart/form-data`; anything else JSON-encodes. `$returnRequest` skips the send and
+     * `multipart/form-data`, anything else JSON-encodes. `$returnRequest` skips the send and
      * hands back the prepared PSR-7 request for {@see self::executePool()}.
      *
      * @return array{data: IdentifiableResource|IdentifiableResource[], links: ?PaginationLinks}|null|RequestInterface
@@ -652,8 +634,8 @@ class APIClient
 
     /**
      * `$mayRefresh` is true for the first send of a request and false for the retry after a
-     * token refresh, so a 401 on the retry surfaces as a ClientException instead of a second
-     * refresh.
+     * credentials refresh, so a 401 on the retry surfaces as a ClientException instead of a
+     * second refresh.
      * @throws ClientException
      * @throws ConnectionException
      * @throws OAuthException
@@ -717,9 +699,8 @@ class APIClient
     }
 
     /**
-     * Sends with the retry policy applied: 429 / 503 and network failures are resent after
-     * the policy's delay until it gives up, at which point the last response is returned or
-     * the transport failure surfaces as a ConnectionException.
+     * Resends on a retryable status or network failure until the policy gives up, at which point
+     * the last response is returned or the transport failure surfaces as a ConnectionException.
      *
      * @throws ConnectionException
      */
@@ -763,8 +744,6 @@ class APIClient
     }
 
     /**
-     * Maps status to exception or decoded, hydrated body.
-     *
      * @return array{data: IdentifiableResource|IdentifiableResource[], links: ?PaginationLinks}|null
      * @throws ClientException
      * @throws ServerException
@@ -792,15 +771,13 @@ class APIClient
     }
 
     /**
-     * Hydrates a decoded JSON:API response. Converts resource objects to typed classes and
-     * pagination links to PaginationLinks. `links` is always set, null when the response
-     * carried none, so `$result['links']?->next` is safe on every endpoint.
+     * Hydrates a decoded JSON:API response into typed classes. `links` is always set, null when
+     * the response carried none, so `$result['links']?->next` is safe on every endpoint.
      *
-     * Compound documents are resolved: when the request used `include=`, every relationship
-     * identifier that matches an entry of the top-level `included` array hydrates to that
-     * full resource (attributes, meta and its own relationships), so
-     * `$resource->getRelationship('tags')->data[0]->name` works. `included` itself is kept
-     * on the result as a hydrated list for callers that want the flat view.
+     * Compound documents are resolved: with `include=`, every relationship identifier matching an
+     * entry of the top-level `included` array hydrates to that full resource, so
+     * `$resource->getRelationship('tags')->data[0]->name` works. `included` is also kept on the
+     * result as a hydrated list, for callers that want the flat view.
      *
      * @return array{data: IdentifiableResource|IdentifiableResource[], links: ?PaginationLinks, included?: IdentifiableResource[]}
      */
@@ -908,30 +885,25 @@ class APIClient
     }
 
     /**
-     * Executes prepared requests concurrently through the transport. Each entry in the
-     * returned array is the unwrapped `data` from the hydrated JSON:API response (single
-     * resource or array of resources, depending on the endpoint), null for empty bodies, or
-     * a translated Klaviyo exception when that request was rejected. Order matches the input
-     * request order. Callers that don't tolerate partial failure should pass the result
-     * through assertNoExceptions().
+     * Executes prepared requests concurrently through the transport. Each entry of the returned
+     * array is the unwrapped `data` of the hydrated response, null for an empty body, or a
+     * translated Klaviyo exception when that request was rejected; order matches the input.
+     * Callers that don't tolerate partial failure should pass the result through
+     * {@see self::assertNoExceptions()}.
      *
-     * Retries follow the same {@see RetryPolicy} as single sends, run as further rounds:
-     * after a round completes, every request that got a retryable status or network error is
-     * resent after the longest requested delay. Retry rounds run one request at a time: the
-     * usual cause is a 429 from exceeding the endpoint's burst limit, and resending the failed
-     * requests concurrently would trip it again (observed live against `/api/accounts`, whose
-     * burst limit is 1/s: five concurrent sends failed one request outright after ten 429 rounds;
-     * with sequential retry rounds all ten succeed). Only the failed requests are kept between rounds, so the memory
-     * contract below holds.
+     * Retries follow the same {@see RetryPolicy} as single sends, run as further rounds: after a
+     * round completes, every request that got a retryable status or network error is resent after
+     * the longest requested delay. Those rounds send one request at a time, because the usual
+     * cause is a 429 from the endpoint's burst limit and resending concurrently would trip it
+     * again (live against `/api/accounts`, burst limit 1/s: five concurrent sends failed a
+     * request outright after ten 429 rounds; sequentially all ten succeed).
      *
-     * Choose `$concurrency` at or below the endpoint's burst limit (see
-     * {@see RateLimit::burstLimit()} on a previous response); anything above it only produces
-     * 429s and retry sleeps.
+     * Keep `$concurrency` at or below the endpoint's burst limit (see
+     * {@see RateLimit::burstLimit()} on a previous response); above it only produces 429s and
+     * retry sleeps.
      *
-     * Accepts an iterable so callers can pass a generator. With a generator, request objects
-     * (which can be huge for bulk subscribe / bulk import JSON bodies) are constructed lazily
-     * as the transport consumes them, capping peak memory at O(concurrency × body) rather than
-     * O(N × body), which matters for large bulk syncs.
+     * Passing a generator builds request objects lazily as the transport consumes them, capping
+     * peak memory at O(concurrency × body) rather than O(N × body) — worth it for bulk bodies.
      *
      * @param iterable<int, RequestInterface> $requests
      * @return array<int, IdentifiableResource|IdentifiableResource[]|null|ClientException|ServerException|ConnectionException>
@@ -1014,11 +986,9 @@ class APIClient
     }
 
     /**
-     * Convenience wrapper around {@see self::executePool()} for the common case where the
-     * caller has a list of inputs (jobs, profile chunks, etc.) and a function that turns
-     * one input into a request. Inputs are iterated lazily and request objects are only
-     * built as the transport consumes them, so peak memory stays at O(concurrency × body) —
-     * the same memory contract as passing your own generator to executePool.
+     * {@see self::executePool()} over a list of inputs and a function turning one input into a
+     * request. Inputs are iterated lazily, so this keeps the same O(concurrency × body) peak
+     * memory as passing your own generator.
      *
      * @template T
      * @param iterable<T>                    $items
@@ -1038,8 +1008,8 @@ class APIClient
     }
 
     /**
-     * Re-raises the first exception in a pool result, if any. Used by callers that want
-     * all-or-nothing semantics rather than per-request partial-success handling.
+     * Re-raises the first exception in a pool result, for callers that want all-or-nothing
+     * semantics rather than per-request partial-success handling.
      *
      * @param array<int, array|null|ClientException|ServerException|ConnectionException> $results
      *

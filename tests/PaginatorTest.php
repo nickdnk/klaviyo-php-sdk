@@ -16,10 +16,6 @@ use nickdnk\Klaviyo\Resources\Response\Coupon;
 use nickdnk\Klaviyo\Resources\Response\Profile;
 use PHPUnit\Framework\TestCase;
 
-/**
- * Auto-pagination: iterate() / paginate() walk links.next lazily, keep the first request's query,
- * stop on the last page, and never spin on a repeated cursor.
- */
 class PaginatorTest extends TestCase
 {
 

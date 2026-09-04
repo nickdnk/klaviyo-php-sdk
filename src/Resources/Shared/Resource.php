@@ -72,8 +72,8 @@ abstract class Resource implements JsonSerializable, ArrayAccess
     /**
      * If a resource has children that are also resources, this array should return the key:value mapping.
      * We cannot use automatic hydration based on `type`, as not all hydratable objects have a type (i.e. they are not
-     * all subclasses of `TypedResource`). A key whose value is a JSON list hydrates element-wise, so one mapping
-     * serves both `{…}` and `[{…}, {…}]` attributes.
+     * all subclasses of `TypedResource`). If the JSON under a mapped key is a list, each element is hydrated to that
+     * class instead; no separate "list of X" declaration is needed.
      *
      * @return array<string, class-string<Resource>>
      */

@@ -17,10 +17,7 @@ use nickdnk\Klaviyo\Resources\Shared\Explicit;
 use nickdnk\Klaviyo\Resources\Shared\WebhookTopic;
 use PHPUnit\Framework\TestCase;
 
-/**
- * WebhookService CRUD against the responses recorded with the OAuth app (webhooks are 403 for
- * API keys, so the 403 fixture is asserted too).
- */
+/** Webhooks are 403 for API-key clients, so the recorded 403 is asserted too. */
 class WebhookServiceTest extends TestCase
 {
 
@@ -31,16 +28,18 @@ class WebhookServiceTest extends TestCase
 
         $this->mock = new MockHandler($responses);
 
-        return new APIClient('oauth-token', GuzzleTransport::fromHandlerStack(HandlerStack::create($this->mock)));
+        return APIClient::withAccessToken('oauth-token', GuzzleTransport::fromHandlerStack(HandlerStack::create($this->mock)));
 
     }
 
     private function lastBody(): array
     {
 
-        $this->mock->getLastRequest()->getBody()->rewind();
+        $request = $this->mock->getLastRequest();
+        self::assertNotNull($request, 'No request was sent.');
 
-        return json_decode((string)$this->mock->getLastRequest()->getBody(), true);
+        // Stream::__toString() seeks to 0 itself, so no explicit rewind() is needed.
+        return json_decode((string)$request->getBody(), true);
 
     }
 

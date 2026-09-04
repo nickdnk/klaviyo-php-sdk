@@ -39,9 +39,9 @@ return function (Harness $h): void {
             $h->assert($r instanceof OAuthCredentials && $r->accessToken !== $before->accessToken && $r->expiresAt >= $before->expiresAt && $h->client->getCredentials() === $r, 'new access token adopted');
             $h->note('Refresh token ' . ($r->refreshToken === $before->refreshToken ? 'NOT rotated (same value re-issued)' : 'rotated') . ' on refresh.');
         });
-    $h->step('oauth', 'withOAuth', 'automatic refresh on 401: bogus access token + valid refresh token → request succeeds after one refresh', function (APIClient $c) use ($h) {
-        $valid = $c->getCredentials();
-        $c->setCredentials(new OAuthCredentials('bogus-access-token', $valid->refreshToken, $valid->expiresAt, $valid->scope));
+    $h->step('oauth', 'withOAuth', 'automatic refresh on 401: bogus access token + valid refresh token → request succeeds after one refresh', function (APIClient $main) use ($h) {
+        $valid = $main->getCredentials();
+        $c = $h->oauthClient(new OAuthCredentials('bogus-access-token', $valid->refreshToken, $valid->expiresAt, $valid->scope));
         $acc = $c->accounts->list()['data'][0];
         $h->assert($acc->id === 'WBhXHN', 'call succeeded');
         $h->assert($c->getCredentials()->accessToken !== 'bogus-access-token' && $c->getCredentials()->accessToken !== $valid->accessToken, 'client swapped to a freshly issued access token');

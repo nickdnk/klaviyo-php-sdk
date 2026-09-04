@@ -9,11 +9,7 @@ use nickdnk\Klaviyo\Exceptions\ClientException;
 use nickdnk\Klaviyo\Exceptions\KlaviyoError;
 use PHPUnit\Framework\TestCase;
 
-/**
- * ClientException turns Klaviyo's JSON:API `errors` array into KlaviyoError objects. Callers
- * branch on `code`, `meta` (duplicate_profile_id on 409) and the JSON pointer, so each of
- * those has to survive parsing, and a body that is not JSON:API must not blow up.
- */
+/** Callers branch on `code`, `meta` (duplicate_profile_id on 409) and the JSON pointer. */
 class ClientExceptionTest extends TestCase
 {
 

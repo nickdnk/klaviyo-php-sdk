@@ -637,11 +637,9 @@ class KlaviyoResourceTest extends TestCase
         $event = $result->events[0]['payload'];
         self::assertInstanceOf(AttributeBag::class, $event->event_properties);
 
-        // Array-style access on missing key — must return null without raising "Undefined array key".
+        // Both access styles must answer null for a missing key, not raise "Undefined array key".
         self::assertNull($event->event_properties['custom_method_detail']);
-        // Property-style access on missing key — same contract.
         self::assertNull($event->event_properties->custom_method_detail);
-        // Existing key still resolves.
         self::assertSame('foo@bar.com', $event->event_properties['email_address']);
 
     }
