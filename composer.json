@@ -1,6 +1,6 @@
 {
   "name": "nickdnk/klaviyo-php-sdk",
-  "description": "Klaviyo JSON:API client for PHP: typed request/response resources, OAuth with automatic token refresh, retries, bulk job helpers and webhook verification over PSR-18/PSR-17/PSR-7.",
+  "description": "A typed PHP client for the Klaviyo API with OAuth, webhooks and any PSR-18 HTTP client.",
   "type": "library",
   "license": "MIT",
   "keywords": [
@@ -8,8 +8,9 @@
     "api",
     "sdk",
     "client",
-    "psr-18",
-    "oauth"
+    "oauth",
+    "webhooks",
+    "psr-18"
   ],
   "homepage": "https://github.com/nickdnk/klaviyo-php-sdk",
   "authors": [
