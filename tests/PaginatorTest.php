@@ -104,7 +104,10 @@ class PaginatorTest extends TestCase
             self::page(['p1'], 'https://a.klaviyo.com/api/profiles?page%5Bcursor%5D=c2'),
             self::page(['p2', 'p3'], null),
         ]);
-        self::assertSame(['p1', 'p2', 'p3'], array_map(fn(Profile $p) => $p->id, iterator_to_array($client->profiles->iterate())));
+        $all = $client->paginate(fn(?string $next) => $client->profiles->list(null, $next))->all();
+        self::assertSame([0, 1, 2], array_keys($all), 'all() is a flat list, not keyed per page');
+        self::assertSame(['p1', 'p2', 'p3'], array_map(fn(Profile $p) => $p->id, $all));
+        self::assertCount(2, $this->history, 'all() fetched every page');
 
     }
 
