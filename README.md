@@ -210,7 +210,7 @@ $query = (new Query())
 
 $page = $client->profiles->list($query);            // ['data' => Profile[], 'links' => ?PaginationLinks]
 
-foreach ($client->profiles->iterate($query)->items() as $p) {   // all pages, fetched as you go
+foreach ($client->profiles->iterate($query) as $p) {            // all pages, fetched as you go
     // ...
 }
 ```
@@ -281,9 +281,8 @@ Klaviyo paginates with cursors. Every `list()` result carries a `links` object:
 - `$page['links']->prev` points back, `self` is the current page, `first` and `last` exist for some endpoints.
 - `page[size]` sets how many resources one page holds (see the limits above).
 
-The easiest way through all pages is `iterate()`, available on every service that has `list()`. It returns a
-`Paginator` whose `items()` generator fetches the next page only when the current one is exhausted, so breaking out of
-the loop stops the requests:
+The easiest way through all pages is `iterate()`, available on every service that has `list()`. It is a generator
+that fetches the next page only when the current one is exhausted, so breaking out of the loop stops the requests:
 
 ```php
 use nickdnk\Klaviyo\Filter;
@@ -291,12 +290,19 @@ use nickdnk\Klaviyo\Query;
 
 $query = (new Query())->filter(Filter::equals('email', 'jane@example.com'))->pageSize(50);
 
-foreach ($client->profiles->iterate($query)->items() as $profile) {
+foreach ($client->profiles->iterate($query) as $profile) {
     echo $profile->email, PHP_EOL;
 }
 
-$pages = $client->profiles->iterate($query)->pages();   // one ['data' => ..., 'links' => ...] per page
-$all   = $client->profiles->iterate($query)->all();     // everything in one array; fine for small sets
+$all = iterator_to_array($client->profiles->iterate($query));   // everything in one array; fine for small sets
+```
+
+To see each page with its links, use `paginate()` with the same `list()` call:
+
+```php
+$paginator = $client->paginate(fn(?string $next) => $client->profiles->list($query, $next));
+foreach ($paginator->pages() as $page) { /* ['data' => Profile[], 'links' => ?PaginationLinks] */ }
+$all = $paginator->all();
 ```
 
 Relationship listings take a `next:` argument instead, so wrap them with `paginate()`. The callback gets `null` for the

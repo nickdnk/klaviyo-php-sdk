@@ -3,10 +3,12 @@
 
 namespace nickdnk\Klaviyo\Services;
 
+use Generator;
 use nickdnk\Klaviyo\Exceptions\ClientException;
 use nickdnk\Klaviyo\Exceptions\ConnectionException;
 use nickdnk\Klaviyo\Exceptions\OAuthException;
 use nickdnk\Klaviyo\Exceptions\ServerException;
+use nickdnk\Klaviyo\Paginator;
 use nickdnk\Klaviyo\Query;
 use nickdnk\Klaviyo\Resources\Request\CreateTag;
 use nickdnk\Klaviyo\Resources\Request\UpdateTag;
@@ -60,6 +62,22 @@ class TagService extends BaseService
 
         return $this->listTrait($query, $next, $returnRequest);
 
+    }
+
+    /**
+     * Every Tag matching `$query`, fetching the next page only when the current one is exhausted;
+     * breaking out of the loop stops the requests. `iterator_to_array()` it for the whole set, or use
+     * {@see \nickdnk\Klaviyo\APIClient::paginate()} to see pages and links.
+     *
+     * @return Generator<int, Tag>
+     * @throws ClientException
+     * @throws ConnectionException
+     * @throws OAuthException
+     * @throws ServerException
+     */
+    public function iterate(?Query $query = null): Generator
+    {
+        return (new Paginator(fn(?string $next) => $this->list($query, $next)))->items();
     }
 
     /**

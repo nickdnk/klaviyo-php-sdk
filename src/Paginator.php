@@ -22,7 +22,7 @@ use nickdnk\Klaviyo\Resources\Shared\PaginationLinks;
  * ```
  *
  * Pages are fetched lazily as the generator advances, so breaking out of the loop early stops
- * the requests. Services with `list()` also offer `iterate($query)` as a shortcut.
+ * the requests. Services with `list()` also offer `iterate($query)`, which yields the items directly.
  *
  * @template T of IdentifiableResource
  */

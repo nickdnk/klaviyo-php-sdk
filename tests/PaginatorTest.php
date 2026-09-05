@@ -10,7 +10,6 @@ use GuzzleHttp\Psr7\Response;
 use nickdnk\Klaviyo\APIClient;
 use nickdnk\Klaviyo\Exceptions\ClientException;
 use nickdnk\Klaviyo\Http\GuzzleTransport;
-use nickdnk\Klaviyo\Paginator;
 use nickdnk\Klaviyo\Query;
 use nickdnk\Klaviyo\Resources\Response\Coupon;
 use nickdnk\Klaviyo\Resources\Response\Profile;
@@ -51,12 +50,12 @@ class PaginatorTest extends TestCase
             self::page(['p5'], null),
         ]);
 
-        $paginator = $client->profiles->iterate((new Query())->pageSize(2)->fields('profile', 'email'));
-        self::assertInstanceOf(Paginator::class, $paginator);
+        $items = $client->profiles->iterate((new Query())->pageSize(2)->fields('profile', 'email'));
+        self::assertInstanceOf(\Generator::class, $items);
         self::assertCount(0, $this->history, 'nothing is fetched before iteration starts');
 
         $seen = [];
-        foreach ($paginator->items() as $i => $profile) {
+        foreach ($items as $i => $profile) {
             self::assertInstanceOf(Profile::class, $profile);
             $seen[$i] = $profile->id;
             if ($i === 2) {
@@ -80,7 +79,7 @@ class PaginatorTest extends TestCase
             self::page(['p2'], null),
         ]);
 
-        foreach ($client->profiles->iterate()->items() as $profile) {
+        foreach ($client->profiles->iterate() as $profile) {
             break;
         }
 
@@ -96,7 +95,7 @@ class PaginatorTest extends TestCase
             self::page(['p2', 'p3'], null),
         ]);
 
-        $pages = iterator_to_array($client->profiles->iterate()->pages());
+        $pages = iterator_to_array($client->paginate(fn(?string $next) => $client->profiles->list(null, $next))->pages());
         self::assertCount(2, $pages);
         self::assertSame('p1', $pages[0]['data'][0]->id);
         self::assertNull($pages[1]['links']->next);
@@ -105,7 +104,7 @@ class PaginatorTest extends TestCase
             self::page(['p1'], 'https://a.klaviyo.com/api/profiles?page%5Bcursor%5D=c2'),
             self::page(['p2', 'p3'], null),
         ]);
-        self::assertSame(['p1', 'p2', 'p3'], array_map(fn(Profile $p) => $p->id, $client->profiles->iterate()->all()));
+        self::assertSame(['p1', 'p2', 'p3'], array_map(fn(Profile $p) => $p->id, iterator_to_array($client->profiles->iterate())));
 
     }
 
@@ -138,7 +137,7 @@ class PaginatorTest extends TestCase
             self::page(['never'], null),
         ]);
 
-        $ids = array_map(fn(Profile $p) => $p->id, $client->profiles->iterate()->all());
+        $ids = array_map(fn(Profile $p) => $p->id, iterator_to_array($client->profiles->iterate()));
         self::assertSame(['p1', 'p2'], $ids);
         self::assertCount(2, $this->history);
 
@@ -154,7 +153,7 @@ class PaginatorTest extends TestCase
 
         $ids = [];
         try {
-            foreach ($client->profiles->iterate()->items() as $p) {
+            foreach ($client->profiles->iterate() as $p) {
                 $ids[] = $p->id;
             }
             self::fail('expected ClientException');
@@ -176,7 +175,7 @@ class PaginatorTest extends TestCase
         });
         $client = $this->client([Fixtures::response('get_coupons.200'), $last]);
 
-        $coupons = $client->coupons->iterate((new Query())->pageSize(1))->all();
+        $coupons = iterator_to_array($client->coupons->iterate((new Query())->pageSize(1)));
         self::assertCount(2, $coupons);
         self::assertContainsOnlyInstancesOf(Coupon::class, $coupons);
         self::assertSame('second', $coupons[1]->id);
