@@ -5,7 +5,7 @@
 [![Latest version](https://img.shields.io/packagist/v/nickdnk/klaviyo-php-sdk)](https://packagist.org/packages/nickdnk/klaviyo-php-sdk)
 [![Downloads](https://img.shields.io/packagist/dt/nickdnk/klaviyo-php-sdk)](https://packagist.org/packages/nickdnk/klaviyo-php-sdk/stats)
 [![PHP](https://img.shields.io/packagist/dependency-v/nickdnk/klaviyo-php-sdk/php)](composer.json)
-[![License](https://img.shields.io/packagist/l/nickdnk/klaviyo-php-sdk)](LICENSE)
+![GitHub License](https://img.shields.io/github/license/nickdnk/klaviyo-php-sdk)
 
 This is a custom PHP client for the [Klaviyo API](https://developers.klaviyo.com/en/reference/api_overview).
 
@@ -87,16 +87,8 @@ $client = APIClient::withOAuth(
     clientSecret: $_ENV['KLAVIYO_CLIENT_SECRET'],
     refresh: function (OAuthCredentials $current, TokenExchange $exchange): OAuthCredentials {
         // Called on a 401, before the request that triggered it is retried.
-        $fresh = $exchange($current);   // POST /oauth/token with the refresh token
-        // Write the new values back to the same place $saved came from. The previous access token keeps working
-        // until it expires, so another process still holding it is not cut off; only the stored pair changes.
-        $updated = [
-            'access_token'  => $fresh->accessToken,
-            'refresh_token' => $fresh->refreshToken,   // store it even when unchanged
-            'expires_at'    => $fresh->expiresAt,      // unix timestamp
-        ];
-        // ... persist $updated
-        return $fresh;
+        // See lock rotation example below for details.
+        return $exchange($current);
     },
 );
 ```
